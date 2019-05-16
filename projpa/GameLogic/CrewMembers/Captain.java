@@ -8,15 +8,6 @@ import projpa.GameLogic.GameLogic;
  */
 public class Captain extends CrewMember implements Serializable{
 
-    public Captain(int roomNumber, GameLogic game){
-        // old
-        super(roomNumber, game);
-        this.setMovement(1);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-    
     public Captain(GameLogic game){
         
         super(game);

@@ -18,6 +18,4 @@ public class ProjPA {
 
     }
 
-    //do the start function for the javafx
-
 }

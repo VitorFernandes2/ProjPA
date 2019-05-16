@@ -3,6 +3,7 @@ package projpa.GameLogic.CrewMembers;
 import java.io.Serializable;
 import projpa.GameLogic.GameLogic;
 import projpa.GameLogic.MapRooms.*;
+import projpa.GameLogic.General.*;
 
 /*
  * This class is the crew member main class
@@ -64,67 +65,8 @@ public abstract class CrewMember implements Serializable{
     }
 
     public shipJavaInterface chooseRoom(int roomNumber){
-        
-        // REVER, pode colidir com as mecanicas de rooms
-        
-        
-        crewMemberRoom = new Room1();
 
-        switch(roomNumber){
-            
-            case 1:
-                crewMemberRoom = new Room1();
-                break;
-
-            case 2:
-                crewMemberRoom = new Room2(); 
-                break;
-
-            case 3:
-                crewMemberRoom = new Room3();
-                break;
-
-            case 4:
-                crewMemberRoom = new Room4();
-                break;
-
-            case 5:
-                crewMemberRoom = new Room5();
-                break;
-
-            case 6:
-                crewMemberRoom = new Room6();
-                break;
-
-            case 7:
-                crewMemberRoom = new Room7();
-                break;
-
-            case 8:
-                crewMemberRoom = new Room8();
-                break;
-
-            case 9:
-                crewMemberRoom = new Room9();
-                break;
-
-            case 10:
-                crewMemberRoom = new Room10();
-                break;
-
-            case 11:
-                crewMemberRoom = new Room11();
-                break;
-
-            case 12:
-                crewMemberRoom = new Room12();
-                break;
-
-            default:
-
-        }
-
-        return crewMemberRoom;
+        return new General().convertIntToRoom(roomNumber);
 
     }
 

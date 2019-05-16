@@ -8,15 +8,6 @@ import projpa.GameLogic.GameLogic;
  */
 public class CommsOfficer extends CrewMember implements Serializable{
 
-    public CommsOfficer(int roomNumber, GameLogic game){
-        // old
-        super(roomNumber, game);
-        this.setMovement(1);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-    
     public CommsOfficer(GameLogic game){
         
         super(game);

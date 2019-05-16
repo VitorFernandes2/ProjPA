@@ -28,6 +28,7 @@ import projpa.GameLogic.UpgradeCards.AddOneAtackDiceResult;
 import projpa.GameLogic.UpgradeCards.GainOneSealedRoom;
 import projpa.GameLogic.UpgradeCards.UpgradeCard;
 import projpa.GameLogic.User.User;
+import projpa.GameLogic.General.General;
 
 /**
  *
@@ -210,28 +211,12 @@ public class GameLogic implements Serializable{
     public void setHealthTrackervalue(int healthTracker) {
         this.getHealthTracker().setHullstate(healthTracker);
     }
-    
-
-    /**
-     * @param hullTracker the hullTracker to set
-     */
-    public void setHullTracker(HullTracker hullTracker) {
-        this.hullTracker = hullTracker;
-    }
 
     /**
      * @param hullTracker the healthTracker to set
      */
     public void setHullTrackervalue(int healthTracker) {
         this.getHullTracker().setHullstate(healthTracker);
-    }
-    
-    
-    /**
-     * @param journeyTracker the journeyTracker to set
-     */
-    public void setJourneyTracker(JourneyTracker journeyTracker) {
-        this.journeyTracker = journeyTracker;
     }
 
     /**
@@ -266,61 +251,6 @@ public class GameLogic implements Serializable{
     }
 
     /**
-     * This function converts integer to room
-     * @param roomNumber
-     * @return the correspondent room
-     */
-    public shipJavaInterface convertIntToRoom(int roomNumber){
-
-        shipJavaInterface room = null;
-
-        switch(roomNumber){
-
-            case 1:
-                room = new Room1();
-                break;
-            case 2:
-                room = new Room2();
-                break;
-            case 3:
-                room = new Room3();
-                break;
-            case 4:
-                room = new Room4();
-                break;
-            case 5:
-                room = new Room5();
-                break;
-            case 6:
-                room = new Room6();
-                break;
-            case 7:
-                room = new Room7();
-                break;
-            case 8:
-                room = new Room8();
-                break;
-            case 9:
-                room = new Room9();
-                break;
-            case 10:
-                room = new Room10();
-                break;
-            case 11:
-                room = new Room11();
-                break;
-            case 12:
-                room = new Room12();
-                break;
-            default:
-            
-        }
-
-        return room;
-
-    }
-
-    /**
      * This function gets if the room is locked if it isn't returns the room
      * @param roomNumber
      * @return a room or null if the door is locked
@@ -329,7 +259,7 @@ public class GameLogic implements Serializable{
 
         shipJavaInterface room;
 
-        room = convertIntToRoom(roomNumber);
+        room = new General().convertIntToRoom(roomNumber);
 
         if(room.getsealledstatus() == true)
             room = null;
@@ -465,7 +395,7 @@ public class GameLogic implements Serializable{
         shipJavaInterface room;
 
         //best Otion of deslocation
-        room = convertIntToRoom(findBestRoom(map, roomNumber, crewMembersLocation));
+        room = new General().convertIntToRoom(findBestRoom(map, roomNumber, crewMembersLocation));
 
         //First room to find the crew member
         return room;
@@ -535,14 +465,17 @@ public class GameLogic implements Serializable{
 
         if(position != 0){
 
-            if (!convertIntToRoom(position).getsealledstatus()) {
+            shipJavaInterface auxRoom = new General().convertIntToRoom(position);
+            shipJavaInterface auxRoom2 = new General().convertIntToRoom(roomNumber);
+
+            if (!auxRoom.getsealledstatus()) {
             
                 return position;
 
             }
             else{
 
-                shipJavaInterface tmpRoom = randomRoom(convertIntToRoom(roomNumber).Return_avaible_rooms());
+                shipJavaInterface tmpRoom = randomRoom(auxRoom2.Return_avaible_rooms());
                 
                 if(tmpRoom != null)
                     return convertRoomToInt(tmpRoom);
@@ -554,7 +487,8 @@ public class GameLogic implements Serializable{
         }
         else{
 
-            shipJavaInterface tmpRoom = randomRoom(convertIntToRoom(roomNumber).Return_avaible_rooms());
+            shipJavaInterface auxRoom2 = new General().convertIntToRoom(roomNumber);
+            shipJavaInterface tmpRoom = randomRoom(auxRoom2.Return_avaible_rooms());
             
             if(tmpRoom != null)
                 return convertRoomToInt(tmpRoom);
@@ -586,7 +520,9 @@ public class GameLogic implements Serializable{
             for (int j = 0; j < 4; j++) {
                 
                 if (map[i][j] == roomNumber) {
-                    
+
+                    shipJavaInterface auxRoom = new General().convertIntToRoom(roomNumber);
+
                     if (targetLocation[1] == i) { //If in the same line
                         
                         if (targetLocation[0] == j) { //If in the same column
@@ -597,13 +533,13 @@ public class GameLogic implements Serializable{
                         else
                             if(targetLocation[0] < j){ //If in the left column
                                     
-                                int position = convertIntToRoom(roomNumber).getLeft();                                
+                                int position = auxRoom.getLeft();
                                 return adjustFindBestRoom(position, roomNumber);
 
                             }
                             else{ //If in the right column
 
-                                int position = convertIntToRoom(roomNumber).getRight();
+                                int position = auxRoom.getRight();
                                 return adjustFindBestRoom(position, roomNumber);                              
 
                             }
@@ -612,13 +548,13 @@ public class GameLogic implements Serializable{
                     else
                         if(targetLocation[1] > i){ //If in one of the lanes below
                             
-                            int position = convertIntToRoom(roomNumber).getDown();
+                            int position = auxRoom.getDown();
                             return adjustFindBestRoom(position, roomNumber);
 
                         }
                         else{ //If in one of the lanes above
 
-                            int position = convertIntToRoom(roomNumber).getUp();
+                            int position = auxRoom.getUp();
                             return adjustFindBestRoom(position, roomNumber);
 
                         }
@@ -733,7 +669,7 @@ public class GameLogic implements Serializable{
         ArrayList<shipJavaInterface> roomList = new ArrayList<>();
 
         for (int i = 0; i < nearRooms.size(); i++)             
-            roomList.add(convertIntToRoom(nearRooms.get(i)));
+            roomList.add(new General().convertIntToRoom(nearRooms.get(i)));
 
         return roomList;
 
@@ -1291,7 +1227,7 @@ public class GameLogic implements Serializable{
             
             if (roomIndex != 0) {
                 
-                shipJavaInterface room = this.convertIntToRoom(roomIndex);
+                shipJavaInterface room = new General().convertIntToRoom(roomIndex);
                 returnStringBuffer.append(roomIndex).append(" - ").append(room.ReturnName()).append("\n");
 
             }
@@ -1325,7 +1261,7 @@ public class GameLogic implements Serializable{
 
         for (int i = 1; i <= 12; i++) {
             
-            shipJavaInterface room = this.convertIntToRoom(i);
+            shipJavaInterface room = new General().convertIntToRoom(i);
             returnString.append(i + " - " + room.ReturnName() + "\n");
 
         }
@@ -1418,7 +1354,7 @@ public class GameLogic implements Serializable{
             
             if (roomIndex != 0) {
                 
-                shipJavaInterface room = this.convertIntToRoom(roomIndex);
+                shipJavaInterface room = new General().convertIntToRoom(roomIndex);
                 returnString.append(roomIndex + " - " + room.ReturnName() + "\n");    
             
             }            
@@ -1645,7 +1581,7 @@ public class GameLogic implements Serializable{
 
             if (i != 0) {
 
-                shipJavaInterface room = this.convertIntToRoom(i);
+                shipJavaInterface room = new General().convertIntToRoom(i);
                 returnString.append(i + " - " + room.ReturnName() + "\n");
         
             }
@@ -1660,7 +1596,7 @@ public class GameLogic implements Serializable{
 
     public boolean canSealRoom(int roomNumber){
 
-        shipJavaInterface room = convertIntToRoom(roomNumber);
+        shipJavaInterface room = new General().convertIntToRoom(roomNumber);
 
         for (Alien alien : this.getAliens()) {
             

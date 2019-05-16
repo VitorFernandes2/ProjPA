@@ -8,16 +8,7 @@ import projpa.GameLogic.GameLogic;
  */
 public class Doctor extends CrewMember implements Serializable{
 
-    public Doctor(int roomNumber, GameLogic game){
-        //old
-        super(roomNumber, game);
-        this.setMovement(1);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-
-        public Doctor(GameLogic game){
+    public Doctor(GameLogic game){
         
         super(game);
         this.setMovement(1);

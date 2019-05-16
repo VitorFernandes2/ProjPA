@@ -8,17 +8,7 @@ import projpa.GameLogic.GameLogic;
  */
 public class TransporterChief extends CrewMember implements Serializable{
 
-    public TransporterChief(int roomNumber, GameLogic game){
-        
-        //old
-        super(roomNumber, game);
-        this.setMovement(0);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-    
-        public TransporterChief(GameLogic game){
+    public TransporterChief(GameLogic game){
         
         super(game);
         this.setMovement(1);

@@ -9,7 +9,10 @@ import java.util.Random;
 public class Dice implements Serializable{
 
     public int roll(int min, int max){
-        
+
+        if(min > max)
+            return 0;
+
         int rollValue = 0;
         Random generator = new Random();
 

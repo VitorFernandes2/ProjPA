@@ -7,23 +7,15 @@ import java.util.Collections;
 import projpa.GameLogic.Alien;
 import projpa.GameLogic.GameLogic;
 import projpa.GameLogic.Dice.Dice;
+import projpa.GameLogic.General.General;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 
 /**
  * ScienceOfficer
  */
 public class ScienceOfficer extends CrewMember implements Serializable{
-
-    public ScienceOfficer(int roomNumber, GameLogic game){
-        //old
-        super(roomNumber, game);
-        this.setMovement(1);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
     
-        public ScienceOfficer(GameLogic game){
+    public ScienceOfficer(GameLogic game){
         
         super(game);
         this.setMovement(1);
@@ -45,7 +37,7 @@ public class ScienceOfficer extends CrewMember implements Serializable{
 
         for (int var : arrInteger) {
             
-            shipJavaInterface room = this.game.convertIntToRoom(var);
+            shipJavaInterface room = new General().convertIntToRoom(var);
             
             if (this.game.verifyalien(room.ReturnName()) != -1) {
             

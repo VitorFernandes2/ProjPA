@@ -10,16 +10,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class RedShirt extends CrewMember implements Serializable{
 
-    public RedShirt(int roomNumber, GameLogic game){
-        //old
-        super(roomNumber, game);
-        this.setMovement(1);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-    
-        public RedShirt(GameLogic game){
+    public RedShirt(GameLogic game){
         
         super(game);
         this.setMovement(1);

@@ -9,15 +9,6 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class Engineer extends CrewMember implements Serializable{
 
-    public Engineer(int roomNumber, GameLogic game){
-        //old
-        super(roomNumber, game);
-        this.setMovement(1);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-
     public Engineer(GameLogic game){
         
         super(game);

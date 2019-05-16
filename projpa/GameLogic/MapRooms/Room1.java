@@ -29,10 +29,7 @@ public class Room1 implements shipJavaInterface,Serializable {
     }
 
     @Override
-    public String ReturnName() {
-
-        return name;
-    }
+    public String ReturnName() {return name;}
 
     @Override
     public ArrayList<Integer> Return_avaible_rooms() {

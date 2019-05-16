@@ -8,16 +8,7 @@ import projpa.GameLogic.GameLogic;
  */
 public class NavigationOfficer extends CrewMember implements Serializable{
 
-    public NavigationOfficer(int roomNumber, GameLogic game){
-        //old
-        super(roomNumber, game);
-        this.setMovement(2);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-    
-        public NavigationOfficer(GameLogic game){
+    public NavigationOfficer(GameLogic game){
         
         super(game);
         this.setMovement(1);

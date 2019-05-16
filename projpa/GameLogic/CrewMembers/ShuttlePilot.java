@@ -8,16 +8,7 @@ import projpa.GameLogic.GameLogic;
  */
 public class ShuttlePilot extends CrewMember implements Serializable{
 
-    public ShuttlePilot(int roomNumber, GameLogic game){
-        //old
-        super(roomNumber, game);
-        this.setMovement(1);
-        this.refillMovementToDo();
-        this.setAttack(106);
-
-    }
-    
-        public ShuttlePilot(GameLogic game){
+    public ShuttlePilot(GameLogic game){
         
         super(game);
         // special
