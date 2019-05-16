@@ -17,9 +17,9 @@ public class AwaitThirdTokenSecondCrewMember extends StateAdapter implements Ser
         
         // place a crew member in a selected room if possible
         if(room >= 1 || room <= 12){
-        
-            game.getUser().getCrewMembers()[1].chooseRoom(room);
-            
+
+            game.chooseCrewMemberRoom(room,1);
+
             this.game.addTurn();
             this.game.spawnAliens();
 

@@ -29,7 +29,7 @@ public interface IStates {
      * this function doesnt recive nothing, the objetivo is to randomely create/select the 2 crewmemebers
      * @return Actual State
      */
-    public IStates selectrandomCrewMembers();
+    public IStates selectRandomCrewMembers();
 
     /**
      * This function places the first Crew Member
@@ -95,13 +95,6 @@ public interface IStates {
     public IStates sealRoom(int roomIndex);
 
     /**
-     * This function do all the Alien Phase
-     * @param game
-     * @return Actual State
-     */
-    public IStates alienPhase(GameLogic game);
-
-    /**
      * This function will save the game in a file
      * @return Actual State
      */
@@ -112,13 +105,13 @@ public interface IStates {
      * @param game
      * @return Actual State
      */
-    public IStates Inputbegining(GameLogic game);
+    public IStates InputBeginning(GameLogic game);
 
     /**
      * This function restarts the game
      * @return the Actual State of the game
      */
-    public IStates Startnewbegin();
+    public IStates StartNewBegin();
 
     /**
      * This function returns the anterior state
@@ -145,6 +138,6 @@ public interface IStates {
     public void gainoneattack(int crewmember);
     public void addonethedice();
     
-    public Boolean wassaved();
+    public Boolean wasSaved();
     
 }

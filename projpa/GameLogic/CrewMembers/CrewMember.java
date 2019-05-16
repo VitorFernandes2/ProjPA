@@ -27,7 +27,6 @@ public abstract class CrewMember implements Serializable{
     }
     
     public CrewMember(GameLogic game){
-
         
         this.game = game;
 
@@ -137,5 +136,13 @@ public abstract class CrewMember implements Serializable{
      * @return the boolean special move value
      */
     public abstract boolean Special(int room);
+
+    public boolean gotMovementsToDo(){
+        return (movementToDo > 0);
+    }
+
+    public boolean gotMovement(){
+        return (this.movement > 0);
+    }
 
 }

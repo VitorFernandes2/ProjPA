@@ -22,10 +22,10 @@ public class AwaitPeekRoom extends StateAdapter implements Serializable{
 
         int numberOfCrewInRoom = 0;
 
-        if (this.game.getCrewMember1RoomName().equals(roomName))
+        if (this.game.isTheSameCrewMember1Name(roomName))
             numberOfCrewInRoom++;
         
-        if (this.game.getCrewMember2RoomName().equals(roomName))
+        if (this.game.isTheSameCrewMember2Name(roomName))
             numberOfCrewInRoom++;
 
         return numberOfCrewInRoom;
@@ -69,7 +69,7 @@ public class AwaitPeekRoom extends StateAdapter implements Serializable{
 
                 if (alienInRoom == -1 && crewMemberInRoom == 0){
 
-                    roomInterface.setsealed();
+                    roomInterface.setSealed();
                     this.game.removeSealedToken();
                     this.game.decrementActionPoints();
 
@@ -90,8 +90,8 @@ public class AwaitPeekRoom extends StateAdapter implements Serializable{
             
             CrewMember crewMember = this.game.getCrewMember(crewMemberIndex);
 
-            if (crewMember.getMovement() > 0)
-                if (crewMember.getMovementToDo() > 0) {
+            if (crewMember.gotMovement())
+                if (crewMember.gotMovementsToDo()) {
                 
                     crewMember.chooseRoom(crewMemberNewRoom);
                     crewMember.decrementMovementToDo();

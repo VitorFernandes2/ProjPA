@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class SecretRoom implements shipJavaInterface,Serializable {
 
     @Override
-    public shipJavaInterface newlocation(int location) {
+    public shipJavaInterface newLocation(int location) {
         return this;
     }
 
@@ -39,17 +39,17 @@ public class SecretRoom implements shipJavaInterface,Serializable {
     }
 
     @Override
-    public ArrayList<Integer> Return_avaible_rooms() {
+    public ArrayList<Integer> ReturnAvailableRooms() {
         return null;
     }
 
     @Override
-    public boolean setsealed() {
+    public boolean setSealed() {
         return false;
     }
 
     @Override
-    public boolean getsealledstatus() {
+    public boolean getSealStatus() {
         return false;
     }
     

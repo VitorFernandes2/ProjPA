@@ -17,11 +17,11 @@ public class Room6 implements shipJavaInterface,Serializable {
         protected static boolean sealedroom = false;
     
     @Override
-    public shipJavaInterface newlocation(int location) {
+    public shipJavaInterface newLocation(int location) {
 
-        if(location == 2 && new Room2().getsealledstatus() == false)
+        if(location == 2 && !new Room2().getSealStatus())
             return new Room2();
-        if(location == 10 && new Room10().getsealledstatus() == false)
+        if(location == 10 && new Room10().getSealStatus())
             return new Room10();
         return this;
         
@@ -34,7 +34,7 @@ public class Room6 implements shipJavaInterface,Serializable {
     }
 
     @Override
-    public ArrayList<Integer> Return_avaible_rooms() {
+    public ArrayList<Integer> ReturnAvailableRooms() {
        
         ArrayList<Integer> returnvalues = new ArrayList<>();
 
@@ -45,16 +45,12 @@ public class Room6 implements shipJavaInterface,Serializable {
     }
     
     @Override
-    public boolean setsealed() {
-        sealedroom = true;
-        if (sealedroom == true)
-            return true;
-        return false;
-        
+    public boolean setSealed() {
+        return true;
     }
 
     @Override
-    public boolean getsealledstatus() {
+    public boolean getSealStatus() {
         return sealedroom;
     }
 

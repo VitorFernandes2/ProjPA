@@ -13,7 +13,7 @@ public class AwaitBeginning extends StateAdapter implements Serializable{
     }
     
     @Override
-    public IStates Inputbegining(GameLogic game){
+    public IStates InputBeginning(GameLogic game){
         
         this.game = game;
         return new AwaitCrewMembersSelection(this.game);

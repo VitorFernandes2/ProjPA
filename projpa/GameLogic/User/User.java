@@ -55,9 +55,9 @@ public class User implements Serializable{
         this.points = points;
     }
     
-    public void addCrewMember(CrewMember crewmemeber, int pos){
+    public void addCrewMember(CrewMember CrewMember, int pos){
         // add crewmember if not defined
-        this.crewMember[pos] = crewmemeber;
+        this.crewMember[pos] = CrewMember;
         
     }
 

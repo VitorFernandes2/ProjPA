@@ -11,8 +11,6 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
 
     public AwaitRestPhaseActions(GameLogic game){
         super(game);
-        
-        
     } 
     
     @Override
@@ -23,7 +21,7 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
 
         this.game.addTurn();
 
-        if ("Commander".equals(game.getCrewMember(0).getName()) || "Commander".equals(game.getCrewMember(1).getName()))
+        if (this.game.isTheSameCrewMembersName("Commander"))
             this.game.setActionPoints(6);
         else
             this.game.setActionPoints(5);

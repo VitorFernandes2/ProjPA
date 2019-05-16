@@ -31,7 +31,7 @@ public class StateAdapter implements IStates,Serializable{
     }
 
     @Override
-    public IStates selectrandomCrewMembers() {
+    public IStates selectRandomCrewMembers() {
         return this;
     }
 
@@ -72,17 +72,12 @@ public class StateAdapter implements IStates,Serializable{
     }
 
     @Override
-    public IStates alienPhase(GameLogic game) {
-        return this;
-    }
-
-    @Override
-    public IStates Inputbegining(GameLogic game) {
+    public IStates InputBeginning(GameLogic game) {
         return this;
     }    
 
     @Override
-    public IStates Startnewbegin() {
+    public IStates StartNewBegin() {
         return this;
     }
 
@@ -143,7 +138,7 @@ public class StateAdapter implements IStates,Serializable{
         
     }
     @Override
-    public Boolean wassaved(){  
+    public Boolean wasSaved(){
         return false;
     }
    

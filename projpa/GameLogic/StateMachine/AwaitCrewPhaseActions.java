@@ -8,8 +8,6 @@ import projpa.GameLogic.GameLogic;
  */
 public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
 
-    //int turns = 5; // look better -> FINISH
-    
     public AwaitCrewPhaseActions(GameLogic game){
         super(game);
     }
@@ -17,7 +15,7 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
     @Override
     public IStates sealRoom(int roomIndex) {
         
-        if (game.getActionPoints()>0)
+        if (this.game.gotSomeActionPoints())
             if (this.game.hasUpgradeSealedToken()) {
                 return new AwaitPeekRoom(this.game);   
             }            
@@ -31,9 +29,9 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
         
         if (this.game.gotSomeActionPoints()) {
             
-            if (this.game.getCrewMember2Name().equals("Doctor") || this.game.getCrewMember1Name().equals("Doctor")) {
+            if (this.game.isTheSameCrewMembersName("Doctor")) {
                 
-                if (this.game.getHealthHealthTracker() < this.game.getHullMaxHealth()) {
+                if (this.game.notMaxHealthHealthTracker()) {
 
                     this.game.addHealthTrackerHealth();
                     this.game.decrementActionPoints();
@@ -53,9 +51,9 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
 
         if (this.game.gotSomeActionPoints()){
 
-            if(this.game.getCrewMember2Name().equals("Engineer") || this.game.getCrewMember1Name().equals("Engineer")){
+            if(this.game.isTheSameCrewMembersName("Engineer")){
 
-                if (this.game.getHullHealth() < this.game.getHullMaxHealth()) {
+                if (this.game.notMaxHealthHealthTracker()) {
 
                     this.game.addHullHealth();
                     this.game.decrementActionPoints();
@@ -95,7 +93,7 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
     }
 
     @Override
-    public IStates move(int crewMember, int crewMemberNewRoom) { // VERRRRR
+    public IStates move(int crewMember, int crewMemberNewRoom) {
         
         if (this.game.gotSomeActionPoints())
             return new AwaitPeekRoom(this.game);
@@ -126,7 +124,7 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
 
         //commander special
         
-        if ("Commander".equals(game.getCrewMember(0).getName()) || "Commander".equals(game.getCrewMember(1).getName()))
+        if (this.game.isTheSameCrewMembersName("Commander"))
             this.game.setActionPoints(6);
         else
             this.game.setActionPoints(5);

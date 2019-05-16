@@ -12,16 +12,15 @@ import projpa.GameLogic.GameLogic;
  */
 public class AwaitSaveGame extends StateAdapter implements Serializable{
 
-    private int wassaved;
+    private int wasSaved;
     
     public AwaitSaveGame(GameLogic game){
         super(game);
-        wassaved = 0;
+        wasSaved = 0;
     }
 
     @Override
     public IStates saveGame() {
-        
 
         try {
                 
@@ -30,7 +29,7 @@ public class AwaitSaveGame extends StateAdapter implements Serializable{
             ObjectOutputStream o = new ObjectOutputStream(f);
             
             // allow to see if game was already saved or not
-            wassaved = 1;
+            wasSaved = 1;
             
             // Write objects to file
             o.writeObject(this.game);
@@ -51,13 +50,13 @@ public class AwaitSaveGame extends StateAdapter implements Serializable{
 
     @Override
     public IStates goBack() {
-        wassaved = 0;
+        wasSaved = 0;
         return new AwaitCrewPhaseActions(this.game);
     }
     
     @Override
-    public Boolean wassaved() {
-        if (wassaved == 1)
+    public Boolean wasSaved() {
+        if (wasSaved == 1)
             return true;
         else
             return false;

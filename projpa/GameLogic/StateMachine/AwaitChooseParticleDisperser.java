@@ -35,7 +35,7 @@ public class AwaitChooseParticleDisperser extends StateAdapter implements Serial
         
         if(existParticleDisperser(particleDisperser)){
 
-            game.Killallaliensin(particleDisperser);
+            game.KillAllAliensIn(particleDisperser);
             this.game.removeTrap(this.game.findParticleDisperserByRoom(particleDisperser));
 
              if ( this.game.getCrewMember1RoomName().equals(particleDisperser) || 

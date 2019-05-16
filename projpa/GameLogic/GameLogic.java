@@ -201,19 +201,12 @@ public class GameLogic implements Serializable{
     /**
      * @param healthTracker the healthTracker to set
      */
-    public void setHealthTracker(HealthTracker healthTracker) {
-        this.healthTracker = healthTracker;
-    }
-    
-    /**
-     * @param healthTracker the healthTracker to set
-     */
     public void setHealthTrackervalue(int healthTracker) {
         this.getHealthTracker().setHullstate(healthTracker);
     }
 
     /**
-     * @param hullTracker the healthTracker to set
+     * @param healthTracker the healthTracker to set
      */
     public void setHullTrackervalue(int healthTracker) {
         this.getHullTracker().setHullstate(healthTracker);
@@ -261,7 +254,7 @@ public class GameLogic implements Serializable{
 
         room = new General().convertIntToRoom(roomNumber);
 
-        if(room.getsealledstatus() == true)
+        if(room.getSealStatus() == true)
             room = null;
 
         return room;
@@ -468,14 +461,14 @@ public class GameLogic implements Serializable{
             shipJavaInterface auxRoom = new General().convertIntToRoom(position);
             shipJavaInterface auxRoom2 = new General().convertIntToRoom(roomNumber);
 
-            if (!auxRoom.getsealledstatus()) {
+            if (!auxRoom.getSealStatus()) {
             
                 return position;
 
             }
             else{
 
-                shipJavaInterface tmpRoom = randomRoom(auxRoom2.Return_avaible_rooms());
+                shipJavaInterface tmpRoom = randomRoom(auxRoom2.ReturnAvailableRooms());
                 
                 if(tmpRoom != null)
                     return convertRoomToInt(tmpRoom);
@@ -488,7 +481,7 @@ public class GameLogic implements Serializable{
         else{
 
             shipJavaInterface auxRoom2 = new General().convertIntToRoom(roomNumber);
-            shipJavaInterface tmpRoom = randomRoom(auxRoom2.Return_avaible_rooms());
+            shipJavaInterface tmpRoom = randomRoom(auxRoom2.ReturnAvailableRooms());
             
             if(tmpRoom != null)
                 return convertRoomToInt(tmpRoom);
@@ -651,7 +644,7 @@ public class GameLogic implements Serializable{
         ArrayList<shipJavaInterface> availableNearRooms = new ArrayList<>();
 
         for (shipJavaInterface room : nearRooms)
-            if(!room.getsealledstatus())
+            if(!room.getSealStatus())
                 availableNearRooms.add(room);
 
 
@@ -695,7 +688,7 @@ public class GameLogic implements Serializable{
             ArrayList<shipJavaInterface> alienRooms = new ArrayList<>();
             alienRooms.addAll(getAvailableNextRooms(Return_Alien_avaible_rooms(alien)));
 
-            if(!alienRooms.isEmpty() && alien.getRoom().getsealledstatus() == false)
+            if(!alienRooms.isEmpty() && alien.getRoom().getSealStatus() == false)
                 followCrewMember(alien);
             
             if (this.explodeTrapToAlien(alien)){
@@ -713,7 +706,7 @@ public class GameLogic implements Serializable{
      * @return Alien Available rooms
      */
     public ArrayList<Integer> Return_Alien_avaible_rooms (Alien alien){
-        return alien.getRoom().Return_avaible_rooms();
+        return alien.getRoom().ReturnAvailableRooms();
     }
 
     /**
@@ -732,7 +725,13 @@ public class GameLogic implements Serializable{
     public CrewMember getCrewMember(int index){
         return getCrewMembers()[index];
     }
-    
+
+    public boolean alienHasTheSameLocation(String location, int i){
+
+        return aliens.get(i).getRoom().ReturnName().equals(location);
+
+    }
+
     /**
      * This function returns if a alien is in a determinated location
      * @param location
@@ -744,9 +743,8 @@ public class GameLogic implements Serializable{
         
         for (int i = 0; i < aliens.size();i++){
             
-            if(aliens.get(i).getRoom().ReturnName().equals(location))
+            if(alienHasTheSameLocation(location, i))
                 pos = i;
-            
             
         }  
 
@@ -754,13 +752,13 @@ public class GameLogic implements Serializable{
         
     }
     
-    public int Killallaliensin(String location){
+    public int KillAllAliensIn(String location){
         
         int pos = -1; // se if there is some... if not stays -1
         
         for (int i = 0; i <= aliens.size();i++){
             
-            if(aliens.get(i).getRoom().ReturnName().equals(location)){
+            if(alienHasTheSameLocation(location, i)){
                 aliens.remove(i);
                 this.addPoints();
                 i--;
@@ -1375,7 +1373,7 @@ public class GameLogic implements Serializable{
 
         ArrayList<Integer> returnArray = new ArrayList<>();
 
-        returnArray.addAll(this.getCrewMember(crewMemberIndex).getCrewMemberRoom().Return_avaible_rooms());
+        returnArray.addAll(this.getCrewMember(crewMemberIndex).getCrewMemberRoom().ReturnAvailableRooms());
         returnArray.add(0);
 
         return returnArray;
@@ -1397,29 +1395,29 @@ public class GameLogic implements Serializable{
 
     public boolean seelockedroom(int i){
         // return true if its locked
-        if (new Room1().getsealledstatus() == true && i == 1 )
+        if (new Room1().getSealStatus() == true && i == 1 )
             return true;
-        if (new Room2().getsealledstatus() == true && i == 2 )
+        if (new Room2().getSealStatus() == true && i == 2 )
             return true;
-        if (new Room3().getsealledstatus() == true && i == 3 )
+        if (new Room3().getSealStatus() == true && i == 3 )
             return true;
-        if (new Room4().getsealledstatus() == true && i == 4 )
+        if (new Room4().getSealStatus() == true && i == 4 )
             return true;
-        if (new Room5().getsealledstatus() == true && i == 5 )
+        if (new Room5().getSealStatus() == true && i == 5 )
             return true;
-        if (new Room6().getsealledstatus() == true && i == 6 )
+        if (new Room6().getSealStatus() == true && i == 6 )
             return true;
-        if (new Room7().getsealledstatus() == true && i == 7 )
+        if (new Room7().getSealStatus() == true && i == 7 )
             return true;
-        if (new Room8().getsealledstatus() == true && i == 8 )
+        if (new Room8().getSealStatus() == true && i == 8 )
             return true;
-        if (new Room9().getsealledstatus() == true && i == 9 )
+        if (new Room9().getSealStatus() == true && i == 9 )
             return true;
-        if (new Room10().getsealledstatus() == true && i == 10 )
+        if (new Room10().getSealStatus() == true && i == 10 )
             return true;
-        if (new Room11().getsealledstatus() == true && i == 11 )
+        if (new Room11().getSealStatus() == true && i == 11 )
             return true;
-        if (new Room12().getsealledstatus() == true && i == 12 )
+        if (new Room12().getSealStatus() == true && i == 12 )
             return true;
         
         return false;
@@ -1442,7 +1440,7 @@ public class GameLogic implements Serializable{
 	}
 
 	public void selectrandomCrewMembers() {
-        this.stateOfTheGame = this.stateOfTheGame.selectrandomCrewMembers();
+        this.stateOfTheGame = this.stateOfTheGame.selectRandomCrewMembers();
     }
 
 	public void selectCrewMembers(String crewMember1, String crewMember2) {
@@ -1450,7 +1448,7 @@ public class GameLogic implements Serializable{
 	}
 
 	public void Inputbegining() {
-        this.stateOfTheGame = this.stateOfTheGame.Inputbegining(this);
+        this.stateOfTheGame = this.stateOfTheGame.InputBeginning(this);
 	}
 
 	public void placeFirstCrewMember(int room) {
@@ -1614,7 +1612,7 @@ public class GameLogic implements Serializable{
 
         }
 
-        if (room.getsealledstatus())
+        if (room.getSealStatus())
             return false;
 
         return true;
@@ -1860,6 +1858,36 @@ public class GameLogic implements Serializable{
 
         return sb.toString();
 
+    }
+
+    public Alien getAlienByPosition(int position){
+
+        return this.getAliens().get(position);
+
+    }
+
+    public boolean isTheSameCrewMembersName(String crewMemberName){
+        return (this.getCrewMember2Name().equals(crewMemberName) || this.getCrewMember1Name().equals(crewMemberName));
+    }
+
+    public boolean notMaxHealthHealthTracker(){
+        return (this.getHealthHealthTracker() < this.getHullMaxHealth());
+    }
+
+    public int getCrewMemberAtack(int crewMemberIndex){
+        return this.getCrewMember(crewMemberIndex).getAttack();
+    }
+
+    public boolean isTheSameCrewMember1Name(String crewMemberName){
+        return (this.getCrewMember1Name().equals(crewMemberName));
+    }
+
+    public boolean isTheSameCrewMember2Name(String crewMemberName){
+        return (this.getCrewMember2Name().equals(crewMemberName));
+    }
+
+    public void chooseCrewMemberRoom(int room, int crewMember){
+        this.getUser().getCrewMembers()[crewMember].chooseRoom(room);
     }
 
 }

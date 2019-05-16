@@ -37,15 +37,6 @@ public class TextInterface {
     }
 
     /**
-     * This constructor creates a new game
-     */
-    public TextInterface(){
-
-        this.game = new GameLogic();
-
-    }
-
-    /**
      * This function is the run of the game
      */
     public void run(){
@@ -499,7 +490,7 @@ public class TextInterface {
         
         IStates statesOfTheGame = this.game.getStateOfTheGame();
 
-        if(statesOfTheGame.wassaved() == true){
+        if(statesOfTheGame.wasSaved() == true){
             // saved game start with the last state, so save game... this fix it
             statesOfTheGame.goBack();
         }

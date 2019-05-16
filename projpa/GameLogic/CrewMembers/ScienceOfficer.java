@@ -32,7 +32,7 @@ public class ScienceOfficer extends CrewMember implements Serializable{
     @Override
     public boolean Special() {
 
-        ArrayList<Integer> arrInteger = this.getCrewMemberRoom().Return_avaible_rooms();
+        ArrayList<Integer> arrInteger = this.getCrewMemberRoom().ReturnAvailableRooms();
         Collections.shuffle(arrInteger);
 
         for (int var : arrInteger) {

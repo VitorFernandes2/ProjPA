@@ -109,11 +109,11 @@ public class GainOneSealedRoom extends UpgradeCard implements Serializable{
     public boolean closeRoomFunction(shipJavaInterface room) {
 
         if(gotSomeActionPoints())
-            if (!room.getsealledstatus())
+            if (!room.getSealStatus())
                 if (blockRooms(room))
                     if (getSomeoneInside(room)){
                         setActionPoints(getActionPoints() - 1);
-                        return room.setsealed();
+                        return room.setSealed();
                     }
                         
 

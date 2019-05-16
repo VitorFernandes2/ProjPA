@@ -31,9 +31,9 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
             if(alienPosition != -1){
 
                 Dice crewMemberDice = new Dice();
-                int dif = game.getNumberOfAtackDiceResult() + this.comandaerbonus();
+                int dif = game.getNumberOfAtackDiceResult() + this.commanderBonus();
                 
-                switch (this.game.getCrewMember(crewMemberIndex).getAttack()) {
+                switch (this.game.getCrewMemberAtack(crewMemberIndex)) {
                     
                     case 106:
                         dif += crewMemberDice.roll(1, 6);
@@ -58,7 +58,7 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
                 if (dif >= 5) {
                     
                     //Alien would be destroyd
-                    this.game.removeAlien(game.getAliens().get(alienPosition));
+                    this.game.removeAlien(game.getAlienByPosition(alienPosition));
                     this.game.addInspirationPoints();
                     this.game.addPoints();
 
@@ -86,9 +86,9 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
         return new AwaitCrewPhaseActions(this.game);
     }
     
-    public int comandaerbonus(){
+    private int commanderBonus(){
         
-        if (game.getCrewMember(0).getName().equals("Commander") || game.getCrewMember(1).getName().equals("Commander"))
+        if (this.game.isTheSameCrewMembersName("Commander"))
             return 3;
         else            
             return 0;

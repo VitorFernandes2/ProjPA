@@ -13,22 +13,22 @@ import java.util.ArrayList;
  */
 public interface shipJavaInterface {    
     
-    public shipJavaInterface newlocation (int location);
+    shipJavaInterface newLocation(int location);
     
-    public String ReturnName();
+    String ReturnName();
 
-    public int getRight();
+    int getRight();
 
-    public int getUp();
+    int getUp();
 
-    public int getLeft();
+    int getLeft();
 
-    public int getDown();
+    int getDown();
 
-    public ArrayList<Integer> Return_avaible_rooms ();
+    ArrayList<Integer> ReturnAvailableRooms();
     
-    public boolean setsealed();
+    boolean setSealed();
     
-    public boolean getsealledstatus();    
+    boolean getSealStatus();
 
 }

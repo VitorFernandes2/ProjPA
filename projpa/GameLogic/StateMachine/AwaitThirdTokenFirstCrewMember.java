@@ -12,19 +12,14 @@ public class AwaitThirdTokenFirstCrewMember extends StateAdapter implements Seri
         super(game);
     }
 
-    public AwaitThirdTokenFirstCrewMember(){
-        super();
-    }
-
-
     @Override
     public IStates placeFirstCrewMember(int room) {
      
         // place a crew member in a selected room if possible
         if(room >= 1 || room <= 12){
         
-        game.getUser().getCrewMembers()[0].chooseRoom(room);
-        
+        game.chooseCrewMemberRoom(room,0);
+
         return new AwaitThirdTokenSecondCrewMember(this.game);
         
         }
