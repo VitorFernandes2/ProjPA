@@ -5,6 +5,7 @@ import projpa.Iu.Text.TextInterface;
 public class ProjPA {
 
     /**
+     * This is the main function where we will run all the interfaces
      * @param args the command line arguments
      */
 
