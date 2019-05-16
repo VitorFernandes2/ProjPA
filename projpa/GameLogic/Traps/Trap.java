@@ -1,0 +1,130 @@
+package projpa.GameLogic.Traps;
+
+import java.io.Serializable;
+import projpa.GameLogic.MapRooms.*;
+import projpa.GameLogic.GameLogic;
+
+/**
+ * Main function of the traps
+ * 
+ * @author Vitor
+ * @author João
+ */
+public abstract class Trap implements Serializable{
+
+    protected shipJavaInterface trapRoom;
+    protected GameLogic game;
+    private static int numberOfTraps = 0;
+    private int id;
+
+    public Trap(GameLogic game) {
+
+        this.trapRoom = null;
+        this.game = game;
+        numberOfTraps++;
+        this.id = numberOfTraps;
+
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public shipJavaInterface chooseTrapRoom(int roomNumber){
+
+        shipJavaInterface room = new Room1();
+
+        switch(roomNumber){
+            
+            case 1:
+                room = new Room1();
+                break;
+
+            case 2:
+                room = new Room2(); 
+                break;
+
+            case 3:
+                room = new Room3();
+                break;
+
+            case 4:
+                room = new Room4();
+                break;
+
+            case 5:
+                room = new Room5();
+                break;
+
+            case 6:
+                room = new Room6();
+                break;
+
+            case 7:
+                room = new Room7();
+                break;
+
+            case 8:
+                room = new Room8();
+                break;
+
+            case 9:
+                room = new Room9();
+                break;
+
+            case 10:
+                room = new Room10();
+                break;
+
+            case 11:
+                room = new Room11();
+                break;
+
+            case 12:
+                room = new Room12();
+                break;
+
+            default:
+
+        }
+
+        return room;
+
+    }
+
+    /**
+     * @return the room
+     */
+    public shipJavaInterface getRoom() {
+        return this.trapRoom;
+    }
+
+    /**
+     * @return the trapRoom
+     */
+    public shipJavaInterface getTrapRoom() {
+        return trapRoom;
+    }
+
+    /**
+     * @return 
+     */
+    public abstract String getName();
+
+    /**
+     * @return 0 if nothing has been destroyed, -1 if a crew member has been destroyed 
+     * and number of aliens destroyd by the trap
+     */
+    public abstract int destroyAliens();
+    
+}
