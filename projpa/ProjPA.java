@@ -14,8 +14,10 @@ public class ProjPA {
         GameLogic game = new GameLogic();
         TextInterface gameInterface = new TextInterface(game);
     
-        gameInterface.run();        
-        
+        gameInterface.run();
+
     }
-    
+
+    //do the start function for the javafx
+
 }
