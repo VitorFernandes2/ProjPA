@@ -1,14 +1,14 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * ShuttlePilot
  */
 public class ShuttlePilot extends CrewMember implements Serializable{
 
-    public ShuttlePilot(GameLogic game){
+    public ShuttlePilot(GameData game){
         
         super(game);
         // special

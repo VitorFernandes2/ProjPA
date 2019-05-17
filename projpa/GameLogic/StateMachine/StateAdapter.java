@@ -1,16 +1,16 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * StateAdapter
  */
 public class StateAdapter implements IStates,Serializable{
 
-    GameLogic game;
+    GameData game;
 
-    public StateAdapter(GameLogic game) {
+    public StateAdapter(GameData game) {
 
         this.game = game;
 
@@ -72,7 +72,7 @@ public class StateAdapter implements IStates,Serializable{
     }
 
     @Override
-    public IStates InputBeginning(GameLogic game) {
+    public IStates InputBeginning(GameData game) {
         return this;
     }    
 

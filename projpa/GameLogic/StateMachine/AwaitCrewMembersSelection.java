@@ -2,7 +2,7 @@ package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
 import projpa.GameLogic.CrewMembers.*;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.Dice.Dice;
 import projpa.GameLogic.General.General;
 
@@ -12,7 +12,7 @@ import projpa.GameLogic.General.General;
  */
 public class AwaitCrewMembersSelection extends StateAdapter implements Serializable{
 
-    public AwaitCrewMembersSelection(GameLogic game){
+    public AwaitCrewMembersSelection(GameData game){
         
         super(game);
         

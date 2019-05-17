@@ -1,7 +1,7 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * AwaitBeginning
@@ -13,7 +13,7 @@ public class AwaitBeginning extends StateAdapter implements Serializable{
     }
     
     @Override
-    public IStates InputBeginning(GameLogic game){
+    public IStates InputBeginning(GameData game){
         
         this.game = game;
         return new AwaitCrewMembersSelection(this.game);

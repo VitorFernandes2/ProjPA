@@ -2,7 +2,7 @@ package projpa.GameLogic.UpgradeCards;
 
 import java.io.Serializable;
 import projpa.GameLogic.Alien;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
 import projpa.GameLogic.MapRooms.*;
 
@@ -11,7 +11,7 @@ import projpa.GameLogic.MapRooms.*;
  */
 public class GainOneSealedRoom extends UpgradeCard implements Serializable{
 
-    public GainOneSealedRoom(GameLogic game) {
+    public GainOneSealedRoom(GameData game) {
         super(game);
     }
 

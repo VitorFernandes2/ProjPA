@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.StateMachine.*;
 import projpa.GameLogic.Traps.Trap;
 import projpa.GameLogic.User.User;
@@ -24,13 +24,13 @@ import projpa.GameLogic.User.User;
 public class TextInterface {
 
     private boolean run = false;
-    GameLogic game;
+    GameData game;
 
     /**
      * This constructor starts with the game constructed
      * @param game
      */
-    public TextInterface(GameLogic game){
+    public TextInterface(GameData game){
 
         this.game = game;
         
@@ -101,11 +101,11 @@ public class TextInterface {
                         ObjectInputStream oi = new ObjectInputStream(fi);
 
                         // Read objects
-                        GameLogic pr1 = (GameLogic) oi.readObject();	
+                        GameData pr1 = (GameData) oi.readObject();
 
                         oi.close();
                         
-                        this.game = new GameLogic(pr1);
+                        this.game = new GameData(pr1);
                         
                 } catch (IOException e) {
 
@@ -291,7 +291,7 @@ public class TextInterface {
                     
                     if (i == 0) {
                         
-                        this.game = new GameLogic();
+                        this.game = new GameData();
                         break;
 
                     }                    
@@ -1076,7 +1076,7 @@ public class TextInterface {
             }
                     
             option = MenuGameOver();       
-            this.game = new GameLogic();
+            this.game = new GameData();
             
             if (option == 1){
 

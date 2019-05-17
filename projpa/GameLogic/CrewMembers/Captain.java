@@ -1,14 +1,14 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * Captain
  */
 public class Captain extends CrewMember implements Serializable{
 
-    public Captain(GameLogic game){
+    public Captain(GameData game){
         
         super(game);
         this.setMovement(1);

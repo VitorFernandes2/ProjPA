@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import projpa.GameLogic.Alien;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.Dice.Dice;
 import projpa.GameLogic.General.General;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
@@ -15,7 +15,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class ScienceOfficer extends CrewMember implements Serializable{
     
-    public ScienceOfficer(GameLogic game){
+    public ScienceOfficer(GameData game){
         
         super(game);
         this.setMovement(1);

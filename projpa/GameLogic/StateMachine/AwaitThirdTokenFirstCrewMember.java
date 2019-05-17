@@ -1,14 +1,14 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * AwaitThirdTokenFirstCrewMember
  */
 public class AwaitThirdTokenFirstCrewMember extends StateAdapter implements Serializable{
 
-    public AwaitThirdTokenFirstCrewMember(GameLogic game){
+    public AwaitThirdTokenFirstCrewMember(GameData game){
         super(game);
     }
 

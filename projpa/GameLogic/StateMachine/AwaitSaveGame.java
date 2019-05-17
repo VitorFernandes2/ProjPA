@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * AwaitSaveGame
@@ -14,7 +14,7 @@ public class AwaitSaveGame extends StateAdapter implements Serializable{
 
     private int wasSaved;
     
-    public AwaitSaveGame(GameLogic game){
+    public AwaitSaveGame(GameData game){
         super(game);
         wasSaved = 0;
     }

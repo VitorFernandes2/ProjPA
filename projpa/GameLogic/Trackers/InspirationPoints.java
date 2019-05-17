@@ -15,15 +15,6 @@ import projpa.GameLogic.GameConstants;
 public class InspirationPoints extends GameConstants implements Serializable{
     
     private int InspirationPoints;
-
-    public InspirationPoints(int value){
-        
-        this.InspirationPoints = 0;
-
-        if(value >=1 && value <= getMaxSize())
-            this.InspirationPoints = value;        
-        
-    }
     
     public InspirationPoints(){
         

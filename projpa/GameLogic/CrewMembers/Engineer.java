@@ -1,7 +1,7 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 
 /**
@@ -9,7 +9,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class Engineer extends CrewMember implements Serializable{
 
-    public Engineer(GameLogic game){
+    public Engineer(GameData game){
         
         super(game);
         this.setMovement(1);

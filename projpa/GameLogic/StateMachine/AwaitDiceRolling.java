@@ -1,7 +1,7 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.Dice.Dice;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 
@@ -10,7 +10,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class AwaitDiceRolling extends StateAdapter implements Serializable{
     
-    public AwaitDiceRolling(GameLogic game){
+    public AwaitDiceRolling(GameData game){
         super(game);        
     }
 

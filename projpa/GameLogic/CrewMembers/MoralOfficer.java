@@ -1,14 +1,14 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * MoralOfficer
  */
 public class MoralOfficer extends CrewMember implements Serializable{
 
-    public MoralOfficer(GameLogic game){
+    public MoralOfficer(GameData game){
         
         super(game);
         // special

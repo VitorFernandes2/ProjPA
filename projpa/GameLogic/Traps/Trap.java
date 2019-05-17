@@ -2,7 +2,7 @@ package projpa.GameLogic.Traps;
 
 import java.io.Serializable;
 import projpa.GameLogic.MapRooms.*;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * Main function of the traps
@@ -13,11 +13,11 @@ import projpa.GameLogic.GameLogic;
 public abstract class Trap implements Serializable{
 
     protected shipJavaInterface trapRoom;
-    protected GameLogic game;
+    protected GameData game;
     private static int numberOfTraps = 0;
     private int id;
 
-    public Trap(GameLogic game) {
+    public Trap(GameData game) {
 
         this.trapRoom = null;
         this.game = game;
@@ -126,5 +126,13 @@ public abstract class Trap implements Serializable{
      * and number of aliens destroyd by the trap
      */
     public abstract int destroyAliens();
+
+    public boolean TrapRoomNameIsEqual(String name){
+        return this.getTrapRoom().ReturnName().equals(name);
+    }
+
+    public String getRoomName(){
+        return this.getRoom().ReturnName();
+    }
     
 }

@@ -1,7 +1,7 @@
 package projpa.GameLogic.UpgradeCards;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 
@@ -10,7 +10,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class AddOneHealth extends UpgradeCard implements Serializable{
 
-    public AddOneHealth(GameLogic game){
+    public AddOneHealth(GameData game){
         super(game);
     }
 

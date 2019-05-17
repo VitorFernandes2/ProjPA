@@ -1,14 +1,14 @@
 package projpa.GameLogic.Traps;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * OrganicDetonator
  */
 public class OrganicDetonator extends Trap implements Serializable{
 
-    public OrganicDetonator(GameLogic game){
+    public OrganicDetonator(GameData game){
         
         super(game);
         
@@ -22,12 +22,12 @@ public class OrganicDetonator extends Trap implements Serializable{
     @Override
     public int destroyAliens() {
         
-        for (int i = 0; i < game.getAliens().size() ; i++){
+        for (int i = 0; i < game.getSizeOfAliens() ; i++){
             
-            if (this.getTrapRoom().ReturnName().equals(game.getAliens().get(i).getRoom().ReturnName())){
+            if (this.TrapRoomNameIsEqual(this.game.getAlienRoomNameByPosition(i))){
                 
-                game.getAliens().remove(i); // removes the alien
-                game.getInspirationPoints().addoneInspPoint(); // add one inspiration point
+                game.removeAlienByPosition(i); // removes the alien
+                game.addOneInspPoint(); // add one inspiration point
                 return -1;
                 
             }         

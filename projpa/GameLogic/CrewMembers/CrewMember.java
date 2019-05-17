@@ -1,7 +1,7 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.MapRooms.*;
 import projpa.GameLogic.General.*;
 
@@ -17,16 +17,16 @@ public abstract class CrewMember implements Serializable{
     private int movementToDo;
     private int attack;
     private shipJavaInterface crewMemberRoom;
-    protected GameLogic game;  //This variable is used to allow Crew Members to have Special Move
+    protected GameData game;  //This variable is used to allow Crew Members to have Special Move
 
-    public CrewMember(int roomNumber, GameLogic game){
+    public CrewMember(int roomNumber, GameData game){
         // old
         this.crewMemberRoom = chooseRoom(roomNumber);
         this.game = game;
 
     }
     
-    public CrewMember(GameLogic game){
+    public CrewMember(GameData game){
         
         this.game = game;
 

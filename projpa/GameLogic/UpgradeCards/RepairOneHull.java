@@ -1,7 +1,7 @@
 package projpa.GameLogic.UpgradeCards;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 
@@ -10,7 +10,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class RepairOneHull extends UpgradeCard implements Serializable{
 
-    public RepairOneHull(GameLogic game) {
+    public RepairOneHull(GameData game) {
         super(game);
     }
 
@@ -21,7 +21,7 @@ public class RepairOneHull extends UpgradeCard implements Serializable{
 
         for (int i = 0; i < 2; i++) {
 
-            if (getCrewMembers()[i].getName().equals("Engineer")) {
+            if (this.game.isTheSameCrewMemberRoomNameByIndex(i, "Engineer")) {
 
                 int hullstate = getHullTracker().getHullstate();
                 int limitHealth = 12;

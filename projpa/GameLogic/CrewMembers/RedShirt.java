@@ -1,7 +1,7 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.MapRooms.SecretRoom;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 
@@ -10,7 +10,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class RedShirt extends CrewMember implements Serializable{
 
-    public RedShirt(GameLogic game){
+    public RedShirt(GameData game){
         
         super(game);
         this.setMovement(1);

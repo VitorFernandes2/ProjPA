@@ -1,7 +1,7 @@
 package projpa.GameLogic.Traps;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * ParticleDisperser
@@ -9,7 +9,7 @@ import projpa.GameLogic.GameLogic;
 public class ParticleDisperser extends Trap implements Serializable{
 
     
-    public ParticleDisperser(GameLogic game){
+    public ParticleDisperser(GameData game){
 
         super(game);
         
@@ -23,28 +23,30 @@ public class ParticleDisperser extends Trap implements Serializable{
     @Override
     public int destroyAliens() {
         
-        if (game.getCrewMember1Room().ReturnName().equals(this.getRoom().ReturnName())){ // if crewmemebr is in 1 room
+        if (game.isCrewMember1SameRoomName(this.getRoomName())){ // if crewmemebr is in 1 room
             
             game.HealthTrackertozero();
             return -1;
         }
             
-        if (game.getCrewMember2Room().ReturnName().equals(this.getRoom().ReturnName())){ // if crewmemebr is in 1 room
+        if (game.isCrewMember2SameRoomName(this.getRoomName())){ // if crewmemebr is in 1 room
             
             game.HealthTrackertozero();
             return -1;
+
         }
         
         int existe = 0;
-        for (int i = 0; i < game.getAliens().size() ; i++){
+        for (int i = 0; i < game.getSizeOfAliens() ; i++){
             
-            if (this.getTrapRoom().ReturnName().equals(game.getAliens().get(i).getRoom().ReturnName())){
+            if (this.TrapRoomNameIsEqual(game.getAlienRoomNameByPosition(i))){
                 
-                game.getAliens().remove(i); // removes the alien
+                game.removeAlienByPosition(i); // removes the alien
                 i--;
                 existe++;
                 
-            }         
+            }
+
         }
         
         if(existe == 0){

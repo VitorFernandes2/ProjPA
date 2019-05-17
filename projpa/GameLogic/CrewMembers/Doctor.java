@@ -1,14 +1,14 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * Doctor
  */
 public class Doctor extends CrewMember implements Serializable{
 
-    public Doctor(GameLogic game){
+    public Doctor(GameData game){
         
         super(game);
         this.setMovement(1);

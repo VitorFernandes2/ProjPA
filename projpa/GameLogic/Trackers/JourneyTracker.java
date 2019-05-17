@@ -22,21 +22,13 @@ public class JourneyTracker extends GameConstants implements Serializable{
         return JourneyTrackers;
     }
 
-    public void setJourneyTrackers(String[] JourneyTrackers) {
-        this.JourneyTrackers = JourneyTrackers;
-    }
-
     public int getJourneyState() {
         return JourneyState;
     }
 
-    public void setJourneyState(int JourneyState) {
-        this.JourneyState = JourneyState;
-    }
-
     public Boolean changeJourney(int pos, String value){
         
-        String[] change = new String[15];;
+        String[] change = new String[15];
         ArrayList<String> temp = new ArrayList<String>();
         
         // copy value to array List
@@ -52,7 +44,7 @@ public class JourneyTracker extends GameConstants implements Serializable{
         
         // make new String   
         for (int i= 0;i < 15; i++)
-             change[i] = temp.get(i).toString();
+             change[i] = temp.get(i);
          
         JourneyTrackers = change;
         return true;
@@ -71,15 +63,6 @@ public class JourneyTracker extends GameConstants implements Serializable{
      */
     public void addJourneyState(){
         this.JourneyState++;
-    }
-    
-    public Boolean decrementJourneyState (){
-        
-        this.JourneyState = this.JourneyState - 1;
-        
-        if (JourneyState <= 0) // return if we are in the end to remove the last cicle
-            return false;
-        return true;
     }
     
 }

@@ -1,7 +1,7 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.UpgradeCards.*;
 import projpa.GameLogic.Traps.*;
 /**
@@ -9,7 +9,7 @@ import projpa.GameLogic.Traps.*;
  */
 public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
 
-    public AwaitRestPhaseActions(GameLogic game){
+    public AwaitRestPhaseActions(GameData game){
         super(game);
     } 
     

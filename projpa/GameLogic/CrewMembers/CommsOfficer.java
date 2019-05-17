@@ -1,14 +1,14 @@
 package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * CommsOfficer
  */
 public class CommsOfficer extends CrewMember implements Serializable{
 
-    public CommsOfficer(GameLogic game){
+    public CommsOfficer(GameData game){
         
         super(game);
         this.setMovement(1);

@@ -1,14 +1,14 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * AwaitChooseParticleDisperser
  */
 public class AwaitChooseParticleDisperser extends StateAdapter implements Serializable{
 
-    public AwaitChooseParticleDisperser(GameLogic game){
+    public AwaitChooseParticleDisperser(GameData game){
         super(game);
         
     }

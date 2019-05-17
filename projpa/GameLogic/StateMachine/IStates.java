@@ -1,6 +1,6 @@
 package projpa.GameLogic.StateMachine;
 
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  *This class represents the interface for the states of the game
@@ -105,7 +105,7 @@ public interface IStates {
      * @param game
      * @return Actual State
      */
-    public IStates InputBeginning(GameLogic game);
+    public IStates InputBeginning(GameData game);
 
     /**
      * This function restarts the game

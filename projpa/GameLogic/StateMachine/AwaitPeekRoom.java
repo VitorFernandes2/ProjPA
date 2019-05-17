@@ -1,7 +1,7 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
 import projpa.GameLogic.General.General;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
@@ -12,7 +12,7 @@ import projpa.GameLogic.Traps.Trap;
  */
 public class AwaitPeekRoom extends StateAdapter implements Serializable{
 
-    public AwaitPeekRoom(GameLogic game){
+    public AwaitPeekRoom(GameData game){
         
         super(game);
 

@@ -1,14 +1,14 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 
 /**
  * AwaitCrewPhaseActions
  */
 public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
 
-    public AwaitCrewPhaseActions(GameLogic game){
+    public AwaitCrewPhaseActions(GameData game){
         super(game);
     }
 

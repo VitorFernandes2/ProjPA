@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import projpa.GameLogic.Alien;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 import projpa.GameLogic.Trackers.*;
@@ -17,9 +17,9 @@ import projpa.GameLogic.User.User;
  */
 public abstract class UpgradeCard implements Serializable{
 
-    GameLogic game;
+    GameData game;
 
-    public UpgradeCard(GameLogic game){
+    public UpgradeCard(GameData game){
 
         this.game = game;
 
@@ -28,7 +28,7 @@ public abstract class UpgradeCard implements Serializable{
     /**
      * @return the game
      */
-    public GameLogic getGame() {
+    public GameData getGame() {
         return game;
     }
 

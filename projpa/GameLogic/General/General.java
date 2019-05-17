@@ -1,7 +1,7 @@
 package projpa.GameLogic.General;
 
 import projpa.GameLogic.CrewMembers.*;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.MapRooms.*;
 
 public class General {
@@ -61,7 +61,7 @@ public class General {
 
     }
 
-    public CrewMember convertStringToCrewMember(String CrewMemberName, GameLogic game){
+    public CrewMember convertStringToCrewMember(String CrewMemberName, GameData game){
 
         switch(CrewMemberName){
             case "Captain":
@@ -94,7 +94,7 @@ public class General {
 
     }
 
-    public CrewMember convertIntToCrewMember(int CrewMemberName, GameLogic game){
+    public CrewMember convertIntToCrewMember(int CrewMemberName, GameData game){
 
         switch(CrewMemberName){
             case 1:

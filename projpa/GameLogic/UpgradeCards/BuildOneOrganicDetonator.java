@@ -1,7 +1,7 @@
 package projpa.GameLogic.UpgradeCards;
 
 import java.io.Serializable;
-import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
 import projpa.GameLogic.MapRooms.shipJavaInterface;
 
@@ -10,7 +10,7 @@ import projpa.GameLogic.MapRooms.shipJavaInterface;
  */
 public class BuildOneOrganicDetonator extends UpgradeCard implements Serializable{
 
-    public BuildOneOrganicDetonator(GameLogic game){
+    public BuildOneOrganicDetonator(GameData game){
         super(game);
     }
 
