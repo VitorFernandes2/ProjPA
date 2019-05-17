@@ -65,7 +65,8 @@ public abstract class CrewMember implements Serializable{
 
     public shipJavaInterface chooseRoom(int roomNumber){
 
-        return new General().convertIntToRoom(roomNumber);
+        this.crewMemberRoom = new General().convertIntToRoom(roomNumber);
+        return crewMemberRoom;
 
     }
 
