@@ -11,9 +11,9 @@ public class General {
      * @param roomNumber
      * @return the correspondent room
      */
-    public shipJavaInterface convertIntToRoom(int roomNumber){
+    public RoomState convertIntToRoom(int roomNumber){
 
-        shipJavaInterface room = null;
+        RoomState room = null;
 
         switch(roomNumber){
 

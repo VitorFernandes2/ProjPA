@@ -3,7 +3,7 @@ package projpa.GameLogic.CrewMembers;
 import java.io.Serializable;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.MapRooms.SecretRoom;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 
 /**
  * RedShirt
@@ -27,7 +27,7 @@ public class RedShirt extends CrewMember implements Serializable{
     @Override
     public boolean Special() {
 
-        shipJavaInterface room = new SecretRoom();
+        RoomState room = new SecretRoom();
         this.setCrewMemberRoom(room);
         
         for (int i = 0; i < 5; i++) 

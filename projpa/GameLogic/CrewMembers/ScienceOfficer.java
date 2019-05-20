@@ -8,7 +8,7 @@ import projpa.GameLogic.Alien;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.Dice.Dice;
 import projpa.GameLogic.General.General;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 
 /**
  * ScienceOfficer
@@ -32,14 +32,14 @@ public class ScienceOfficer extends CrewMember implements Serializable{
     @Override
     public boolean Special() {
 
-        ArrayList<Integer> arrInteger = this.getCrewMemberRoom().ReturnAvailableRooms();
+        ArrayList<Integer> arrInteger = this.getCrewMemberRoom().Return_avaible_rooms();
         Collections.shuffle(arrInteger);
 
         for (int var : arrInteger) {
             
-            shipJavaInterface room = new General().convertIntToRoom(var);
+            RoomState room = new General().convertIntToRoom(var);
             
-            if (this.game.verifyalien(room.ReturnName()) != -1) {
+            if (this.game.verifyalien(room.getName()) != -1) {
             
                 Dice dice = new Dice();
                 int roll = dice.roll(1, 6);
@@ -49,7 +49,7 @@ public class ScienceOfficer extends CrewMember implements Serializable{
                     
                     for (Alien alien : this.game.getAliens()) {
                         
-                        if (alien.getRoom().ReturnName().equals(room.ReturnName())) {
+                        if (alien.getRoom().getName().equals(room.getName())) {
                             
                             this.game.removeAlien(alien.getId());
                             return true;

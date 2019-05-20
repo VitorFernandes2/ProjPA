@@ -123,10 +123,10 @@ public class GameData implements Serializable{
      * @param room
      * @return true if some trap inside
      */
-    public boolean isTrapInside(shipJavaInterface room){
+    public boolean isTrapInside(RoomState room){
 
         for (Trap trap : this.getTraps())
-            if (trap.getRoom().ReturnName().equals(room.ReturnName()))
+            if (trap.getRoom().getName().equals(room.getName()))
                 return true;
 
         return false;
@@ -218,7 +218,7 @@ public class GameData implements Serializable{
     public void addRandomAlien(){
 
         Alien alien = null;
-        shipJavaInterface alienRoom = null;
+        RoomState alienRoom = null;
 
         {
 
@@ -248,13 +248,13 @@ public class GameData implements Serializable{
      * @param roomNumber
      * @return a room or null if the door is locked
      */
-    public shipJavaInterface isRoomLocked(int roomNumber){
+    public RoomState isRoomLocked(int roomNumber){
 
-        shipJavaInterface room;
+        RoomState room;
 
         room = new General().convertIntToRoom(roomNumber);
 
-        if(room.getSealStatus() == true)
+        if(room.getsealledstatus() == true)
             room = null;
 
         return room;
@@ -291,9 +291,9 @@ public class GameData implements Serializable{
      * @param roomList
      * @return a room
      */
-    public shipJavaInterface randomRoom(ArrayList<Integer> roomList){
+    public RoomState randomRoom(ArrayList<Integer> roomList){
         
-        shipJavaInterface room = null;
+        RoomState room = null;
 
         {
         
@@ -334,13 +334,13 @@ public class GameData implements Serializable{
      * @param rooms
      * @return the available rooms
      */
-    public ArrayList<shipJavaInterface> getAvailableNextRooms(ArrayList<Integer> rooms){
+    public ArrayList<RoomState> getAvailableNextRooms(ArrayList<Integer> rooms){
         
-        ArrayList<shipJavaInterface> nextRooms = new ArrayList<>();
+        ArrayList<RoomState> nextRooms = new ArrayList<>();
 
         for (int i = 0; i < rooms.size(); i++) {
             
-            shipJavaInterface room = isRoomLocked(rooms.get(i));
+            RoomState room = isRoomLocked(rooms.get(i));
 
             if(room != null)
                 nextRooms.add(room);
@@ -381,11 +381,11 @@ public class GameData implements Serializable{
      * @param crewMembersLocation
      * @return the nearest room to follow the nearest crew member
      */
-    public shipJavaInterface getBestRoomForAlienMove(Alien alien, ArrayList<Integer>crewMembersLocation){
+    public RoomState getBestRoomForAlienMove(Alien alien, ArrayList<Integer>crewMembersLocation){
 
         int map[][] = getMap();
         int roomNumber = convertRoomToInt(alien.getRoom());
-        shipJavaInterface room;
+        RoomState room;
 
         //best Otion of deslocation
         room = new General().convertIntToRoom(findBestRoom(map, roomNumber, crewMembersLocation));
@@ -458,17 +458,17 @@ public class GameData implements Serializable{
 
         if(position != 0){
 
-            shipJavaInterface auxRoom = new General().convertIntToRoom(position);
-            shipJavaInterface auxRoom2 = new General().convertIntToRoom(roomNumber);
+            RoomState auxRoom = new General().convertIntToRoom(position);
+            RoomState auxRoom2 = new General().convertIntToRoom(roomNumber);
 
-            if (!auxRoom.getSealStatus()) {
+            if (!auxRoom.getsealledstatus()) {
             
                 return position;
 
             }
             else{
 
-                shipJavaInterface tmpRoom = randomRoom(auxRoom2.ReturnAvailableRooms());
+                RoomState tmpRoom = randomRoom(auxRoom2.Return_avaible_rooms());
                 
                 if(tmpRoom != null)
                     return convertRoomToInt(tmpRoom);
@@ -480,8 +480,8 @@ public class GameData implements Serializable{
         }
         else{
 
-            shipJavaInterface auxRoom2 = new General().convertIntToRoom(roomNumber);
-            shipJavaInterface tmpRoom = randomRoom(auxRoom2.ReturnAvailableRooms());
+            RoomState auxRoom2 = new General().convertIntToRoom(roomNumber);
+            RoomState tmpRoom = randomRoom(auxRoom2.Return_avaible_rooms());
             
             if(tmpRoom != null)
                 return convertRoomToInt(tmpRoom);
@@ -514,7 +514,7 @@ public class GameData implements Serializable{
                 
                 if (map[i][j] == roomNumber) {
 
-                    shipJavaInterface auxRoom = new General().convertIntToRoom(roomNumber);
+                    RoomState auxRoom = new General().convertIntToRoom(roomNumber);
 
                     if (targetLocation[1] == i) { //If in the same line
                         
@@ -585,7 +585,7 @@ public class GameData implements Serializable{
      * @param room
      * @return the room integer
      */
-    public int convertRoomToInt(shipJavaInterface room){
+    public int convertRoomToInt(RoomState room){
 
         int number = 0;
 
@@ -622,7 +622,7 @@ public class GameData implements Serializable{
      * This function returns the room of the first crew member
      * @return the room of the first Crew Member
      */
-    public shipJavaInterface getCrewMember1Room(){
+    public RoomState getCrewMember1Room(){
         return user.getCrewMembers()[0].getCrewMemberRoom();
     }
 
@@ -630,7 +630,7 @@ public class GameData implements Serializable{
      * This function returns the room of the second crew member
      * @return the room of the second Crew Member
      */
-    public shipJavaInterface getCrewMember2Room(){
+    public RoomState getCrewMember2Room(){
         return user.getCrewMembers()[1].getCrewMemberRoom();
     }
 
@@ -639,12 +639,12 @@ public class GameData implements Serializable{
      * @param nearRooms
      * @return the available rooms
      */
-    public ArrayList<shipJavaInterface> getAvailableRooms(ArrayList<shipJavaInterface> nearRooms){
+    public ArrayList<RoomState> getAvailableRooms(ArrayList<RoomState> nearRooms){
 
-        ArrayList<shipJavaInterface> availableNearRooms = new ArrayList<>();
+        ArrayList<RoomState> availableNearRooms = new ArrayList<>();
 
-        for (shipJavaInterface room : nearRooms)
-            if(!room.getSealStatus())
+        for (RoomState room : nearRooms)
+            if(!room.getsealledstatus())
                 availableNearRooms.add(room);
 
 
@@ -657,9 +657,9 @@ public class GameData implements Serializable{
      * @param nearRooms
      * @return the correspondent rooms of the integers
      */
-    public ArrayList<shipJavaInterface> convertIntegerShipJavaInterfaces(ArrayList<Integer> nearRooms){
+    public ArrayList<RoomState> convertIntegerRoomStates(ArrayList<Integer> nearRooms){
 
-        ArrayList<shipJavaInterface> roomList = new ArrayList<>();
+        ArrayList<RoomState> roomList = new ArrayList<>();
 
         for (int i = 0; i < nearRooms.size(); i++)             
             roomList.add(new General().convertIntToRoom(nearRooms.get(i)));
@@ -674,7 +674,7 @@ public class GameData implements Serializable{
      * @return the crew member room name
      */
     public String getCrewMemberRoomName(int index){
-        return getCrewMember(index).getCrewMemberRoom().ReturnName();
+        return getCrewMember(index).getCrewMemberRoom().getName();
     }
 
     /**
@@ -685,10 +685,10 @@ public class GameData implements Serializable{
         for (Alien alien : this.aliens) {
             
             //Available Rooms
-            ArrayList<shipJavaInterface> alienRooms = new ArrayList<>();
+            ArrayList<RoomState> alienRooms = new ArrayList<>();
             alienRooms.addAll(getAvailableNextRooms(Return_Alien_avaible_rooms(alien)));
 
-            if(!alienRooms.isEmpty() && alien.getRoom().getSealStatus() == false)
+            if(!alienRooms.isEmpty() && alien.getRoom().getsealledstatus() == false)
                 followCrewMember(alien);
             
             if (this.explodeTrapToAlien(alien)){
@@ -706,7 +706,7 @@ public class GameData implements Serializable{
      * @return Alien Available rooms
      */
     public ArrayList<Integer> Return_Alien_avaible_rooms (Alien alien){
-        return alien.getRoom().ReturnAvailableRooms();
+        return alien.getRoom().Return_avaible_rooms();
     }
 
     /**
@@ -728,7 +728,7 @@ public class GameData implements Serializable{
 
     public boolean alienHasTheSameLocation(String location, int i){
 
-        return aliens.get(i).getRoom().ReturnName().equals(location);
+        return aliens.get(i).getRoom().getName().equals(location);
 
     }
 
@@ -1011,12 +1011,12 @@ public class GameData implements Serializable{
      */
     private boolean isAlienAlone(Alien alien){
 
-        shipJavaInterface room = alien.getRoom();
+        RoomState room = alien.getRoom();
 
-        if (getCrewMember1Room().ReturnName().equals(room.ReturnName()))
+        if (getCrewMember1Room().getName().equals(room.getName()))
             return false;
 
-        if (getCrewMember2Room().ReturnName().equals(room.ReturnName()))
+        if (getCrewMember2Room().getName().equals(room.getName()))
             return false;
 
         return true;
@@ -1050,11 +1050,11 @@ public class GameData implements Serializable{
     
     public boolean verifyifcoomofficerspecial(Alien alien){
         
-        if ("Comm's Officer".equals(this.getCrewMember(0).getName()) && alien.getRoom().ReturnName().equals(this.getCrewMemberRoomName(0))){
+        if ("Comm's Officer".equals(this.getCrewMember(0).getName()) && alien.getRoom().getName().equals(this.getCrewMemberRoomName(0))){
             
             return true;
         }
-        if ("Comm's Officer".equals(this.getCrewMember(1).getName()) && alien.getRoom().ReturnName().equals(this.getCrewMemberRoomName(1))){
+        if ("Comm's Officer".equals(this.getCrewMember(1).getName()) && alien.getRoom().getName().equals(this.getCrewMemberRoomName(1))){
             return true;
         }
         
@@ -1103,13 +1103,13 @@ public class GameData implements Serializable{
      */
     private boolean explodeTrapToAlien(Alien alien){
 
-        shipJavaInterface room = alien.getRoom();
+        RoomState room = alien.getRoom();
 
         for (Trap trap : this.getTraps()) {
             
-            String trapRoomName = trap.getRoom().ReturnName();
+            String trapRoomName = trap.getRoom().getName();
 
-            if (trapRoomName.equals(room.ReturnName())){
+            if (trapRoomName.equals(room.getName())){
                 
                 if (trap.getName().equals("OrganicDetonator")) {
                     
@@ -1225,8 +1225,8 @@ public class GameData implements Serializable{
             
             if (roomIndex != 0) {
                 
-                shipJavaInterface room = new General().convertIntToRoom(roomIndex);
-                returnStringBuffer.append(roomIndex).append(" - ").append(room.ReturnName()).append("\n");
+                RoomState room = new General().convertIntToRoom(roomIndex);
+                returnStringBuffer.append(roomIndex).append(" - ").append(room.getName()).append("\n");
 
             }
             
@@ -1259,8 +1259,8 @@ public class GameData implements Serializable{
 
         for (int i = 1; i <= 12; i++) {
             
-            shipJavaInterface room = new General().convertIntToRoom(i);
-            returnString.append(i + " - " + room.ReturnName() + "\n");
+            RoomState room = new General().convertIntToRoom(i);
+            returnString.append(i + " - " + room.getName() + "\n");
 
         }
 
@@ -1276,7 +1276,7 @@ public class GameData implements Serializable{
      * @return the crew member 1 room name
      */
     public String getCrewMember1RoomName() {
-        return getCrewMember1Room().ReturnName();
+        return getCrewMember1Room().getName();
     }
 
     /**
@@ -1285,7 +1285,7 @@ public class GameData implements Serializable{
      * @return the crew member 2 room name
      */
     public String getCrewMember2RoomName() {
-        return getCrewMember2Room().ReturnName();
+        return getCrewMember2Room().getName();
     }
 
     public String getCrewMember1Name() {
@@ -1314,7 +1314,7 @@ public class GameData implements Serializable{
      * @return trap room name
      */
     public String getTrapRoomName(int trapIndex) {
-        return this.getUser().getTraps().get(trapIndex).getRoom().ReturnName();
+        return this.getUser().getTraps().get(trapIndex).getRoom().getName();
     } 
 
     /**
@@ -1352,8 +1352,8 @@ public class GameData implements Serializable{
             
             if (roomIndex != 0) {
                 
-                shipJavaInterface room = new General().convertIntToRoom(roomIndex);
-                returnString.append(roomIndex + " - " + room.ReturnName() + "\n");    
+                RoomState room = new General().convertIntToRoom(roomIndex);
+                returnString.append(roomIndex + " - " + room.getName() + "\n");    
             
             }            
 
@@ -1366,14 +1366,14 @@ public class GameData implements Serializable{
     }
 
     public String returnplayerslocation(int i){
-        return this.getCrewMembers()[i].getCrewMemberRoom().ReturnName();
+        return this.getCrewMembers()[i].getCrewMemberRoom().getName();
     } 
 
     public ArrayList<Integer> getNearAvailableRooms(int crewMemberIndex) {
 
         ArrayList<Integer> returnArray = new ArrayList<>();
 
-        returnArray.addAll(this.getCrewMember(crewMemberIndex).getCrewMemberRoom().ReturnAvailableRooms());
+        returnArray.addAll(this.getCrewMember(crewMemberIndex).getCrewMemberRoom().Return_avaible_rooms());
         returnArray.add(0);
 
         return returnArray;
@@ -1395,29 +1395,29 @@ public class GameData implements Serializable{
 
     public boolean seelockedroom(int i){
         // return true if its locked
-        if (new Room1().getSealStatus() == true && i == 1 )
+        if (new Room1().getsealledstatus() == true && i == 1 )
             return true;
-        if (new Room2().getSealStatus() == true && i == 2 )
+        if (new Room2().getsealledstatus() == true && i == 2 )
             return true;
-        if (new Room3().getSealStatus() == true && i == 3 )
+        if (new Room3().getsealledstatus() == true && i == 3 )
             return true;
-        if (new Room4().getSealStatus() == true && i == 4 )
+        if (new Room4().getsealledstatus() == true && i == 4 )
             return true;
-        if (new Room5().getSealStatus() == true && i == 5 )
+        if (new Room5().getsealledstatus() == true && i == 5 )
             return true;
-        if (new Room6().getSealStatus() == true && i == 6 )
+        if (new Room6().getsealledstatus() == true && i == 6 )
             return true;
-        if (new Room7().getSealStatus() == true && i == 7 )
+        if (new Room7().getsealledstatus() == true && i == 7 )
             return true;
-        if (new Room8().getSealStatus() == true && i == 8 )
+        if (new Room8().getsealledstatus() == true && i == 8 )
             return true;
-        if (new Room9().getSealStatus() == true && i == 9 )
+        if (new Room9().getsealledstatus() == true && i == 9 )
             return true;
-        if (new Room10().getSealStatus() == true && i == 10 )
+        if (new Room10().getsealledstatus() == true && i == 10 )
             return true;
-        if (new Room11().getSealStatus() == true && i == 11 )
+        if (new Room11().getsealledstatus() == true && i == 11 )
             return true;
-        if (new Room12().getSealStatus() == true && i == 12 )
+        if (new Room12().getsealledstatus() == true && i == 12 )
             return true;
         
         return false;
@@ -1579,8 +1579,8 @@ public class GameData implements Serializable{
 
             if (i != 0) {
 
-                shipJavaInterface room = new General().convertIntToRoom(i);
-                returnString.append(i + " - " + room.ReturnName() + "\n");
+                RoomState room = new General().convertIntToRoom(i);
+                returnString.append(i + " - " + room.getName() + "\n");
         
             }
             
@@ -1594,11 +1594,11 @@ public class GameData implements Serializable{
 
     public boolean canSealRoom(int roomNumber){
 
-        shipJavaInterface room = new General().convertIntToRoom(roomNumber);
+        RoomState room = new General().convertIntToRoom(roomNumber);
 
         for (Alien alien : this.getAliens()) {
             
-            if (alien.getRoom().ReturnName().equals(room.ReturnName())) {
+            if (alien.getRoom().getName().equals(room.getName())) {
                 return false;
             }
 
@@ -1606,13 +1606,13 @@ public class GameData implements Serializable{
 
         for (int i = 0; i < 2; i++) {
             
-            if (this.getCrewMember(i).getCrewMemberRoom().ReturnName().equals(room.ReturnName())) {
+            if (this.getCrewMember(i).getCrewMemberRoom().getName().equals(room.getName())) {
                 return false;
             }
 
         }
 
-        if (room.getSealStatus())
+        if (room.getsealledstatus())
             return false;
 
         return true;
@@ -1657,7 +1657,7 @@ public class GameData implements Serializable{
             
             if (var.getName().equals("ParticleDisperser")) {
                 
-                if (var.getRoom().ReturnName().equals(trapRoom)) {
+                if (var.getRoom().getName().equals(trapRoom)) {
                     
                     return var.getId();
 
@@ -1895,15 +1895,15 @@ public class GameData implements Serializable{
     }
 
     public boolean isCrewMember1SameRoomName(String RoomName){
-        return (getCrewMember1Room().ReturnName().equals(RoomName));
+        return (getCrewMember1Room().getName().equals(RoomName));
     }
 
     public boolean isCrewMember2SameRoomName(String RoomName){
-        return (getCrewMember2Room().ReturnName().equals(RoomName));
+        return (getCrewMember2Room().getName().equals(RoomName));
     }
 
     public String getAlienRoomNameByPosition(int i){
-        return getAlienByPosition(i).getRoom().ReturnName();
+        return getAlienByPosition(i).getRoom().getName();
     }
 
     public void addOneInspPoint(){

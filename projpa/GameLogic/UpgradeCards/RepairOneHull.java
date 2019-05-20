@@ -3,7 +3,7 @@ package projpa.GameLogic.UpgradeCards;
 import java.io.Serializable;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 
 /**
  * RepairOneHull
@@ -44,7 +44,7 @@ public class RepairOneHull extends UpgradeCard implements Serializable{
 
     // This function returns false because this class can't do this function
     @Override
-    public boolean closeRoomFunction(shipJavaInterface room) {
+    public boolean closeRoomFunction(RoomState room) {
         return false;
     }
 

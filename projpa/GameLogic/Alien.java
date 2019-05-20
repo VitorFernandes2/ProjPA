@@ -1,14 +1,14 @@
 package projpa.GameLogic;
 
 import java.io.Serializable;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 
 /**
  * Alien
  */
 public class Alien implements Serializable{
 
-    private shipJavaInterface room;
+    private RoomState room;
     private static int numberOfAliens = 0;
     private int id;
 
@@ -17,7 +17,7 @@ public class Alien implements Serializable{
         this.id = numberOfAliens;
     }
 
-    public Alien(shipJavaInterface room){
+    public Alien(RoomState room){
 
         this();
         this.room = room;
@@ -34,14 +34,14 @@ public class Alien implements Serializable{
     /**
      * @return the room
      */
-    public shipJavaInterface getRoom() {
+    public RoomState getRoom() {
         return room;
     }
 
     /**
      * @param room the room to set
      */
-    public void setRoom(shipJavaInterface room) {
+    public void setRoom(RoomState room) {
         this.room = room;
     }
     

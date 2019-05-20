@@ -4,7 +4,7 @@ import java.io.Serializable;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
 import projpa.GameLogic.General.General;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 import projpa.GameLogic.Traps.Trap;
 
 /**
@@ -37,7 +37,7 @@ public class AwaitPeekRoom extends StateAdapter implements Serializable{
         
         if (this.game.gotSomeActionPoints()) {
             
-            shipJavaInterface roomInterface = new General().convertIntToRoom(room);
+            RoomState roomInterface = new General().convertIntToRoom(room);
             Trap trap = this.game.getTrapById(trapIndex);
 
             if(trap != null)
@@ -61,15 +61,15 @@ public class AwaitPeekRoom extends StateAdapter implements Serializable{
 
             if (this.game.hasUpgradeSealedToken()) {
                 
-                shipJavaInterface roomInterface = new General().convertIntToRoom(roomIndex);
+                RoomState roomInterface = new General().convertIntToRoom(roomIndex);
 
-                int alienInRoom = this.game.verifyalien(roomInterface.ReturnName());
-                int crewMemberInRoom = NumberOfCrewMembersInRoom(roomInterface.ReturnName());
+                int alienInRoom = this.game.verifyalien(roomInterface.getName());
+                int crewMemberInRoom = NumberOfCrewMembersInRoom(roomInterface.getName());
 
 
                 if (alienInRoom == -1 && crewMemberInRoom == 0){
 
-                    roomInterface.setSealed();
+                    roomInterface.setsealed();
                     this.game.removeSealedToken();
                     this.game.decrementActionPoints();
 

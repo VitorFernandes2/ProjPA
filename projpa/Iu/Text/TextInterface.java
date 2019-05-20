@@ -418,7 +418,7 @@ public class TextInterface {
             for (Trap trap : particleDisperser) {
                 
                 i++;
-                System.out.println(i + " - Particle Disperser na room " + trap.getRoom().ReturnName());
+                System.out.println(i + " - Particle Disperser na room " + trap.getRoom().getName());
 
             }
 
@@ -432,7 +432,7 @@ public class TextInterface {
             return "Sair";
         else{
             option = option - 1;
-            return particleDisperser.get(option).getRoom().ReturnName();
+            return particleDisperser.get(option).getRoom().getName();
         }
             
     }
@@ -689,7 +689,7 @@ public class TextInterface {
         for (int i = 0; i < game.getAliens().size();i++){
             
             System.out.println("Alien number:" + (i + 1) 
-            + " is in: " + game.getAliens().get(i).getRoom().ReturnName());
+            + " is in: " + game.getAliens().get(i).getRoom().getName());
             
         }
         

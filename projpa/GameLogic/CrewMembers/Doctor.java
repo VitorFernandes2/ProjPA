@@ -25,7 +25,7 @@ public class Doctor extends CrewMember implements Serializable{
     @Override
     public boolean Special() {
         
-        if ("Sick Bay".equals(this.getCrewMemberRoom().ReturnName())){
+        if ("Sick Bay".equals(this.getCrewMemberRoom().getName())){
             
             game.addHealthTrackerHealth();
             return true;

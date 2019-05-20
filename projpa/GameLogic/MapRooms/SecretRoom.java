@@ -6,15 +6,11 @@ import java.util.ArrayList;
 /**
  * SecretRoom
  */
-public class SecretRoom implements shipJavaInterface,Serializable {
+public class SecretRoom extends RoomState implements Serializable {
+
 
     @Override
-    public shipJavaInterface newLocation(int location) {
-        return this;
-    }
-
-    @Override
-    public String ReturnName() {
+    public String getName() {
         return "SecretRoom";
     }
 
@@ -39,17 +35,17 @@ public class SecretRoom implements shipJavaInterface,Serializable {
     }
 
     @Override
-    public ArrayList<Integer> ReturnAvailableRooms() {
+    public ArrayList<Integer> Return_avaible_rooms() {
         return null;
     }
 
     @Override
-    public boolean setSealed() {
+    public boolean setsealed() {
         return false;
     }
 
     @Override
-    public boolean getSealStatus() {
+    public boolean getsealledstatus() {
         return false;
     }
     

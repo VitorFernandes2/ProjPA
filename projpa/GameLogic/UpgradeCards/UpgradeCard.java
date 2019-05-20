@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import projpa.GameLogic.Alien;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 import projpa.GameLogic.Trackers.*;
 import projpa.GameLogic.User.User;
 
@@ -116,7 +116,7 @@ public abstract class UpgradeCard implements Serializable{
      * @param room
      * @return true if all work has been done successfully
      */
-    public abstract boolean closeRoomFunction(shipJavaInterface room);
+    public abstract boolean closeRoomFunction(RoomState room);
 
     /**
      * This function is used to put a crew member with one more atack power or one more movement

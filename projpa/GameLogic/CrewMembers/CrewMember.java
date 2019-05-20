@@ -16,7 +16,7 @@ public abstract class CrewMember implements Serializable{
     private int movement;
     private int movementToDo;
     private int attack;
-    private shipJavaInterface crewMemberRoom;
+    private RoomState crewMemberRoom;
     protected GameData game;  //This variable is used to allow Crew Members to have Special Move
 
     public CrewMember(int roomNumber, GameData game){
@@ -63,7 +63,7 @@ public abstract class CrewMember implements Serializable{
 
     }
 
-    public shipJavaInterface chooseRoom(int roomNumber){
+    public RoomState chooseRoom(int roomNumber){
 
         this.crewMemberRoom = new General().convertIntToRoom(roomNumber);
         return crewMemberRoom;
@@ -73,14 +73,14 @@ public abstract class CrewMember implements Serializable{
     /**
      * @return the crewMemberRoom
      */
-    public shipJavaInterface getCrewMemberRoom() {
+    public RoomState getCrewMemberRoom() {
         return crewMemberRoom;
     }
 
     /**
      * @param crewMemberRoom the crewMemberRoom to set
      */
-    public void setCrewMemberRoom(shipJavaInterface crewMemberRoom) {
+    public void setCrewMemberRoom(RoomState crewMemberRoom) {
         this.crewMemberRoom = crewMemberRoom;
     }
 

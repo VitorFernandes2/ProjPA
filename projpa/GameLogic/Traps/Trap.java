@@ -12,7 +12,7 @@ import projpa.GameLogic.GameData;
  */
 public abstract class Trap implements Serializable{
 
-    protected shipJavaInterface trapRoom;
+    protected RoomState trapRoom;
     protected GameData game;
     private static int numberOfTraps = 0;
     private int id;
@@ -40,9 +40,9 @@ public abstract class Trap implements Serializable{
         this.id = id;
     }
 
-    public shipJavaInterface chooseTrapRoom(int roomNumber){
+    public RoomState chooseTrapRoom(int roomNumber){
 
-        shipJavaInterface room = new Room1();
+        RoomState room = new Room1();
 
         switch(roomNumber){
             
@@ -105,14 +105,14 @@ public abstract class Trap implements Serializable{
     /**
      * @return the room
      */
-    public shipJavaInterface getRoom() {
+    public RoomState getRoom() {
         return this.trapRoom;
     }
 
     /**
      * @return the trapRoom
      */
-    public shipJavaInterface getTrapRoom() {
+    public RoomState getTrapRoom() {
         return trapRoom;
     }
 
@@ -128,11 +128,11 @@ public abstract class Trap implements Serializable{
     public abstract int destroyAliens();
 
     public boolean TrapRoomNameIsEqual(String name){
-        return this.getTrapRoom().ReturnName().equals(name);
+        return this.getTrapRoom().getName().equals(name);
     }
 
     public String getRoomName(){
-        return this.getRoom().ReturnName();
+        return this.getRoom().getName();
     }
     
 }

@@ -2,7 +2,7 @@ package projpa.GameLogic.CrewMembers;
 
 import java.io.Serializable;
 import projpa.GameLogic.GameData;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 
 /**
  * Engineer
@@ -26,9 +26,9 @@ public class Engineer extends CrewMember implements Serializable{
     @Override
     public boolean Special() {
 
-        shipJavaInterface room = this.getCrewMemberRoom(); 
+        RoomState room = this.getCrewMemberRoom(); 
 
-        if (room.ReturnName().equals("Engineering")) {
+        if (room.getName().equals("Engineering")) {
             
             if (this.game.getHullHealth() < this.game.getHullMaxHealth()) {
                 

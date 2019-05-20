@@ -12,30 +12,20 @@ import java.util.ArrayList;
  *
  * @author a21270909
  */
-public class Room7 implements shipJavaInterface,Serializable {
+public class Room7 extends RoomState implements Serializable {
 
         String name = "Weapons Bay";
         static boolean sealedroom = false;
-    
-    @Override
-    public shipJavaInterface newLocation(int location) {
 
-        if(location == 2 && !new Room2().getSealStatus())
-            return new Room2();
-        if(location == 11 && !new Room11().getSealStatus())
-            return new Room11();
-        return this;
-        
-    }
 
     @Override
-    public String ReturnName() {
+    public String getName() {
 
         return name;
     }
 
     @Override
-    public ArrayList<Integer> ReturnAvailableRooms() {
+    public ArrayList<Integer> Return_avaible_rooms() {
        
         ArrayList<Integer> returnvalues = new ArrayList<>();
 
@@ -46,12 +36,13 @@ public class Room7 implements shipJavaInterface,Serializable {
     }
     
     @Override
-    public boolean setSealed() {
+    public boolean setsealed() {
+        sealedroom = true;
         return true;
     }
 
     @Override
-    public boolean getSealStatus() {
+    public boolean getsealledstatus() {
         return sealedroom;
     }
 

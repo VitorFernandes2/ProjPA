@@ -3,7 +3,7 @@ package projpa.GameLogic.UpgradeCards;
 import java.io.Serializable;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.CrewMembers.CrewMember;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 
 /**
  * AddOneHealth
@@ -43,7 +43,7 @@ public class AddOneHealth extends UpgradeCard implements Serializable{
     }
 
     @Override
-    public boolean closeRoomFunction(shipJavaInterface room) {
+    public boolean closeRoomFunction(RoomState room) {
         return false;
     }
 

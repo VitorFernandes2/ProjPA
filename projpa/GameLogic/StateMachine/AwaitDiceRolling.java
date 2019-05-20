@@ -3,7 +3,7 @@ package projpa.GameLogic.StateMachine;
 import java.io.Serializable;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.Dice.Dice;
-import projpa.GameLogic.MapRooms.shipJavaInterface;
+import projpa.GameLogic.MapRooms.RoomState;
 
 /**
  * AwaitDiceRolling
@@ -19,14 +19,14 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
         
         if(this.game.gotSomeActionPoints()){
 
-            shipJavaInterface room;
+            RoomState room;
 
             if (crewMemberIndex == 0)
                 room = this.game.getCrewMember1Room();
             else
                 room = this.game.getCrewMember2Room();
             
-            int alienPosition = this.game.verifyalien(room.ReturnName()); 
+            int alienPosition = this.game.verifyalien(room.getName()); 
             
             if(alienPosition != -1){
 

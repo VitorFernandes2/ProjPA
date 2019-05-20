@@ -27,7 +27,7 @@ public class GainOneSealedRoom extends UpgradeCard implements Serializable{
      * @param room
      * @return number of crew members in the room
      */
-    private int countCrewMembers(shipJavaInterface room) {
+    private int countCrewMembers(RoomState room) {
 
         int count = 0;
 
@@ -45,7 +45,7 @@ public class GainOneSealedRoom extends UpgradeCard implements Serializable{
      * @param room
      * @return number of aliens in the room
      */
-    private int countAliens(shipJavaInterface room) {
+    private int countAliens(RoomState room) {
 
         int count = 0;
 
@@ -63,7 +63,7 @@ public class GainOneSealedRoom extends UpgradeCard implements Serializable{
      * @param room
      * @return false if someone inside
      */
-    private boolean getSomeoneInside(shipJavaInterface room) {
+    private boolean getSomeoneInside(RoomState room) {
 
         int count = 0;
 
@@ -80,7 +80,7 @@ public class GainOneSealedRoom extends UpgradeCard implements Serializable{
      * @param room
      * @return true if can
      */
-    public boolean blockRooms(shipJavaInterface room) {
+    public boolean blockRooms(RoomState room) {
 
         if (room instanceof Room3) {
             return true;
@@ -106,14 +106,14 @@ public class GainOneSealedRoom extends UpgradeCard implements Serializable{
     }
 
     @Override
-    public boolean closeRoomFunction(shipJavaInterface room) {
+    public boolean closeRoomFunction(RoomState room) {
 
         if(gotSomeActionPoints())
-            if (!room.getSealStatus())
+            if (!room.getsealledstatus())
                 if (blockRooms(room))
                     if (getSomeoneInside(room)){
                         setActionPoints(getActionPoints() - 1);
-                        return room.setSealed();
+                        return room.setsealed();
                     }
                         
 
