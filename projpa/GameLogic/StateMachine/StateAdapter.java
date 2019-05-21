@@ -1,6 +1,7 @@
 package projpa.GameLogic.StateMachine;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import projpa.GameLogic.GameData;
 
 /**
@@ -57,13 +58,13 @@ public class StateAdapter implements IStates,Serializable{
     }
 
     @Override
-    public IStates heal() {
-        return this;
+    public Boolean heal() {
+        return false;
     }
 
     @Override
-    public IStates fixOneHull() {
-        return this;
+    public Boolean fixOneHull() {
+        return false;
     }
 
     @Override
@@ -107,39 +108,47 @@ public class StateAdapter implements IStates,Serializable{
     }
     
     @Override
-    public void addonehealth(){
+    public boolean addonehealth(){
+        return false;
     }
     @Override
-    public void repairhull(){
-        
+    public boolean repairhull(){
+        return false;
     }
     @Override
-    public void buildorganicdetonator(){
-        
+    public boolean buildorganicdetonator(){
+        return false;
     }
     @Override
-    public void builoneparticleddispenser(){
-        
+    public boolean builoneparticleddispenser(){
+        return false;
     }
     @Override
-    public void addonemovement(int crewmemeber){
-        
+    public boolean addonemovement(int crewmemeber){
+        return false;
     }
     @Override
-    public void gainonesealedromtoken(){
-        
+    public boolean gainonesealedromtoken(){
+        return false;
     }
     @Override
-    public void gainoneattack(int crewmember){
-        
+    public boolean gainoneattack(int crewmember){
+        return false;
     }
     @Override
-    public void addonethedice(){
-        
+    public boolean addonethedice(){
+        return false;
     }
     @Override
     public Boolean wasSaved(){
         return false;
+    }
+    
+    @Override
+    public ArrayList<Integer> getgeninfo(){
+        ArrayList<Integer> returns = new ArrayList<Integer>();
+        returns.add(-1);
+        return returns;
     }
    
 }

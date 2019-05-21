@@ -459,7 +459,11 @@ public class TextInterface {
                 default:
 
                     this.game.detonateParticleDisperser(option);
-
+                    
+                    System.out.println("------------------------");
+                    System.out.println("Detonate praticle com o numero: " +option + " detonada" );
+                    System.out.println("------------------------");
+                    
                     break;
                     
             }
@@ -477,10 +481,28 @@ public class TextInterface {
             clearConsole();
             int crewMemberIndex = SelectCrewMemberMenu(); 
 
-            if (crewMemberIndex != 0)
-                this.game.atack(crewMemberIndex - 1);
-            else
+            if (crewMemberIndex != 0){
+                
+                ArrayList<Integer> output = new ArrayList<Integer>();
+                
+                output = this.game.atack(crewMemberIndex - 1);
+                
+                if(output.get(2) != -1){
+                    System.out.println("---------------------------------");
+                    System.out.println("O resultado do dado foi:" + output.get(0)/output.get(1) + "com o dado lancado " + output.get(1) + " vezes e o player " + output.get(2));
+                    System.out.println("---------------------------------");
+                }
+                else{
+                    System.out.println("---------------------------------");
+                    System.out.println("Não existe nenhum alien na sala");
+                    System.out.println("---------------------------------");
+                }
+            }
+            else{
                 this.game.goBack();
+            
+            
+            }
 
         }
 
@@ -548,22 +570,27 @@ public class TextInterface {
             
             if(opcao >=0 && opcao < 9){
                 
+                boolean outputs = false;
+                
                 switch(opcao){
                     
                     case 1:
                         
-                        this.game.addonehealth();
-                        
+                        outputs = this.game.addonehealth();
+                        ui_restphaseout(outputs);
                         break;
 
                     case 2:
-                        this.game.repairhull();
+                        
+                        outputs = this.game.repairhull();
+                        ui_restphaseout(outputs);
                         
                         break;    
 
                     case 3:
                         
-                        this.game.buildorganicdetonator();
+                        outputs = this.game.buildorganicdetonator();
+                        ui_restphaseout(outputs);
                         
                         break;
 
@@ -571,20 +598,24 @@ public class TextInterface {
                         
                         opcao = SelectCrewMemberMenu();
                         
-                        if (opcao != 0)
-                            this.game.addonemovement(opcao - 1);
+                        if (opcao != 0){
+                            outputs = this.game.addonemovement(opcao - 1);
+                            ui_restphaseout(outputs);
                         
+                        }
                         break;
 
                     case 5:
                         
-                        this.game.builoneparticleddispenser();
+                        outputs = this.game.builoneparticleddispenser();
+                        ui_restphaseout(outputs);
                         
                         break; 
 
                     case 6:
                         
-                        this.game.gainonesealedromtoken();
+                        outputs = this.game.gainonesealedromtoken();
+                        ui_restphaseout(outputs);
                         
                         break;   
 
@@ -593,13 +624,15 @@ public class TextInterface {
                         opcao = SelectCrewMemberMenu();
                         
                         if (opcao != 0)                        
-                            this.game.gainoneattack(opcao);
+                            outputs = this.game.gainoneattack(opcao);
+                            ui_restphaseout(outputs);
                         
                         break; 
 
                     case 8:
                         
-                        this.game.addonethedice();
+                        outputs = this.game.addonethedice();
+                        ui_restphaseout(outputs);
                         
                         break; 
 
@@ -744,15 +777,17 @@ public class TextInterface {
                 //If Heal One Health
                 case 3:
 
-                    this.game.heal(); 
-
+                    boolean helthoutput = this.game.heal(); 
+                    ui_heal(helthoutput);
+                    
                     break;
 
                 //If Fix One Hull
                 case 4:
 
-                        this.game.fixOneHull(); 
-
+                        boolean hulloutput = this.game.fixOneHull(); 
+                        ui_hull(hulloutput);
+                        
                     break;
 
                 //If Setting trap
@@ -795,8 +830,9 @@ public class TextInterface {
                 //RedShirt Special
                 case 10:
 
-                    this.game.redShirtSpecial();
-
+                    int redshirtoutput = this.game.redShirtSpecial();
+                    ui_redshirt(redshirtoutput);
+                    
                     break;
 
                 //If is exit
@@ -814,16 +850,19 @@ public class TextInterface {
 
     public int SelectRoomToMove(int index){
 
-        int option = -1;        
+        int option = -1,correu=0;        
         ArrayList<Integer> options = this.game.getNearAvailableRooms(index);
         String MenuRooms = this.game.getRoomsNear(index);
 
         while (!options.contains(option)) {
             
+            if(correu>0)
+                System.out.println("Opção errada");
+            
             clearConsole();
             System.out.println(MenuRooms);
             option = scanInteger("\nInsira a opcao que pretende: ");
-
+            correu++;
         }
 
         return option;
@@ -885,10 +924,18 @@ public class TextInterface {
 
                     int option = SelectRoomToMove(index - 1);
                     
-                    if (option != 0) 
+                    if (option != 0){ 
+                        
+                        
                         this.game.move(index - 1, option);
-                    else
-                        this.game.goBack();                    
+                        
+                        System.out.println("Crew memeber mudou de sala com sucesso");
+                        
+                    }
+                    else{
+                        this.game.goBack();       
+
+                    }             
                 
                 }
 
@@ -931,12 +978,16 @@ public class TextInterface {
             
             int option = SelectRoomToSeal();
 
-            if (option != 0)
+            if (option != 0){
                 this.game.sealRoom(option); 
+                System.out.println("Sala selada com o numero: " +option);
+            }
             else
                 this.game.goBack();
 
         }
+        else
+            System.out.println("Não é possivel sela a sala (tip: verifica se tens sealed tokens)");
 
     }
 
@@ -992,7 +1043,8 @@ public class TextInterface {
                 if (roomIndex != 0) {
                     
                     this.game.setTrap(roomIndex, trapIndex);
-
+                    
+                    System.out.println("Trap colocada com sucesso");
                 }
                 else
                     this.game.goBack();
@@ -1017,12 +1069,18 @@ public class TextInterface {
             int option = SelectCrewMemberMenu();
 
             if(option != 0){
-
+                //ArrayList<Integer> output = new ArrayList<Integer>();
+                
                 this.game.atack(option - 1); 
+                
+                //System.out.println("O resultado do dado foi:" + output.get(0)/output.get(1) + "com o dado lancado " + output.get(1) + " vezes e o player " + output.get(3));
+                
 
             }
             else{
 
+                //System.out.println("O crew memeber selecionado é invalido");
+                
                 this.game.goBack(); 
             
             }
@@ -1275,6 +1333,67 @@ public class TextInterface {
 
             String opt = scanString("\nPressione Enter para continuar...");
 
+    }
+
+    private void ui_heal(boolean helthoutput) {
+        
+        if(helthoutput == false){
+            System.out.println("-------------------------");
+            System.out.println("Não é possivel aumentar a vida");
+            System.out.println("-------------------------");
+        }
+        else{
+            System.out.println("-------------------------");
+            System.out.println("Vida aumentada com sucesso");
+            System.out.println("-------------------------");
+        }
+        
+    }
+
+    private void ui_hull(boolean hulloutput) {
+        
+        if(hulloutput == false){
+            System.out.println("-------------------------");
+            System.out.println("Não é possivel aumentar o hull");
+            System.out.println("-------------------------");
+        }
+        else{
+            System.out.println("-------------------------");
+            System.out.println("Hull aumentado com sucesso");
+            System.out.println("-------------------------");
+        }
+    }
+
+    private void ui_redshirt(int redshirtoutput) {
+        
+        System.out.println("-------------------------");
+        
+        if(redshirtoutput == 0){
+            
+            System.out.println("Um redshirt foi abicado");
+            
+        }
+        if(redshirtoutput == 1){
+            
+            System.out.println("Não existem redshirts");
+            
+        }
+        if(redshirtoutput == 2){
+            
+            System.out.println("Os 2 redshirts foram eliminados");
+            
+        }
+
+        System.out.println("-------------------------");
+        
+    }
+
+    private void ui_restphaseout(boolean outputs) {
+        
+        if (outputs == true)
+            System.out.println("Foi possivel realizar a opção escolhida");
+        else
+            System.out.println("Não foi possivel realizar a opção escolhida");
     }
     
 }

@@ -1423,8 +1423,22 @@ public class GameData implements Serializable{
         return false;
     }
 
-	public void atack(int i) {
-        this.stateOfTheGame = this.stateOfTheGame.atack(i);
+	public ArrayList<Integer> atack(int i) {
+            
+            boolean wascrew = false;
+            if(this.stateOfTheGame instanceof AwaitCrewPhaseActions)
+                wascrew = true;
+
+            this.stateOfTheGame = this.stateOfTheGame.atack(i);
+
+            ArrayList<Integer> returns = new ArrayList<Integer>();
+            if(wascrew == false && this.stateOfTheGame instanceof AwaitDiceRolling){  
+                returns = this.stateOfTheGame.getgeninfo();
+                this.stateOfTheGame = this.stateOfTheGame.nextTurn();
+
+            }
+
+            return returns;
 	}
 
 	public void goBack() {
@@ -1471,51 +1485,51 @@ public class GameData implements Serializable{
         this.stateOfTheGame = this.stateOfTheGame.nextTurn();
 	}
 
-	public void heal() {
-        this.stateOfTheGame = this.stateOfTheGame.heal();
+	public boolean heal() {
+        return this.stateOfTheGame.heal();
 	}
 
-	public void fixOneHull() {
-        this.stateOfTheGame = this.stateOfTheGame.fixOneHull();
+	public boolean fixOneHull() {
+        return this.stateOfTheGame.fixOneHull();
     }
 
 	public void saveGame() {
         this.stateOfTheGame = this.stateOfTheGame.saveGame();
     }
         
-    public void addonehealth(){
-        this.stateOfTheGame.addonehealth();
+    public boolean addonehealth(){
+        return this.stateOfTheGame.addonehealth();
             
     }
      
-    public void repairhull(){
-        this.stateOfTheGame.repairhull();
+    public boolean repairhull(){
+        return this.stateOfTheGame.repairhull();
     }
     
-    public void buildorganicdetonator(){
-        this.stateOfTheGame.buildorganicdetonator();
+    public boolean buildorganicdetonator(){
+        return this.stateOfTheGame.buildorganicdetonator();
     }
     
-    public void addonemovement(int crewmemeber){
+    public boolean addonemovement(int crewmemeber){
         
-        this.stateOfTheGame.addonemovement(crewmemeber);
+        return this.stateOfTheGame.addonemovement(crewmemeber);
     }
         
-    public void builoneparticleddispenser(){
+    public boolean builoneparticleddispenser(){
         
-        this.stateOfTheGame.builoneparticleddispenser();
+        return this.stateOfTheGame.builoneparticleddispenser();
     }    
         
-    public void gainonesealedromtoken(){
-        this.stateOfTheGame.gainonesealedromtoken();
+    public boolean gainonesealedromtoken(){
+        return this.stateOfTheGame.gainonesealedromtoken();
     }    
      
-    public void gainoneattack(int crewmember){
-        this.stateOfTheGame.gainoneattack(crewmember);
+    public boolean gainoneattack(int crewmember){
+        return this.stateOfTheGame.gainoneattack(crewmember);
     }
     
-    public void addonethedice(){
-        this.stateOfTheGame.addonethedice();
+    public boolean addonethedice(){
+        return this.stateOfTheGame.addonethedice();
     }
         
 
@@ -1787,7 +1801,7 @@ public class GameData implements Serializable{
         
     }
 
-    public void redShirtSpecial(){
+    public int redShirtSpecial(){
 
         int count = 0;
 
@@ -1807,8 +1821,13 @@ public class GameData implements Serializable{
 
         if (count == 2) {
             this.stateOfTheGame = new GameOver(this);
+            return 2; // end game
         }
-
+        if (count == 0) {
+            return 1; // no red shirts
+        }
+        
+        return 0; // sucess
     }    
 
     public ArrayList<Integer> getCrewMembersForMenu(){

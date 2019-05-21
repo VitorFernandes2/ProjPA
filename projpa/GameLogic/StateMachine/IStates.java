@@ -1,5 +1,6 @@
 package projpa.GameLogic.StateMachine;
 
+import java.util.ArrayList;
 import projpa.GameLogic.GameData;
 
 /**
@@ -64,13 +65,13 @@ public interface IStates {
      * This function heals 1 of health of the health tracker
      * @return Actual State
      */
-    public IStates heal();
+    public Boolean heal();
     
     /**
      * This function fixs one point of the hull tracker
      * @return Actual State
      */
-    public IStates fixOneHull();
+    public Boolean fixOneHull();
     
     /**
      * This function creates a trap in a room
@@ -127,17 +128,19 @@ public interface IStates {
     
     //rest phase
 
-    public void addonehealth();
-    public void repairhull();
-    public void buildorganicdetonator();
-    public void builoneparticleddispenser();
+    public boolean addonehealth();
+    public boolean repairhull();
+    public boolean buildorganicdetonator();
+    public boolean builoneparticleddispenser();
 
-    public void addonemovement(int crewmemeber);
-    public void gainonesealedromtoken();
+    public boolean addonemovement(int crewmemeber);
+    public boolean gainonesealedromtoken();
     
-    public void gainoneattack(int crewmember);
-    public void addonethedice();
+    public boolean gainoneattack(int crewmember);
+    public boolean addonethedice();
     
     public Boolean wasSaved();
+    
+    public ArrayList<Integer> getgeninfo();
     
 }

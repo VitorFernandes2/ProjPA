@@ -58,7 +58,7 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
     }    
     
     @Override
-    public void addonehealth(){
+    public boolean addonehealth(){
 
         if (isAnyCrewMember("Doctor")) {
             
@@ -75,10 +75,11 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
                     }             
                         
                 if(enter)
-                    game.decrementInspirationPoints();            
+                    game.decrementInspirationPoints();  
                 
+                return true;
             }
-
+            
         }
         else{
 
@@ -88,17 +89,18 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
 
                     game.addHealthTrackerHealth();
                     game.decrementInspirationPoints();
-
+                    
+                    return true;
                 }        
-            
+                
             }
 
         } 
-        
+        return false;
     }
     
     @Override
-    public void repairhull(){
+    public boolean repairhull(){
         
         if (isAnyCrewMember("Engineer")) {
             
@@ -116,7 +118,8 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
                     
                     if (enter)
                         game.decrementInspirationPoints();        
-                
+                    
+                    return true;
             }
 
         }
@@ -128,30 +131,31 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
 
                     game.addHullHealth();
                     game.decrementInspirationPoints();
-                    
+                    return true;
                 }      
             
             }
 
         }        
-
+        return false;
     }
     
     @Override
-    public void buildorganicdetonator(){
+    public boolean buildorganicdetonator(){
         
         if (game.getInspirationPoints().getInspstate() >= 2){
             
             game.getUser().addTraps(new OrganicDetonator(game));
             game.decrementInspirationPoints();
             game.decrementInspirationPoints();
-
+            
+            return true;
         }
-        
+        return false;
     }
     
     @Override
-    public void builoneparticleddispenser(){
+    public boolean builoneparticleddispenser(){
         
         if (game.getInspirationPoints().getInspstate() >= 5){
             
@@ -159,9 +163,10 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
 
             for (int i = 0; i < 5; i++)
                 game.decrementInspirationPoints();
-
+            
+            return true;
         }
-        
+        return false;
     }
     
 
@@ -183,31 +188,32 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
     
     
     @Override
-    public void addonemovement(int crewmemeber){
+    public boolean addonemovement(int crewmemeber){
         
         if (game.getInspirationPoints().getInspstate() >= 4){
 
             if (crewmemeber == 1 || crewmemeber == 2){
             
                 if (this.game.getCrewMemberName(crewmemeber - 1).equals("Transporter Chief") || getMaxMovementCrewMember(crewmemeber - 1))
-                    return;
+                    return false;
                 else{
                     
                     addMovement(crewmemeber - 1);
 
                     for (int i = 0; i < 4; i++)
                         this.game.decrementInspirationPoints();
-
+                    
+                    return true;
                 }
 
              }
             
         }
- 
+        return false;
     }
     
     @Override
-    public void gainonesealedromtoken(){
+    public boolean gainonesealedromtoken(){
         
         if (game.getInspirationPoints().getInspstate() >= 5){
 
@@ -215,9 +221,10 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
             
             for (int i = 0; i < 5; i++)
                 this.game.decrementInspirationPoints();
-
+            
+            return true;
         }
-
+        return false;
     }
     
     private void addAtack(int crewmember){
@@ -228,30 +235,31 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
     }
     
     @Override
-    public void gainoneattack(int crewmember){
+    public boolean gainoneattack(int crewmember){
         
         if (game.getInspirationPoints().getInspstate() >= 6){
             if (crewmember == 1 || crewmember == 2){
             
                 if (game.getUser().getCrewMembers()[crewmember - 1].getAttack() == 306)
-                    return;
+                    return false;
                 else{
                     
                     addAtack(crewmember - 1);
 
                     for (int i = 0; i < 6; i++)
                         this.game.decrementInspirationPoints();
-
+                    
+                    return true;
                 }
 
              }
             
         }
-        
+        return false;
     }
     
     @Override
-    public void addonethedice(){
+    public boolean addonethedice(){
         
         // to do;
         if (game.getInspirationPoints().getInspstate() >= 6){
@@ -260,9 +268,10 @@ public class AwaitRestPhaseActions extends StateAdapter implements Serializable{
 
             for (int i = 0; i < 6; i++)
                 this.game.decrementInspirationPoints();
-                
+             
+            return true;
         }        
-        
+        return false;
     }
     
 }

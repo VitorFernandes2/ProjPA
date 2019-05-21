@@ -25,7 +25,7 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
     }
 
     @Override
-    public IStates heal() {
+    public Boolean heal() {
         
         if (this.game.gotSomeActionPoints()) {
             
@@ -35,19 +35,19 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
 
                     this.game.addHealthTrackerHealth();
                     this.game.decrementActionPoints();
-    
+                    return true;
                 }
 
             }
 
         }   
 
-        return this;
+        return false;
     
     }
 
     @Override
-    public IStates fixOneHull() {
+    public Boolean fixOneHull() {
 
         if (this.game.gotSomeActionPoints()){
 
@@ -57,14 +57,14 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
 
                     this.game.addHullHealth();
                     this.game.decrementActionPoints();
-    
+                    return true;
                 }
 
             }
         
         }
         
-        return this;
+        return false;
 
     }
 
