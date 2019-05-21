@@ -1,5 +1,5 @@
 package projpa;
-import projpa.GameLogic.GameData;
+import projpa.GameLogic.GameLogic;
 import projpa.Iu.Text.TextInterface;
 
 public class ProjPA {
@@ -11,7 +11,7 @@ public class ProjPA {
 
     public static void main(String[] args) {
 
-        GameData game = new GameData();
+        GameLogic game = new GameLogic();
         TextInterface gameInterface = new TextInterface(game);
     
         gameInterface.run();

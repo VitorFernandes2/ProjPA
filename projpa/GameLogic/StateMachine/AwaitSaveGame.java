@@ -41,7 +41,7 @@ public class AwaitSaveGame extends StateAdapter implements Serializable{
             e.printStackTrace();
                     
         }
-            this.game.setStateOfTheGame(new AwaitCrewPhaseActions(this.game));
+            //this.game.setStateOfTheGame(new AwaitCrewPhaseActions(this.game));
             
             //old
             return new AwaitCrewPhaseActions(this.game);

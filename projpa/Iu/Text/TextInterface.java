@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import projpa.GameLogic.GameData;
+import projpa.GameLogic.GameLogic;
 import projpa.GameLogic.StateMachine.*;
 import projpa.GameLogic.Traps.Trap;
 import projpa.GameLogic.User.User;
@@ -24,15 +26,16 @@ import projpa.GameLogic.User.User;
 public class TextInterface {
 
     private boolean run = false;
-    GameData game;
+    GameLogic game;
 
     /**
      * This constructor starts with the game constructed
      * @param game
      */
-    public TextInterface(GameData game){
+    public TextInterface(GameLogic game){
 
         this.game = game;
+        this.game.setGame(this.game.getGame());
         
     }
 
@@ -105,7 +108,8 @@ public class TextInterface {
 
                         oi.close();
                         
-                        this.game = new GameData(pr1);
+                        //this.game = new GameData(pr1);
+                        this.game.setGame(new GameData(pr1));
                         
                 } catch (IOException e) {
 
@@ -178,7 +182,7 @@ public class TextInterface {
             
             User user = new User(name);
 
-            this.game.setUser(user);
+            this.game.getGame().setUser(user);
             this.game.Inputbegining();
 
         }            
@@ -291,7 +295,7 @@ public class TextInterface {
                     
                     if (i == 0) {
                         
-                        this.game = new GameData();
+                        this.game.setGame(new GameData());
                         break;
 
                     }                    
@@ -407,7 +411,7 @@ public class TextInterface {
         
         int option = -1;
         int i = 0;
-        ArrayList<Trap> particleDisperser = this.game.getParticleDisperserTraps();
+        ArrayList<Trap> particleDisperser = this.game.getGame().getParticleDisperserTraps();
 
         while (option < 0 || option > i) {
 
@@ -526,7 +530,7 @@ public class TextInterface {
     
             
             if (option.toLowerCase().equals("y"))
-                statesOfTheGame.saveGame();
+                this.game.setStateOfTheGame(statesOfTheGame.saveGame());
                         
         }
 
@@ -540,7 +544,7 @@ public class TextInterface {
             
             clearConsole();
             System.out.println("Encontra-se na RestPhase. \nO que pretende fazer:\n");
-            System.out.println("Inspiration Points (IP):" + game.getInspirationPoints().getInspstate());
+            System.out.println("Inspiration Points (IP):" + game.getGame().getInspirationPoints().getInspstate());
             System.out.println("\n1- Adicionar 1 para a vida (custa 1 IP)");
             System.out.println("2- Reparar 1 Hull (custa 1 IP)");
             System.out.println("3- Construir 1 Organic Detonator (custa 2 IP)");
@@ -676,12 +680,12 @@ public class TextInterface {
     public int SelectCrewMemberMenu(){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.getCrewMembersForMenu();
+        ArrayList<Integer> options = this.game.getGame().getCrewMembersForMenu();
 
         while(!options.contains(option)){
 
             clearConsole();
-            System.out.println(MenuConstants.beginningConst + this.game.toStringAvailableCrewMembers(options));
+            System.out.println(MenuConstants.beginningConst + this.game.getGame().toStringAvailableCrewMembers(options));
             
             option = scanInteger("\nInsira a opcao que pretende: ");
 
@@ -694,49 +698,49 @@ public class TextInterface {
     public void showStatus(){
         
         System.out.println("-----Status-----\n");
-        if (this.game.returnplayerslocation(0)!= "SecretRoom"){
+        if (this.game.getGame().returnplayerslocation(0)!= "SecretRoom"){
         System.out.println("Crew Member 1 - Name: " 
-            + this.game.getCrewMember1Name() 
+            + this.game.getGame().getCrewMember1Name() 
             + " - Location: " 
-            + this.game.returnplayerslocation(0)
+            + this.game.getGame().returnplayerslocation(0)
             + " - Can move: "
-            + this.game.getCrewMembers()[0].getMovementToDo()
+            + this.game.getGame().getCrewMembers()[0].getMovementToDo()
         );}
         else 
-            System.out.println("Crew Member 1 - Name: " + this.game.getCrewMember1Name() + " is dead");
+            System.out.println("Crew Member 1 - Name: " + this.game.getGame().getCrewMember1Name() + " is dead");
         
-        if (this.game.returnplayerslocation(1)!= "SecretRoom"){
+        if (this.game.getGame().returnplayerslocation(1)!= "SecretRoom"){
         System.out.println("Crew Member 2 - Name: " 
-            + this.game.getCrewMember2Name() 
+            + this.game.getGame().getCrewMember2Name() 
             + " - Location: " 
-            + this.game.returnplayerslocation(1)
+            + this.game.getGame().returnplayerslocation(1)
             + " - Can move: "
-            + this.game.getCrewMembers()[1].getMovementToDo()
+            + this.game.getGame().getCrewMembers()[1].getMovementToDo()
         );}
         else
-             System.out.println("Crew Member 2 - Name: " + this.game.getCrewMember2Name() + " is dead");
+             System.out.println("Crew Member 2 - Name: " + this.game.getGame().getCrewMember2Name() + " is dead");
         
         
         System.out.println("\n-----Aliens-----\n");
         
-        for (int i = 0; i < game.getAliens().size();i++){
+        for (int i = 0; i < game.getGame().getAliens().size();i++){
             
             System.out.println("Alien number:" + (i + 1) 
-            + " is in: " + game.getAliens().get(i).getRoom().getName());
+            + " is in: " + game.getGame().getAliens().get(i).getRoom().getName());
             
         }
         
-        System.out.println("\nHealth: " + this.game.getHealthHealthTracker());
-        System.out.println("Hull: " + this.game.getHullHealth());
-        System.out.println("Action Points: " + this.game.getActionPoints());       
+        System.out.println("\nHealth: " + this.game.getGame().getHealthHealthTracker());
+        System.out.println("Hull: " + this.game.getGame().getHullHealth());
+        System.out.println("Action Points: " + this.game.getGame().getActionPoints());       
         
         System.out.println("\n-----Journey Location-----\n");
         
         for (int i = 0; i < 15;i++){
             
-            System.out.print(this.game.getJourneyTracker().getJourneyTrackers()[i]);
+            System.out.print(this.game.getGame().getJourneyTracker().getJourneyTrackers()[i]);
                 
-            if (this.game.getJourneyTracker().getJourneyState() == i)
+            if (this.game.getGame().getJourneyTracker().getJourneyState() == i)
                 System.out.print("  <- you are here");
                 
             System.out.print("\n");
@@ -816,6 +820,7 @@ public class TextInterface {
                 //If save game
                 case 8:
 
+
                     this.game.saveGame();
 
                     break;
@@ -851,8 +856,8 @@ public class TextInterface {
     public int SelectRoomToMove(int index){
 
         int option = -1,correu=0;        
-        ArrayList<Integer> options = this.game.getNearAvailableRooms(index);
-        String MenuRooms = this.game.getRoomsNear(index);
+        ArrayList<Integer> options = this.game.getGame().getNearAvailableRooms(index);
+        String MenuRooms = this.game.getGame().getRoomsNear(index);
 
         while (!options.contains(option)) {
             
@@ -886,7 +891,7 @@ public class TextInterface {
                 option = scanInteger("\nInsira a opcao que pretende: ");
             }
 
-            if (this.game.seelockedroom(option) == true){
+            if (this.game.getGame().seelockedroom(option) == true){
                 System.out.println("\nSala Selada");
             }
             else
@@ -910,7 +915,7 @@ public class TextInterface {
 
             if(index != 0){
                 
-                if(this.game.isAnTransporterChief(index - 1)){
+                if(this.game.getGame().isAnTransporterChief(index - 1)){
                     
                     int option = SelectRoomToMovespecial(index - 1);
 
@@ -953,12 +958,12 @@ public class TextInterface {
     public int SelectRoomToSeal(){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.roomsToSeal();
+        ArrayList<Integer> options = this.game.getGame().roomsToSeal();
 
         while(!options.contains(option)){
 
             clearConsole();
-            System.out.println(this.game.toStringRoomsToSeal());
+            System.out.println(this.game.getGame().toStringRoomsToSeal());
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -994,12 +999,12 @@ public class TextInterface {
     public int SelectTrap(){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.getAvailableTraps();
+        ArrayList<Integer> options = this.game.getGame().getAvailableTraps();
 
         while(!options.contains(option)){
 
             clearConsole();
-            System.out.println(this.game.toStringAvailableTraps());
+            System.out.println(this.game.getGame().toStringAvailableTraps());
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -1011,12 +1016,12 @@ public class TextInterface {
     public int SelectTrapRoom(int trapIndex){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.getAvailableTrapRooms(trapIndex);
+        ArrayList<Integer> options = this.game.getGame().getAvailableTrapRooms(trapIndex);
 
         while(!options.contains(option)){
 
             clearConsole();
-            System.out.println(this.game.toStringAvailableTrapRooms(trapIndex));
+            System.out.println(this.game.getGame().toStringAvailableTrapRooms(trapIndex));
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -1114,7 +1119,7 @@ public class TextInterface {
 
         if (statesOfTheGame instanceof GameOver) {
             
-            this.game.savetoscorefile();
+            this.game.getGame().savetoscorefile();
             
             int option;
             System.out.println( "==== Game Over =====\n");
@@ -1124,17 +1129,18 @@ public class TextInterface {
             System.out.println("---Pontuação---");
             
             HashMap<String, Integer> scoreloader = new HashMap<String, Integer>();
-            scoreloader = this.game.scoreopener();
+            scoreloader = this.game.getGame().scoreopener();
             
             for (String i : scoreloader.keySet()) {
               System.out.print("Nome: " + i + " com Pontuação: " + scoreloader.get(i));
-              if(i == this.game.getUserName() && scoreloader.get(i)== this.game.getUser().getPoints())
+              if(i == this.game.getGame().getUserName() && scoreloader.get(i)== this.game.getGame().getUser().getPoints())
                   System.out.print(" <- Aqui estas tu");
               System.out.print("\n");
             }
                     
             option = MenuGameOver();       
-            this.game = new GameData();
+            //this.game = new GameData();
+            this.game.setGame(new GameData());
             
             if (option == 1){
 
@@ -1294,9 +1300,9 @@ public class TextInterface {
 
             do {
                 info = scanString("Que String prende meter nessa posição?");
-            } while (this.game.validateJourneyTrackerOption(info));                    
+            } while (this.game.getGame().validateJourneyTrackerOption(info));                    
 
-            Boolean verify = this.game.getJourneyTracker().changeJourney(pos, info.toUpperCase());
+            Boolean verify = this.game.getGame().getJourneyTracker().changeJourney(pos, info.toUpperCase());
         
             if (verify == false)
                 System.out.println("Não foi possivel modificar o Journey Tracker");
@@ -1306,14 +1312,14 @@ public class TextInterface {
         if (choice == 2){
             
             int pos = scanInteger("Qual o valor que pretende introduzir?");            
-            this.game.setHealthTrackervalue(pos);
+            this.game.getGame().setHealthTrackervalue(pos);
         
         }
         
         if (choice == 3){
             
             int pos = scanInteger("Qual o valor que pretende introduzir?");            
-            this.game.setHullTrackervalue(pos);
+            this.game.getGame().setHullTrackervalue(pos);
         
         }
         
@@ -1324,7 +1330,7 @@ public class TextInterface {
             System.out.println("---Pontuação---");
             
             HashMap<String, Integer> scoreloader = new HashMap<String, Integer>();
-            scoreloader = this.game.scoreopener();
+            scoreloader = this.game.getGame().scoreopener();
             
             for (String i : scoreloader.keySet()) {
               System.out.print("Nome: " + i + " com Pontuação: " + scoreloader.get(i));
