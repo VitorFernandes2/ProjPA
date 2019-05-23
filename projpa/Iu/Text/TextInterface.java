@@ -599,7 +599,7 @@ public class TextInterface {
       
         while (option < 0 || option > 10) {
 
-            clearConsole();
+            //clearConsole();
             showStatus();
             System.out.println(MenuConstants.CrewPhaseActionsConst);
             option = scanInteger("\nInsira a opcao que pretende: ");
@@ -976,7 +976,7 @@ public class TextInterface {
 
         while (option < 1 || option > 2) {
 
-            clearConsole();
+            //clearConsole();
             System.out.println(MenuConstants.GameOverConst);
             option = scanInteger("\nInsira a opcao que pretende: ");
 
@@ -1185,7 +1185,7 @@ public class TextInterface {
     }
 
     private void mostrapont() {
-
+            clearConsole();
             System.out.println("---Pontuação---");
             this.game.getUserPontuation();
             String opt = scanString("\nPressione Enter para continuar...");
@@ -1193,7 +1193,7 @@ public class TextInterface {
     }
 
     private void ui_heal(boolean helthoutput) {
-        
+        clearConsole();
         if(helthoutput == false){
             System.out.println("-------------------------");
             System.out.println("Não é possivel aumentar a vida");
@@ -1208,7 +1208,7 @@ public class TextInterface {
     }
 
     private void ui_hull(boolean hulloutput) {
-        
+        clearConsole();
         if(hulloutput == false){
             System.out.println("-------------------------");
             System.out.println("Não é possivel aumentar o hull");
@@ -1223,6 +1223,7 @@ public class TextInterface {
 
     private void ui_redshirt(int redshirtoutput) {
         
+        clearConsole();
         System.out.println("-------------------------");
         
         if(redshirtoutput == 0){
@@ -1231,7 +1232,7 @@ public class TextInterface {
             
         }
         if(redshirtoutput == 1){
-            
+            ;
             System.out.println("Não existem redshirts");
             
         }
@@ -1246,7 +1247,7 @@ public class TextInterface {
     }
 
     private void ui_restphaseout(boolean outputs) {
-        
+        clearConsole();
         if (outputs == true)
             System.out.println("Foi possivel realizar a opção escolhida");
         else
