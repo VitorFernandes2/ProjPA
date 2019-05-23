@@ -22,7 +22,10 @@ public class HealthTracker extends GameConstants implements Serializable{
     }
 
     public void setHullstate(int dstate) {
-        this.healthstate = dstate;
+        if (dstate > 12)
+            this.healthstate = 12;
+        else
+            this.healthstate = dstate;
     }
     
     public void Hullhit(){

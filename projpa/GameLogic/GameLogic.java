@@ -1,32 +1,16 @@
 package projpa.GameLogic;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
-import projpa.GameLogic.CrewMembers.*;
-import projpa.GameLogic.Dice.Dice;
-import projpa.GameLogic.MapRooms.*;
+import projpa.GameLogic.MapRooms.Room1;
 import projpa.GameLogic.StateMachine.*;
-import projpa.GameLogic.Trackers.HealthTracker;
-import projpa.GameLogic.Trackers.HullTracker;
-import projpa.GameLogic.Trackers.JourneyTracker;
-import projpa.GameLogic.Trackers.InspirationPoints;
 import projpa.GameLogic.Traps.Trap;
-import projpa.GameLogic.UpgradeCards.AddOneAtackDiceResult;
-import projpa.GameLogic.UpgradeCards.GainOneSealedRoom;
-import projpa.GameLogic.UpgradeCards.UpgradeCard;
 import projpa.GameLogic.User.User;
-import projpa.GameLogic.General.General;
 
 
-public class GameLogic {
+public class GameLogic implements Serializable{
 
     private GameData game;
     private IStates stateOfTheGame;
@@ -39,48 +23,240 @@ public class GameLogic {
     
     public GameLogic(GameData game) {
         this.game = new GameData(game);
-        //this.stateOfTheGame = game.getStateOfTheGame();
         this.stateOfTheGame = new AwaitCrewPhaseActions(this.game);
     }
-    
-    public GameLogic(GameLogic game) {
-        this.game = new GameData(game.getGame());
-        //this.stateOfTheGame = game.getStateOfTheGame();
-        this.stateOfTheGame = game.getStateOfTheGame();
-    }
-    
-        /**
-     * @return the a stateOfTheGame copy
-     */
-    public IStates getStateOfTheGame() {
-        
-        //IStates copygamestate = stateOfTheGame;
-        //return copygamestate;
-        return stateOfTheGame;
-    }
-    
-            /**
-     * @return the a TheGame
-     */
-    public GameData getGame() {
-        return this.game;
-    }
-    
-    public void setGame(GameData game2) {
-        
-        List<Alien> aliens = new ArrayList<>();
-        aliens = game2.getAliens();
-        
-        if (aliens.size() == 0){
-            this.game = game2;
+
+    public boolean LoadGame(){
+
+        try {
+
+            FileInputStream fi = new FileInputStream(new File("savegame.txt"));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+
+            // Read objects
+            GameData pr1 = (GameData) oi.readObject();
+
+            oi.close();
+
+            this.game = new GameData(pr1);
+            this.stateOfTheGame = new AwaitCrewPhaseActions(this.game);
+
+        } catch (IOException e) {
+
+            return false;
+
+        } catch (ClassNotFoundException ex) {
+
+            //Logger.getLogger(TextInterface.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+
         }
-        else{
-            this.game = game2;
-            this.stateOfTheGame = new AwaitCrewPhaseActions(game2);
-        }
+
+        return true;
+
     }
-    
-    
+
+    public boolean inGameOverState(){
+        return stateOfTheGame instanceof GameOver;
+    }
+
+    public boolean inAwaitThirdTokenSecondCrewMember(){
+        return stateOfTheGame instanceof AwaitThirdTokenSecondCrewMember;
+    }
+
+    public boolean inAwaitDiceRolling(){
+        return stateOfTheGame instanceof AwaitDiceRolling;
+    }
+
+    public boolean inAwaitSaveGame(){
+        return stateOfTheGame instanceof AwaitSaveGame;
+    }
+
+    public boolean inAwaitPeekRoom(){
+        return stateOfTheGame instanceof AwaitPeekRoom;
+    }
+
+    public boolean inAwaitRestPhaseActions(){
+        return stateOfTheGame instanceof AwaitRestPhaseActions;
+    }
+
+    public boolean inAwaitCrewPhaseActions(){
+        return stateOfTheGame instanceof AwaitCrewPhaseActions;
+    }
+
+    public boolean inAwaitChooseParticleDisperser(){
+        return stateOfTheGame instanceof AwaitChooseParticleDisperser;
+    }
+
+    public boolean validateJourneyTrackerOption(String info){
+        return this.game.validateJourneyTrackerOption(info);
+    }
+
+    public boolean changeJourney(int pos, String info){
+        return this.game.getJourneyTracker().changeJourney( pos, info.toUpperCase());
+    }
+
+    public int getJourneyState(){
+        return this.game.getJourneyTracker().getJourneyState();
+    }
+
+    public String getJourneyValue(int index){
+        return this.game.getJourneyTracker().getJourneyTrackers()[index];
+    }
+
+    public String showStatus(){
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("-----Status-----\n");
+        if (this.game.returnplayerslocation(0)!= "SecretRoom"){
+            sb.append("Crew Member 1 - Name: "
+                    + this.game.getCrewMember1Name()
+                    + " - Location: "
+                    + this.game.returnplayerslocation(0)
+                    + " - Can move: "
+                    + this.game.getCrewMembers()[0].getMovementToDo()
+            );}
+        else
+            sb.append("Crew Member 1 - Name: " + this.game.getCrewMember1Name() + " is dead");
+
+        if (this.game.returnplayerslocation(1)!= "SecretRoom"){
+            sb.append("Crew Member 2 - Name: "
+                    + this.game.getCrewMember2Name()
+                    + " - Location: "
+                    + this.game.returnplayerslocation(1)
+                    + " - Can move: "
+                    + this.game.getCrewMembers()[1].getMovementToDo()
+            );}
+        else
+            sb.append("Crew Member 2 - Name: " + this.game.getCrewMember2Name() + " is dead");
+
+
+        sb.append("\n-----Aliens-----\n");
+
+        for (int i = 0; i < game.getAliens().size();i++){
+
+            sb.append("Alien number:" + (i + 1)
+                    + " is in: " + game.getAliens().get(i).getRoom().getName());
+
+        }
+
+        sb.append("\nHealth: " + this.game.getHealthHealthTracker());
+        sb.append("Hull: " + this.game.getHullHealth());
+        sb.append("Action Points: " + this.game.getActionPoints());
+
+        sb.append("\n-----Journey Location-----\n");
+
+        for (int i = 0; i < 15;i++){
+
+            sb.append(this.getJourneyValue(i));
+
+            if (this.getJourneyState() == i)
+                sb.append("  <- you are here");
+
+            sb.append("\n");
+        }
+        sb.append("\n--------------------\n");
+
+        return sb.toString();
+
+    }
+
+    public boolean isAnTransporterChief(int crewMemberIndex){
+
+        if (crewMemberIndex <= 0 || crewMemberIndex >=1)
+            return false;
+
+        return this.game.isAnTransporterChief(crewMemberIndex);
+
+    }
+
+    public String toStringRoomsToSeal(){
+
+        return this.game.toStringRoomsToSeal();
+
+    }
+
+    public ArrayList<Integer> roomsToSeal(){
+
+        ArrayList<Integer> toSealRooms = new ArrayList<>();
+        toSealRooms.addAll(this.game.roomsToSeal());
+        return toSealRooms;
+
+    }
+
+    public ArrayList<Integer> getAvailableTraps(){
+
+        ArrayList<Integer> availableTraps = new ArrayList<>();
+        availableTraps.addAll(this.game.getAvailableTraps());
+        return availableTraps;
+
+    }
+
+    public String toStringAvailableTraps(){
+        return this.game.toStringAvailableTraps();
+    }
+
+    public ArrayList<Integer> getAvailableTrapRooms(int trapIndex){
+
+        ArrayList<Integer> availableTrapRooms = new ArrayList<>();
+        availableTrapRooms.addAll(this.game.getAvailableTrapRooms(trapIndex));
+        return availableTrapRooms;
+
+    }
+
+    public String toStringAvailableTrapRooms(int trapIndex){
+        return this.game.toStringAvailableTrapRooms(trapIndex);
+    }
+
+    public void setHealthTrackerValue(int value){
+        if (inAwaitBeginning())
+            this.game.setHealthTrackervalue(value);
+    }
+
+    public void setHullTrackerValue(int value){
+        if (inAwaitBeginning())
+            this.game.setHullTrackervalue(value);
+    }
+
+    public boolean inAwaitBeginning(){
+        return stateOfTheGame instanceof AwaitBeginning;
+    }
+
+    public boolean inAwaitCrewMembersSelection(){
+        return stateOfTheGame instanceof AwaitCrewMembersSelection;
+    }
+
+    public boolean inAwaitThirdTokenFirstCrewMember(){
+        return stateOfTheGame instanceof AwaitThirdTokenFirstCrewMember;
+    }
+
+    public String getUserPontuation(){
+
+        StringBuilder sb = new StringBuilder();
+
+        HashMap<String, Integer> scoreloader = new HashMap<String, Integer>();
+        scoreloader = this.game.scoreopener();
+
+        for (String i : scoreloader.keySet()) {
+            sb.append("Nome: " + i + " com Pontuação: " + scoreloader.get(i));
+            if(i == this.game.getUserName() && scoreloader.get(i)== this.game.getPoints())
+                sb.append(" <- Aqui estas tu");
+            sb.append("\n");
+        }
+
+        return sb.toString();
+
+    }
+
+    public boolean SaveScore(){
+        return this.game.savetoscorefile();
+    }
+
+    public boolean wasSaved(){
+        return this.stateOfTheGame.wasSaved();
+    }
+
      /**
      * @param stateOfTheGame the stateOfTheGame to set
      */
@@ -88,23 +264,58 @@ public class GameLogic {
         this.stateOfTheGame = stateOfTheGame;
     }
 
-    	public ArrayList<Integer> atack(int i) {
-            
-            boolean wascrew = false;
-            if(this.stateOfTheGame instanceof AwaitCrewPhaseActions)
-                wascrew = true;
+    public ArrayList<Integer> atack(int i) {
 
-            this.stateOfTheGame = this.stateOfTheGame.atack(i);
+        boolean wascrew = false;
+        if(inAwaitCrewPhaseActions())
+            wascrew = true;
 
-            ArrayList<Integer> returns = new ArrayList<Integer>();
-            if(wascrew == false && this.stateOfTheGame instanceof AwaitDiceRolling){  
-                returns = this.stateOfTheGame.getgeninfo();
-                this.stateOfTheGame = this.stateOfTheGame.nextTurn();
+        this.stateOfTheGame = this.stateOfTheGame.atack(i);
 
-            }
+        ArrayList<Integer> returns = new ArrayList<Integer>();
 
-            return returns;
+        if(!wascrew && inAwaitDiceRolling()) {
+
+            returns = this.stateOfTheGame.getgeninfo();
+            this.stateOfTheGame = this.stateOfTheGame.nextTurn();
+
+        }
+
+        return returns;
+
 	}
+
+	public ArrayList<Integer> getNearAvailableRooms(int index){
+
+        if (index < 0 || index > 1)
+            return null;
+
+        return this.game.getNearAvailableRooms(index);
+
+    }
+
+    public String getRoomsNear(int index){
+
+        if (index < 0 || index > 1)
+            return null;
+
+        return this.game.getRoomsNear(index);
+
+    }
+
+    public String showAllRooms(){
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(new Room1().getAllClassesNumberAndName());
+
+        return sb.toString();
+
+    }
+
+    public boolean seelockedroom(int option){
+        return this.game.seelockedroom(option);
+    }
 
 	public void goBack() {
         this.stateOfTheGame = this.stateOfTheGame.goBack();
@@ -125,6 +336,51 @@ public class GameLogic {
 	public void selectCrewMembers(String crewMember1, String crewMember2) {
         this.stateOfTheGame = this.stateOfTheGame.selectCrewMembers(crewMember1, crewMember2);
 	}
+
+	public String toStringParticleDisperser(){
+
+        StringBuilder sb = new StringBuilder();
+        ArrayList<Trap> particleDisperser = this.game.getParticleDisperserTraps();
+        int i = 0;
+
+        for (Trap trap : particleDisperser) {
+
+            i++;
+            sb.append(i + " - Particle Disperser na room " + trap.getRoom().getName());
+
+        }
+
+        return sb.toString();
+
+    }
+
+    public int getNumberOfParticleDisperser(){
+
+        ArrayList<Trap> particleDisperser = this.game.getParticleDisperserTraps();
+        return particleDisperser.size();
+
+    }
+
+    public String getRoomNameOfParticleDisperser(int index){
+        ArrayList<Trap> particleDisperser = this.game.getParticleDisperserTraps();
+        return particleDisperser.get(index).getRoomName();
+    }
+
+    public int getInspirationPoints(){
+        return this.game.getInspirationPoints().getInspstate();
+    }
+
+    public ArrayList<Integer> getCrewMembersForMenu(){
+
+        ArrayList<Integer> CrewMembersForMenu = new ArrayList<>();
+        CrewMembersForMenu.addAll(this.game.getCrewMembersForMenu());
+        return CrewMembersForMenu;
+
+    }
+
+    public String toStringAvailableCrewMembers(ArrayList<Integer> options){
+        return this.game.toStringAvailableCrewMembers(options);
+    }
 
 	public void Inputbegining() {
         this.stateOfTheGame = this.stateOfTheGame.InputBeginning(this.game);
@@ -196,8 +452,8 @@ public class GameLogic {
     public boolean addonethedice(){
         return this.stateOfTheGame.addonethedice();
     }
-    
-        public int redShirtSpecial(){
+
+    public int redShirtSpecial(){
 
         int count = 0;
 
@@ -224,7 +480,24 @@ public class GameLogic {
         }
         
         return 0; // sucess
-    }    
-    
-    
+
+    }
+
+    public void newGame() {
+        this.stateOfTheGame = new AwaitBeginning();
+        this.game = new GameData();
+    }
+
+    public void newUser(String name) {
+
+        User user = new User(name);
+        this.game.setUser(user);
+
+    }
+
+    public void SaveGame() {
+        if (inAwaitSaveGame())
+            this.stateOfTheGame = this.stateOfTheGame.saveGame();
+    }
+
 }

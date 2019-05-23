@@ -21,7 +21,12 @@ public class HullTracker extends GameConstants implements Serializable{
     }
 
     public void setHullstate(int hullstate) {
-        this.hullstate = hullstate;
+
+        if (hullstate > 12)
+            this.hullstate = 12;
+        else
+            this.hullstate = hullstate;
+
     }
 
     public void addHullHealth(){

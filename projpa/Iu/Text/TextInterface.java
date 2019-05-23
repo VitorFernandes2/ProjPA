@@ -1,17 +1,9 @@
 package projpa.Iu.Text;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import projpa.GameLogic.GameData;
 import projpa.GameLogic.GameLogic;
 import projpa.GameLogic.StateMachine.*;
 import projpa.GameLogic.Traps.Trap;
@@ -35,7 +27,6 @@ public class TextInterface {
     public TextInterface(GameLogic game){
 
         this.game = game;
-        this.game.setGame(this.game.getGame());
         
     }
 
@@ -92,48 +83,22 @@ public class TextInterface {
         
         String option = " ";
       
-                option = scanString("Deseja mesmo carregar o jogo (Y or N)?");
-
-                        
+        option = scanString("Deseja mesmo carregar o jogo (Y or N)?");
             
-            if (option.toLowerCase().equals("y")){
-        	              
-                try {
+        if (option.toLowerCase().equals("y")){
 
-                        FileInputStream fi = new FileInputStream(new File("savegame.txt"));
-                        ObjectInputStream oi = new ObjectInputStream(fi);
+            if (this.game.LoadGame()) {
 
-                        // Read objects
-                        GameData pr1 = (GameData) oi.readObject();
+                System.out.println("\n\nJogo carregado com sucesso.");
+                startGame();
 
-                        oi.close();
-                        
-                        //this.game = new GameData(pr1);
-                        this.game.setGame(new GameData(pr1));
-                        
-                } catch (IOException e) {
-
-                        e.printStackTrace();
-
-                } catch (ClassNotFoundException ex) {
-                Logger.getLogger(TextInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
-                
-                
-
-            startGame();
+            else {
+                System.out.println("\n\nNão foi possível carregar o jogo.");
+            }
 
         }        
 
-    }
-
-    /**
-     * This function show if a string is a file or not
-     * @param filename
-     * @return true if exists
-     */
-    public boolean validateTextFile(String filename){
-        return false;
     }
 
     /**
@@ -171,18 +136,14 @@ public class TextInterface {
      */
     public void ui_AwaitBeginning(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if(statesOfTheGame instanceof AwaitBeginning){
+        if(this.game.inAwaitBeginning()){
             
             AwaitBeginningMenu();
 
             String name = new String();
             name = scanString("Insira o nome do Jogador: ");
-            
-            User user = new User(name);
 
-            this.game.getGame().setUser(user);
+            this.game.newUser(name);
             this.game.Inputbegining();
 
         }            
@@ -281,9 +242,7 @@ public class TextInterface {
 
        int option[] = new int[2];
 
-       IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if (statesOfTheGame instanceof AwaitCrewMembersSelection) {
+        if (this.game.inAwaitCrewMembersSelection()) {
             
             int i;
             
@@ -294,8 +253,8 @@ public class TextInterface {
                 if (option[i] == 0) {
                     
                     if (i == 0) {
-                        
-                        this.game.setGame(new GameData());
+
+                        this.game.newGame();
                         break;
 
                     }                    
@@ -371,10 +330,8 @@ public class TextInterface {
      * This function is the UI for the AwaitThirdTokenFirstCrewMember state
      */
     public void ui_AwaitThirdTokenFirstCrewMember(){
-        
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
 
-        if (statesOfTheGame instanceof AwaitThirdTokenFirstCrewMember) {
+        if (this.game.inAwaitThirdTokenFirstCrewMember()) {
             
             int room = CrewMember1RoomSelectionMenu();
 
@@ -392,9 +349,7 @@ public class TextInterface {
      */
     public void ui_AwaitThirdTokenSecondCrewMember(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if (statesOfTheGame instanceof AwaitThirdTokenSecondCrewMember) {
+        if (this.game.inAwaitThirdTokenSecondCrewMember()) {
             
             int room = CrewMember2RoomSelectionMenu();
 
@@ -408,26 +363,19 @@ public class TextInterface {
     }
 
     public String chooseParticleDisperserMenu(){
-        
+
+        //TESTAR
+
         int option = -1;
         int i = 0;
-        ArrayList<Trap> particleDisperser = this.game.getGame().getParticleDisperserTraps();
 
-        while (option < 0 || option > i) {
+        while (option < 0 || option > this.game.getNumberOfParticleDisperser()) {
 
             i = 0;
             clearConsole();
             System.out.println(MenuConstants.ChooseParticleDisperserConst);
-
-            for (Trap trap : particleDisperser) {
-                
-                i++;
-                System.out.println(i + " - Particle Disperser na room " + trap.getRoom().getName());
-
-            }
-
+            System.out.println(this.game.toStringParticleDisperser());
             System.out.println("0 - Voltar");
-
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -436,7 +384,7 @@ public class TextInterface {
             return "Sair";
         else{
             option = option - 1;
-            return particleDisperser.get(option).getRoom().getName();
+            return this.game.getRoomNameOfParticleDisperser(option);
         }
             
     }
@@ -446,9 +394,7 @@ public class TextInterface {
      */
     public void ui_AwaitChooseParticleDisperser(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if (statesOfTheGame instanceof AwaitChooseParticleDisperser) {
+        if (this.game.inAwaitChooseParticleDisperser()) {
             
             String option = chooseParticleDisperserMenu();
 
@@ -478,9 +424,7 @@ public class TextInterface {
 
     public void ui_AwaitDiceRolling(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if(statesOfTheGame instanceof AwaitDiceRolling){
+        if(this.game.inAwaitDiceRolling()){
 
             clearConsole();
             int crewMemberIndex = SelectCrewMemberMenu(); 
@@ -513,24 +457,19 @@ public class TextInterface {
     }
 
     public void ui_AwaitSaveGame(){
-        
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
 
-        if(statesOfTheGame.wasSaved() == true){
-            // saved game start with the last state, so save game... this fix it
-            statesOfTheGame.goBack();
+        if(this.game.wasSaved()){
+            this.game.goBack();
         }
         
-        if (statesOfTheGame instanceof AwaitSaveGame) {
+        if (this.game.inAwaitSaveGame()) {
             
             String option = " ";
               
-              option = scanString("Deseja mesmo guardar (Y or N)?");
+            option = scanString("Deseja mesmo guardar (Y or N)?");
 
-    
-            
             if (option.toLowerCase().equals("y"))
-                this.game.setStateOfTheGame(statesOfTheGame.saveGame());
+                this.game.SaveGame();
                         
         }
 
@@ -544,7 +483,7 @@ public class TextInterface {
             
             clearConsole();
             System.out.println("Encontra-se na RestPhase. \nO que pretende fazer:\n");
-            System.out.println("Inspiration Points (IP):" + game.getGame().getInspirationPoints().getInspstate());
+            System.out.println("Inspiration Points (IP):" + this.game.getInspirationPoints());
             System.out.println("\n1- Adicionar 1 para a vida (custa 1 IP)");
             System.out.println("2- Reparar 1 Hull (custa 1 IP)");
             System.out.println("3- Construir 1 Organic Detonator (custa 2 IP)");
@@ -565,9 +504,7 @@ public class TextInterface {
 
     public void ui_AwaitRestPhaseActions(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if (statesOfTheGame instanceof AwaitRestPhaseActions) {
+        if (this.game.inAwaitRestPhaseActions()) {
             //interface
             
             int opcao = MenuRestPhase();
@@ -680,13 +617,13 @@ public class TextInterface {
     public int SelectCrewMemberMenu(){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.getGame().getCrewMembersForMenu();
+        ArrayList<Integer> options = this.game.getCrewMembersForMenu();
 
-        while(!options.contains(option)){
+        while(!options.contains(option) && option != 0){
 
             clearConsole();
-            System.out.println(MenuConstants.beginningConst + this.game.getGame().toStringAvailableCrewMembers(options));
-            
+            System.out.println(MenuConstants.beginningConst + this.game.toStringAvailableCrewMembers(options));
+            System.out.println("0 - Voltar");
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -694,69 +631,17 @@ public class TextInterface {
         return option;
 
     }
-    
+
     public void showStatus(){
-        
-        System.out.println("-----Status-----\n");
-        if (this.game.getGame().returnplayerslocation(0)!= "SecretRoom"){
-        System.out.println("Crew Member 1 - Name: " 
-            + this.game.getGame().getCrewMember1Name() 
-            + " - Location: " 
-            + this.game.getGame().returnplayerslocation(0)
-            + " - Can move: "
-            + this.game.getGame().getCrewMembers()[0].getMovementToDo()
-        );}
-        else 
-            System.out.println("Crew Member 1 - Name: " + this.game.getGame().getCrewMember1Name() + " is dead");
-        
-        if (this.game.getGame().returnplayerslocation(1)!= "SecretRoom"){
-        System.out.println("Crew Member 2 - Name: " 
-            + this.game.getGame().getCrewMember2Name() 
-            + " - Location: " 
-            + this.game.getGame().returnplayerslocation(1)
-            + " - Can move: "
-            + this.game.getGame().getCrewMembers()[1].getMovementToDo()
-        );}
-        else
-             System.out.println("Crew Member 2 - Name: " + this.game.getGame().getCrewMember2Name() + " is dead");
-        
-        
-        System.out.println("\n-----Aliens-----\n");
-        
-        for (int i = 0; i < game.getGame().getAliens().size();i++){
-            
-            System.out.println("Alien number:" + (i + 1) 
-            + " is in: " + game.getGame().getAliens().get(i).getRoom().getName());
-            
-        }
-        
-        System.out.println("\nHealth: " + this.game.getGame().getHealthHealthTracker());
-        System.out.println("Hull: " + this.game.getGame().getHullHealth());
-        System.out.println("Action Points: " + this.game.getGame().getActionPoints());       
-        
-        System.out.println("\n-----Journey Location-----\n");
-        
-        for (int i = 0; i < 15;i++){
-            
-            System.out.print(this.game.getGame().getJourneyTracker().getJourneyTrackers()[i]);
-                
-            if (this.game.getGame().getJourneyTracker().getJourneyState() == i)
-                System.out.print("  <- you are here");
-                
-            System.out.print("\n");
-        }
-        System.out.println("\n--------------------\n");
+        System.out.println(this.game.showStatus());
     }
-    
 
     /**
      * This function does all the Crew Phase Actions
      */
     public void ui_AwaitCrewPhaseActions(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if (statesOfTheGame instanceof AwaitCrewPhaseActions) {
+        if (this.game.inAwaitCrewPhaseActions()) {
             
             int option = CrewPhaseActionsMenu();
             
@@ -773,7 +658,7 @@ public class TextInterface {
                 //If is atack
                 case 2:
 
-                    this.game.atack(0); 
+                    this.game.atack(0);
                     ui_Atack();
 
                     break;
@@ -781,16 +666,14 @@ public class TextInterface {
                 //If Heal One Health
                 case 3:
 
-                    boolean helthoutput = this.game.heal(); 
-                    ui_heal(helthoutput);
+                    ui_heal(this.game.heal());
                     
                     break;
 
                 //If Fix One Hull
                 case 4:
 
-                        boolean hulloutput = this.game.fixOneHull(); 
-                        ui_hull(hulloutput);
+                        ui_hull(this.game.fixOneHull());
                         
                     break;
 
@@ -856,34 +739,34 @@ public class TextInterface {
     public int SelectRoomToMove(int index){
 
         int option = -1,correu=0;        
-        ArrayList<Integer> options = this.game.getGame().getNearAvailableRooms(index);
-        String MenuRooms = this.game.getGame().getRoomsNear(index);
+        ArrayList<Integer> options = this.game.getNearAvailableRooms(index);
+        String MenuRooms = this.game.getRoomsNear(index);
 
-        while (!options.contains(option)) {
+        while (!options.contains(option) && option != 0) {
             
             if(correu>0)
                 System.out.println("Opção errada");
             
             clearConsole();
             System.out.println(MenuRooms);
+            System.out.println("0 - Voltar\n");
             option = scanInteger("\nInsira a opcao que pretende: ");
+
             correu++;
+
         }
 
         return option;
 
     }
     
-    public int SelectRoomToMovespecial(int index){
+    public int SelectRoomToMoveSpecial(int index){
         
         int option = -1,allcorrect = 1;
         clearConsole();
         System.out.println("Foi escolhido um Transporter Cheif, logo pode escolher qualquer local:");
         
-        System.out.println("1- Bridge\n" + "2- Sick Bay\n" + "3- Brig\n" + "4- Crew Quarters\n" + 
-                "5- Conference Room\n" + "6- Shuttle Bay\n" + "7- Weapons Bay\n" + "8- Mess Hall" +
-                "9- Engineering\n" + "10- Astrometrics" + "11- Holodeck" + "12- Hydroponics");
-        
+        System.out.println(this.game.showAllRooms());
         
         do{
 
@@ -891,7 +774,7 @@ public class TextInterface {
                 option = scanInteger("\nInsira a opcao que pretende: ");
             }
 
-            if (this.game.getGame().seelockedroom(option) == true){
+            if (this.game.seelockedroom(option)){
                 System.out.println("\nSala Selada");
             }
             else
@@ -900,6 +783,7 @@ public class TextInterface {
         }while (allcorrect != 0);
         
         return option;
+
     }
             
     /**
@@ -907,17 +791,15 @@ public class TextInterface {
      */
     public void ui_Move(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if (statesOfTheGame instanceof AwaitPeekRoom) {
+        if (this.game.inAwaitPeekRoom()) {
             
             int index = SelectCrewMemberMenu();
 
             if(index != 0){
                 
-                if(this.game.getGame().isAnTransporterChief(index - 1)){
+                if(this.game.isAnTransporterChief(index - 1)){
                     
-                    int option = SelectRoomToMovespecial(index - 1);
+                    int option = SelectRoomToMoveSpecial(index - 1);
 
                     if (option != 0) 
                         this.game.move(index - 1, option);
@@ -938,8 +820,7 @@ public class TextInterface {
                         
                     }
                     else{
-                        this.game.goBack();       
-
+                        this.game.goBack();
                     }             
                 
                 }
@@ -958,12 +839,13 @@ public class TextInterface {
     public int SelectRoomToSeal(){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.getGame().roomsToSeal();
+        ArrayList<Integer> options = this.game.roomsToSeal();
 
-        while(!options.contains(option)){
+        while(!options.contains(option) && option != 0){
 
             clearConsole();
-            System.out.println(this.game.getGame().toStringRoomsToSeal());
+            System.out.println(this.game.toStringRoomsToSeal());
+            System.out.println("0 - Voltar\n");
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -976,16 +858,14 @@ public class TextInterface {
      * This function in to Seal a room
      */
     public void ui_SealRoom(){
-        
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
 
-        if (statesOfTheGame instanceof AwaitPeekRoom) {
+        if (this.game.inAwaitPeekRoom()) {
             
             int option = SelectRoomToSeal();
 
             if (option != 0){
                 this.game.sealRoom(option); 
-                System.out.println("Sala selada com o numero: " +option);
+                System.out.println("Sala selada com o numero: " + option);
             }
             else
                 this.game.goBack();
@@ -999,12 +879,13 @@ public class TextInterface {
     public int SelectTrap(){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.getGame().getAvailableTraps();
+        ArrayList<Integer> options = this.game.getAvailableTraps();
 
-        while(!options.contains(option)){
+        while(!options.contains(option) && option != 0){
 
             clearConsole();
-            System.out.println(this.game.getGame().toStringAvailableTraps());
+            System.out.println(this.game.toStringAvailableTraps());
+            System.out.println("0 - Voltar\n");
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -1016,12 +897,13 @@ public class TextInterface {
     public int SelectTrapRoom(int trapIndex){
 
         int option = -1;
-        ArrayList<Integer> options = this.game.getGame().getAvailableTrapRooms(trapIndex);
+        ArrayList<Integer> options = this.game.getAvailableTrapRooms(trapIndex);
 
-        while(!options.contains(option)){
+        while(!options.contains(option) && option != 0){
 
             clearConsole();
-            System.out.println(this.game.getGame().toStringAvailableTrapRooms(trapIndex));
+            System.out.println(this.game.toStringAvailableTrapRooms(trapIndex));
+            System.out.println("0 - Voltar\n");
             option = scanInteger("\nInsira a opcao que pretende: ");
 
         }
@@ -1035,9 +917,7 @@ public class TextInterface {
      */
     public void ui_SetTrap(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
-
-        if (statesOfTheGame instanceof AwaitPeekRoom) {
+        if (this.game.inAwaitPeekRoom()) {
             
             int trapIndex = SelectTrap();
 
@@ -1067,26 +947,22 @@ public class TextInterface {
      */
     public void ui_Atack(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
+        System.out.println("\n\nentrei");
 
-        if (statesOfTheGame instanceof AwaitPeekRoom) {
-            
+        if (this.game.inAwaitPeekRoom()) {
+
+            System.out.println("\n\nentrei2");
+
             int option = SelectCrewMemberMenu();
 
             if(option != 0){
-                //ArrayList<Integer> output = new ArrayList<Integer>();
-                
-                this.game.atack(option - 1); 
-                
-                //System.out.println("O resultado do dado foi:" + output.get(0)/output.get(1) + "com o dado lancado " + output.get(1) + " vezes e o player " + output.get(3));
-                
+
+                this.game.atack(option - 1);
 
             }
             else{
 
-                //System.out.println("O crew memeber selecionado é invalido");
-                
-                this.game.goBack(); 
+                this.game.goBack();
             
             }
 
@@ -1115,38 +991,27 @@ public class TextInterface {
      */
     public void ui_GameOver(){
 
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
+        if (this.game.inGameOverState()) {
 
-        if (statesOfTheGame instanceof GameOver) {
-            
-            this.game.getGame().savetoscorefile();
-            
+            if (this.game.SaveScore()){
+                System.out.println("\n\nNão foi possivel guardar a pontuação do jogo.");
+            }
+
             int option;
             System.out.println( "==== Game Over =====\n");
-            
 
             // Player score
             System.out.println("---Pontuação---");
-            
-            HashMap<String, Integer> scoreloader = new HashMap<String, Integer>();
-            scoreloader = this.game.getGame().scoreopener();
-            
-            for (String i : scoreloader.keySet()) {
-              System.out.print("Nome: " + i + " com Pontuação: " + scoreloader.get(i));
-              if(i == this.game.getGame().getUserName() && scoreloader.get(i)== this.game.getGame().getUser().getPoints())
-                  System.out.print(" <- Aqui estas tu");
-              System.out.print("\n");
-            }
-                    
-            option = MenuGameOver();       
-            //this.game = new GameData();
-            this.game.setGame(new GameData());
-            
+
+            System.out.println(this.game.getUserPontuation());
+
+            option = MenuGameOver();
+
             if (option == 1){
 
-                startGame();
-            
-            }                
+                this.game.newGame();
+
+            }
 
         }
 
@@ -1157,6 +1022,10 @@ public class TextInterface {
      */
     public void clearConsole() {
 
+        for (int i = 0; i < 50; i++) {
+            System.out.println("\n");
+        }
+
         if (System.getProperties().getProperty("os.name").contains("Windows")) {
 
             try {
@@ -1166,13 +1035,6 @@ public class TextInterface {
             }
 
         }
-        else{
-
-            for (int i = 0; i < 50; i++) {
-                System.out.println("\n");
-            }
-
-        }        
 
     }
 
@@ -1236,46 +1098,43 @@ public class TextInterface {
      * This function is the game practice
      */
     public void startGame(){
-        
-        //This function is the interaction with the game core and the user
-        IStates statesOfTheGame = this.game.getStateOfTheGame();
 
         //while not gameOver
-        while(!(statesOfTheGame instanceof GameOver)){
+        while(!(this.game.inGameOverState())){
 
-            statesOfTheGame = this.game.getStateOfTheGame();
-
-            if (statesOfTheGame instanceof AwaitBeginning) 
+            if (this.game.inAwaitBeginning())
                 ui_AwaitBeginning();
 
-            if(statesOfTheGame instanceof AwaitCrewMembersSelection)
+            if(this.game.inAwaitCrewMembersSelection())
                 ui_AwaitCrewMemberSelection();
 
-            if (statesOfTheGame instanceof AwaitThirdTokenFirstCrewMember)
+            if (this.game.inAwaitThirdTokenFirstCrewMember())
                 ui_AwaitThirdTokenFirstCrewMember();
 
-            if (statesOfTheGame instanceof AwaitThirdTokenSecondCrewMember)
+            if (this.game.inAwaitThirdTokenSecondCrewMember())
                 ui_AwaitThirdTokenSecondCrewMember();
 
-            if (statesOfTheGame instanceof AwaitChooseParticleDisperser)
+            if (this.game.inAwaitChooseParticleDisperser())
                 ui_AwaitChooseParticleDisperser();
 
-            if (statesOfTheGame instanceof AwaitDiceRolling)
+            if (this.game.inAwaitDiceRolling())
                 ui_AwaitDiceRolling();
 
-            if (statesOfTheGame instanceof AwaitSaveGame)
+            if (this.game.inAwaitSaveGame())
                 ui_AwaitSaveGame();
 
-            if (statesOfTheGame instanceof AwaitRestPhaseActions) 
+            if (this.game.inAwaitRestPhaseActions())
                 ui_AwaitRestPhaseActions();
 
-            if(statesOfTheGame instanceof AwaitCrewPhaseActions)
+            if(this.game.inAwaitCrewPhaseActions())
                 ui_AwaitCrewPhaseActions();
 
-            if (statesOfTheGame instanceof GameOver)
+            if (this.game.inGameOverState())
                 ui_GameOver();
 
         }
+
+        this.game.newGame();
         
     }
 
@@ -1287,40 +1146,40 @@ public class TextInterface {
         System.out.println("Outro numero para sair");
 
         int choice = scanInteger("Que opcao pretende: ");
-        
-        if (choice == 1){
-            
-            int pos;
 
-            do{
-                pos = scanInteger("Que posição pretende mudar?"); 
-            }while(pos <= 0 || pos > 13);
-            
-            String info;
+        int pos;
 
-            do {
-                info = scanString("Que String prende meter nessa posição?");
-            } while (this.game.getGame().validateJourneyTrackerOption(info));                    
+        switch (choice){
 
-            Boolean verify = this.game.getGame().getJourneyTracker().changeJourney(pos, info.toUpperCase());
-        
-            if (verify == false)
-                System.out.println("Não foi possivel modificar o Journey Tracker");
-        
-        }
-        
-        if (choice == 2){
-            
-            int pos = scanInteger("Qual o valor que pretende introduzir?");            
-            this.game.getGame().setHealthTrackervalue(pos);
-        
-        }
-        
-        if (choice == 3){
-            
-            int pos = scanInteger("Qual o valor que pretende introduzir?");            
-            this.game.getGame().setHullTrackervalue(pos);
-        
+            case 1:
+
+                do{
+                    pos = scanInteger("Que posição pretende mudar?");
+                }while(pos <= 0 || pos > 13);
+
+                String info;
+
+                do {
+                    info = scanString("Que String prende meter nessa posição?");
+                } while (this.game.validateJourneyTrackerOption(info));
+
+                if (!this.game.changeJourney(pos, info.toUpperCase()))
+                    System.out.println("Não foi possivel modificar o Journey Tracker");
+
+                break;
+            case 2:
+
+                pos = scanInteger("Qual o valor que pretende introduzir?");
+                this.game.setHealthTrackerValue(pos);
+
+                break;
+            case 3:
+
+                pos = scanInteger("Qual o valor que pretende introduzir?");
+                this.game.setHullTrackerValue(pos);
+
+                break;
+
         }
         
     }
@@ -1328,15 +1187,7 @@ public class TextInterface {
     private void mostrapont() {
 
             System.out.println("---Pontuação---");
-            
-            HashMap<String, Integer> scoreloader = new HashMap<String, Integer>();
-            scoreloader = this.game.getGame().scoreopener();
-            
-            for (String i : scoreloader.keySet()) {
-              System.out.print("Nome: " + i + " com Pontuação: " + scoreloader.get(i));
-              System.out.print("\n");
-            }
-
+            this.game.getUserPontuation();
             String opt = scanString("\nPressione Enter para continuar...");
 
     }
@@ -1376,7 +1227,7 @@ public class TextInterface {
         
         if(redshirtoutput == 0){
             
-            System.out.println("Um redshirt foi abicado");
+            System.out.println("Um redshirt foi abdicado");
             
         }
         if(redshirtoutput == 1){

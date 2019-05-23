@@ -1174,8 +1174,6 @@ public class GameData implements Serializable{
         else
             getRoomsOrganicDetonator();
 
-        rooms.add(0);
-
         return rooms;
 
     }
@@ -1196,8 +1194,6 @@ public class GameData implements Serializable{
             }
             
         }
-
-        returnStringBuffer.append("0 - Voltar\n");
 
         return returnStringBuffer.toString();
     
@@ -1220,8 +1216,6 @@ public class GameData implements Serializable{
             
         }
 
-        returnStringBuffer.append("0 - Voltar\n");
-
         return returnStringBuffer.toString();
 
     }
@@ -1233,8 +1227,6 @@ public class GameData implements Serializable{
         for (Trap trap : this.getTraps())
             if (trap.getRoom() == null)
                 availableTraps.add(trap.getId());
-
-        availableTraps.add(0);
 
         return availableTraps;
 
@@ -1347,8 +1339,6 @@ public class GameData implements Serializable{
 
         }
 
-        returnString.append("0 - Voltar\n");
-
         return returnString.toString();
 
     }
@@ -1362,7 +1352,6 @@ public class GameData implements Serializable{
         ArrayList<Integer> returnArray = new ArrayList<>();
 
         returnArray.addAll(this.getCrewMember(crewMemberIndex).getCrewMemberRoom().Return_avaible_rooms());
-        returnArray.add(0);
 
         return returnArray;
     
@@ -1481,8 +1470,6 @@ public class GameData implements Serializable{
             
         }
 
-        returnString.append("0 - Voltar\n");
-
         return returnString.toString();
 
     }
@@ -1536,7 +1523,6 @@ public class GameData implements Serializable{
         if (canSealRoom(7)) {
             roomsSeal.add(7);
         }
-        roomsSeal.add(0);
 
         return roomsSeal;
 
@@ -1597,7 +1583,7 @@ public class GameData implements Serializable{
     }
     
     
-    public void savetoscorefile(){
+    public boolean savetoscorefile(){
         
         HashMap<String, Integer> scoreloader = new HashMap<String, Integer>();
         
@@ -1653,12 +1639,7 @@ public class GameData implements Serializable{
                     scoreloader.put(getUserName(), getUser().getPoints());
                 }
                 
-                
             }
-            
-            
-                
-            
 
             //writes in file   
             BufferedWriter writer = new BufferedWriter(new FileWriter("pontuacao.txt"));
@@ -1676,9 +1657,14 @@ public class GameData implements Serializable{
         }
         catch (Exception e)
         {
-          System.err.format("Exception occurred trying to read '%s'.", "pontuacao.txt");
-          e.printStackTrace();
+
+          //System.err.format("Exception occurred trying to read '%s'.", "pontuacao.txt");
+          //e.printStackTrace();
+            return false;
+
         }
+
+        return true;
         
     }
 
@@ -1707,8 +1693,6 @@ public class GameData implements Serializable{
             lista.add(2);
         }
 
-        lista.add(0);
-
         return lista;
         
     }
@@ -1726,8 +1710,6 @@ public class GameData implements Serializable{
             }
 
         }
-        
-        sb.append("0 - Voltar");
 
         return sb.toString();
 
@@ -1789,6 +1771,10 @@ public class GameData implements Serializable{
 
     public boolean isTheSameCrewMemberRoomNameByIndex(int i, String RoomName){
         return getCrewMembers()[i].getName().equals(RoomName);
+    }
+
+    public int getPoints(){
+        return this.user.getPoints();
     }
 
 }
