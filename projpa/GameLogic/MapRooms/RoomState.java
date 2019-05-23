@@ -18,6 +18,20 @@ public abstract class RoomState implements Serializable{
     public abstract String getName() ;
     
     public abstract ArrayList<Integer> Return_avaible_rooms();
+
+    public int[][] getMap(){
+
+        int map[][] = {
+                { 0, 1, 1, 0},
+                { 3, 5, 8, 4},
+                { 9, -1, -1, 11},
+                { 12, 10, 2, 7},
+                { 0, 6, 6, 0}
+        };
+
+        return map;
+
+    }
           
     public RoomState newlocation(int value) {
         

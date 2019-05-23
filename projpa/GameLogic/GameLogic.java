@@ -108,9 +108,9 @@ public class GameLogic implements Serializable{
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("-----Status-----\n");
+        sb.append("-----Status-----");
         if (this.game.returnplayerslocation(0)!= "SecretRoom"){
-            sb.append("Crew Member 1 - Name: "
+            sb.append("\nCrew Member 1 - Name: "
                     + this.game.getCrewMember1Name()
                     + " - Location: "
                     + this.game.returnplayerslocation(0)
@@ -118,10 +118,10 @@ public class GameLogic implements Serializable{
                     + this.game.getCrewMembers()[0].getMovementToDo()
             );}
         else
-            sb.append("Crew Member 1 - Name: " + this.game.getCrewMember1Name() + " is dead");
+            sb.append("\nCrew Member 1 - Name: " + this.game.getCrewMember1Name() + " is dead");
 
         if (this.game.returnplayerslocation(1)!= "SecretRoom"){
-            sb.append("Crew Member 2 - Name: "
+            sb.append("\nCrew Member 2 - Name: "
                     + this.game.getCrewMember2Name()
                     + " - Location: "
                     + this.game.returnplayerslocation(1)
@@ -129,21 +129,21 @@ public class GameLogic implements Serializable{
                     + this.game.getCrewMembers()[1].getMovementToDo()
             );}
         else
-            sb.append("Crew Member 2 - Name: " + this.game.getCrewMember2Name() + " is dead");
+            sb.append("\nCrew Member 2 - Name: " + this.game.getCrewMember2Name() + " is dead");
 
 
-        sb.append("\n-----Aliens-----\n");
+        sb.append("\n-----Aliens-----");
 
         for (int i = 0; i < game.getAliens().size();i++){
 
-            sb.append("Alien number:" + (i + 1)
+            sb.append("\nAlien number:" + (i + 1)
                     + " is in: " + game.getAliens().get(i).getRoom().getName());
 
         }
 
         sb.append("\nHealth: " + this.game.getHealthHealthTracker());
-        sb.append("Hull: " + this.game.getHullHealth());
-        sb.append("Action Points: " + this.game.getActionPoints());
+        sb.append("\nHull: " + this.game.getHullHealth());
+        sb.append("\nAction Points: " + this.game.getActionPoints());
 
         sb.append("\n-----Journey Location-----\n");
 

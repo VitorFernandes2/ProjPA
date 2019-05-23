@@ -9,7 +9,7 @@ import projpa.GameLogic.GameConstants;
  */
 public class JourneyTracker extends GameConstants implements Serializable{
 
-    String [] JourneyTrackers = {"S", "2A", "3A", "4A","5A","R","4A","5A","6A","R","6A","7A","R","8A","E"};
+    String [] JourneyTrackers = {"S", "2A", "3A*", "4A","5A","R","4A","5A","6A","R","6A","7A","R","8A","E"};
     private int JourneyState;
 
     public JourneyTracker() {

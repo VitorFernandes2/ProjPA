@@ -134,11 +134,8 @@ public class AwaitCrewPhaseActions extends StateAdapter implements Serializable{
         switch (this.game.getJourneyTurn()) {
 
             case "R":
-            
-                // CONFERIR -> apagar todos os aliens...
-                
-                this.game.spawnAliens();
-                
+
+                this.game.resetAliens();
                 return new AwaitRestPhaseActions(this.game);
         
             case "E":

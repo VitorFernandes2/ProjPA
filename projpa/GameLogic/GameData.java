@@ -555,16 +555,8 @@ public class GameData implements Serializable{
      * @return the map
      */
     public int[][] getMap(){
-        
-        int map[][] = { 
-            { 0, 1, 1, 0},
-            { 3, 5, 8, 4},
-            { 9, -1, -1, 11},
-            { 12, 10, 2, 7},
-            { 0, 6, 6, 0}
-        };
 
-        return map;
+        return new Room1().getMap();
 
     }
 
@@ -943,11 +935,24 @@ public class GameData implements Serializable{
         if (correctSpawnPhase()) {
         
             String str = new String(getJourneyTurn());
-            char aux[] = new char[str.length() - 1];
+            char aux[];
 
-            str.getChars(0, str.length() - 1, aux, 0);
+            System.out.println("\n\n" + str);
+
+            if (str.endsWith("*")){
+                aux = new char[str.length() - 2];
+                this.resetAliens();
+                str.getChars(0, str.length() - 2, aux, 0);
+            }
+            else{
+                aux = new char[str.length() - 1];
+                str.getChars(0, str.length() - 1, aux, 0);
+            }
 
             String str2 = new String(aux);
+
+            System.out.println("\n\n" + str2);
+
             int value = Integer.parseInt(str2);
             
             return value;
@@ -963,9 +968,11 @@ public class GameData implements Serializable{
      */
     public void spawnAliens(){
 
-        if (correctSpawnPhase())            
-            for (int i = 0; i < getNumberOfAliens(); i++)
+        if (correctSpawnPhase())     {
+            int numberOfAliens = getNumberOfAliens();
+            for (int i = 0; i < numberOfAliens; i++)
                 this.addRandomAlien();
+        }
 
     }
 
@@ -1423,11 +1430,21 @@ public class GameData implements Serializable{
             if (i == Option.length() - 1){
                 if (Option.charAt(i) == 'A' && count > 0)
                     return true;
+                else
+                    if (Option.charAt(i) == '*' && count > 0 && Option.charAt(i - 1) == 'A')
+                        return true;
             }
             else{
 
                 if(Character.isDigit(Option.charAt(i)))
-                    count++;                                   
+                    count++;
+                else
+                    if (i == Option.length() - 2){
+                        if (Option.charAt(i) != 'A')
+                            return false;
+                    }
+                    else
+                        return false;
 
             }
             
@@ -1777,4 +1794,9 @@ public class GameData implements Serializable{
         return this.user.getPoints();
     }
 
+    public void resetAliens() {
+
+        this.aliens.clear();
+
+    }
 }
