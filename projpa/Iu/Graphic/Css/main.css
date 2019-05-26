@@ -1,0 +1,304 @@
+.GreenButton{
+    
+    -fx-font-family: "Death Star";
+    -fx-background-color: #439e27;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+}
+
+.GreenButton:hover {
+
+    -fx-font-family: "Death Star";
+    -fx-background-color: #155800;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.RedButton{
+        
+    -fx-font-family: "Death Star";
+    -fx-background-color: #cc3232;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+}
+
+.RedButton:hover {
+    -fx-font-family: "Death Star";
+    -fx-background-color: #8c0202;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.DefaultButton{
+    
+    -fx-font-family: "Death Star";
+    -fx-background-color: #3282cc;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+}
+
+.DefaultButton:hover {
+
+    -fx-font-family: "Death Star";
+    -fx-background-color: #10028c;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.tab {
+
+    -fx-font-family: "Death Star";
+    -fx-background-color: #999999;
+    -fx-border-color: #ffffff;
+    -fx-pref-width: 90;
+    -fx-pref-height: 80;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-radius: 10 10 0 0;
+    
+} 
+
+.tab:active {
+
+    -fx-background-color: #3a3a3a;
+    
+} 
+
+.tab:selected {
+    -fx-background-color: #3a3a3a;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {-fx-border-color: transparent;}
+
+.tab-header-background {
+    
+    -fx-background-color: #6e6e6e;
+
+}
+
+.AliensLabel{
+    -fx-font-family: "Death Star";
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+.PointsLabel{
+    -fx-font-family: "Death Star";
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+    -fx-background-color: #3a3a3a !important;
+    -fx-border-radius: 10;
+    -fx-background-radius : 10;
+    -fx-border-color: #5a5a5a;
+    -fx-padding: 4;    
+    -fx-border-width: 3;
+    -fx-pref-heigth: 20;
+    -fx-pref-width: 120;
+}
+
+.topBox{
+
+    -fx-background-color: #b0b1b2be !important;
+
+}
+
+.centerBox{
+
+}
+
+.rightBox{
+
+    -fx-background-color: rgba(66, 66, 66, 0.4) !important;
+
+}
+
+.MainBox{
+
+    -fx-background-image: url("Images/galaxy2.gif") !important;
+    -fx-background-position: center center;
+
+}
+
+.ChooseVBox{
+
+    -fx-background-image: url("Images/choose.png") !important;
+    -fx-background-position: center center;
+
+}
+
+.ImageView{
+
+    -fx-border-radius : 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #5a5a5a;
+    -fx-border-width: 8;
+
+}
+
+.ImageView:hover{
+
+    -fx-border-color: #b9b9b9;
+
+}
+
+.TextArea{
+
+    -fx-border-radius : 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
+
+.TextArea:focused {
+
+    -fx-border-color: #b9b9b9;
+    
+}
+
+.PopUp {
+
+    -fx-border-radius : 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #040549;
+    -fx-border-width: 3;
+
+}
+
+.spinner {
+    -fx-prompt-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: none;
+
+    -fx-padding: 0 0 3 0;   
+}
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: transparent;
+}
+
+.spinner .increment-arrow-button .increment-arrow,
+.spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: #007cff;
+    -fx-font-size: 30px;
+}
+
+.spinner .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Death Star";
+    -fx-font-size: 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #bdbdbd;
+} 
+
+.TextArea2{
+
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
+
+.TextArea2:focused {
+
+    -fx-border-color: #b9b9b9;
+    
+}
+
+.TextArea3{
+
+    -fx-border-radius : 10 0 0 10;
+    -fx-background-radius: 10 0 0 10;
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
+
+.TextArea3:focused {
+
+    -fx-border-color: #b9b9b9;
+    
+}
+
+.TextArea4{
+
+    -fx-border-radius : 0 10 10 0;
+    -fx-background-radius: 0 10 10 0;
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
+
+.TextArea4:focused {
+
+    -fx-border-color: #b9b9b9;
+    
+}
+
+.journeyLabelsCenter {
+
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
+
+.journeyLabelsCenterActive {
+
+    -fx-border-color: #b9b9b9;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
+
+.journeyLabelsLeft {
+
+    -fx-border-radius : 10 0 0 10;
+    -fx-background-radius: 10 0 0 10;
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
+
+.journeyLabelsRight {
+
+    -fx-border-radius : 0 10 10 0;
+    -fx-background-radius: 0 10 10 0;
+    -fx-border-color: #5a5a5a;
+    -fx-background-color: #333333;
+    -fx-border-width: 3;
+    -fx-text-fill: #ffffff;
+
+}
