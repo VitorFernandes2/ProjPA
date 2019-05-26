@@ -76,8 +76,6 @@ public class GraphicInterface {
         bottomBox.setPadding(new Insets(5, 10, 5, 10));
         bottomBox.getStyleClass().add("topBox");
 
-        btnExit.setOnAction(e -> primaryStage.close());
-
         bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
 
         /*#########################################################################*/
@@ -373,7 +371,10 @@ public class GraphicInterface {
         /*##                            Action Scene                             ##*/
         /*#########################################################################*/
 
-        Scene ActionScene = new Scene(paneLayout, width, height);
+        StackPane actionStackPane = new StackPane(paneLayout);
+        actionStackPane.setAlignment(Pos.CENTER);
+
+        Scene ActionScene = new Scene(actionStackPane, width, height);
         ActionScene.getStylesheets().add(GraphicInterface.class.getResource("Css\\main.css").toExternalForm());
         ActionScene.setCursor(new ImageCursor(imageCursor));
 
@@ -942,6 +943,16 @@ public class GraphicInterface {
             }
         });
 
+        ObservableList actionStackPaneList = actionStackPane.getChildren();
+        btnExit.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        actionStackPaneList.add(popupFunctionScene(primaryStage, firstScene, actionStackPane));
+                    }
+                });
+
+
         for (int i = 0; i < 12; i++) {
             CardsImageView.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
@@ -1016,6 +1027,60 @@ public class GraphicInterface {
         exitPopup.setAlignment(Pos.CENTER);
         exitPopup.setMaxSize(600, 200);
         btnCancelPopup.setOnMouseClicked(e -> myStackPane.getChildren().remove(exitPopup));
+
+        return exitPopup;
+
+    }
+
+    private VBox popupFunctionScene(Stage primaryStage,Scene mainScene, StackPane myStackPane){
+
+        /*#########################################################################*/
+        /*##                             Exit Popup                              ##*/
+        /*#########################################################################*/
+
+        Image btnExitPopupImg = new Image(getClass().getResourceAsStream("Images\\cancel.png"));
+        ImageView imgVwBtnExitPopup = new ImageView(btnExitPopupImg);
+        imgVwBtnExitPopup.setFitHeight(20);
+        imgVwBtnExitPopup.setFitWidth(20);
+
+        Image btnAcceptPopupImg = new Image(getClass().getResourceAsStream("Images\\accept.png"));
+        ImageView imgVwBtnAcceptPopup = new ImageView(btnAcceptPopupImg);
+        imgVwBtnAcceptPopup.setFitHeight(20);
+        imgVwBtnAcceptPopup.setFitWidth(20);
+
+        Button btnCancelPopup = new Button("No", imgVwBtnExitPopup);
+        btnCancelPopup.getStyleClass().add("RedButton");
+        btnCancelPopup.setPrefWidth(90);
+        btnCancelPopup.setPrefHeight(40);
+
+        Button btnAcceptPopup = new Button("Yes", imgVwBtnAcceptPopup);
+        btnAcceptPopup.getStyleClass().add("GreenButton");
+        btnAcceptPopup.setPrefWidth(90);
+        btnAcceptPopup.setPrefHeight(40);
+
+        Label lblExitPopup = new Label("Did You Really Want To Go?");
+        lblExitPopup.setFont(Font.font("Death Star", FontWeight.MEDIUM, 38));
+        lblExitPopup.setTextFill(Color.web("#ffffff"));
+
+        HBox topOfPopup = new HBox(lblExitPopup);
+        topOfPopup.setSpacing(20);
+        topOfPopup.setAlignment(Pos.CENTER);
+
+        HBox bottomOfPopup = new HBox(btnAcceptPopup, btnCancelPopup);
+        bottomOfPopup.setAlignment(Pos.CENTER);
+        bottomOfPopup.setSpacing(20);
+
+        VBox exitPopup = new VBox();
+        exitPopup.getChildren().addAll(topOfPopup, bottomOfPopup);
+        exitPopup.getStyleClass().add("PopUp");
+        exitPopup.setSpacing(20);
+        exitPopup.setAlignment(Pos.CENTER);
+        exitPopup.setMaxSize(600, 200);
+        btnCancelPopup.setOnMouseClicked(e -> myStackPane.getChildren().remove(exitPopup));
+        btnAcceptPopup.setOnMouseClicked(event -> {
+            primaryStage.setScene(mainScene);
+            myStackPane.getChildren().remove(exitPopup);
+        });
 
         return exitPopup;
 
