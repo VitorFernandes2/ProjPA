@@ -379,11 +379,11 @@ public class GraphicInterface {
         ActionScene.setCursor(new ImageCursor(imageCursor));
 
         /*#########################################################################*/
-        /*##                     Choose CrewMember Scene                         ##*/
+        /*##                     Choose CrewMember 1 Scene                       ##*/
         /*#########################################################################*/
 
         BorderPane paneLayoutCrewMembersChoice = new BorderPane();
-
+        String crewmember1Name;
         VBox mainVboxCrewMembersChoice = new VBox();
 
         ArrayList<Image> CardsImage = new ArrayList<>();
@@ -492,6 +492,118 @@ public class GraphicInterface {
         ChooseCrewMembersScene.setCursor(new ImageCursor(imageCursor));
 
         /*#########################################################################*/
+        /*##                     Choose CrewMember 2 Scene                       ##*/
+        /*#########################################################################*/
+
+        BorderPane paneLayoutCrewMembers2Choice = new BorderPane();
+        String crewmember2Name;
+        VBox mainVboxCrewMembers2Choice = new VBox();
+
+        ArrayList<Image> CardsImage2 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+
+            switch (i){
+                case 0:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\Captain.png")));
+                    break;
+                case 1:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\Commander.png")));
+                    break;
+                case 2:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\CommsOfficer.png")));
+                    break;
+                case 3:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\Doctor.png")));
+                    break;
+                case 4:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\Engineer.png")));
+                    break;
+                case 5:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\MoralOfficer.png")));
+                    break;
+                case 6:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\NavigationOfficer.png")));
+                    break;
+                case 7:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\RedShirt.png")));
+                    break;
+                case 8:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\ScienceOfficer.png")));
+                    break;
+                case 9:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\SecurityOfficer.png")));
+                    break;
+                case 10:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\ShuttlePilot.png")));
+                    break;
+                case 11:
+                    CardsImage2.add(new Image(getClass().getResourceAsStream("Images\\Cards\\TransporterChief.png")));
+                    break;
+            }
+
+        }
+
+        ArrayList<ImageView> CardsImageView2 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++){
+            CardsImageView2.add(new ImageView(CardsImage2.get(i)));
+            CardsImageView2.get(i).setFitWidth(125);
+            CardsImageView2.get(i).setFitHeight(180);
+        }
+
+        ArrayList<HBox> CrewCardImgHbox2 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            CrewCardImgHbox2.add(new HBox());
+            CrewCardImgHbox2.get(i).getChildren().add(CardsImageView2.get(i));
+            CrewCardImgHbox2.get(i).getStyleClass().add("ImageView");
+        }
+
+        HBox firstLineCrewMembersHbox2 = new HBox(CrewCardImgHbox2.get(0), CrewCardImgHbox2.get(1) ,CrewCardImgHbox2.get(2) ,CrewCardImgHbox2.get(3));
+        firstLineCrewMembersHbox2.setSpacing(40);
+        firstLineCrewMembersHbox2.setAlignment(Pos.CENTER);
+
+        HBox secondLineCrewMembersHbox2 = new HBox(CrewCardImgHbox2.get(4), CrewCardImgHbox2.get(5) ,CrewCardImgHbox2.get(6) ,CrewCardImgHbox2.get(7));
+        secondLineCrewMembersHbox2.setSpacing(40);
+        secondLineCrewMembersHbox2.setAlignment(Pos.CENTER);
+
+        HBox thirdLineCrewMembersHbox2 = new HBox(CrewCardImgHbox2.get(8), CrewCardImgHbox2.get(9) ,CrewCardImgHbox2.get(10) ,CrewCardImgHbox2.get(11));
+        thirdLineCrewMembersHbox2.setSpacing(40);
+        thirdLineCrewMembersHbox2.setAlignment(Pos.CENTER);
+
+        Label lblChooseCrewMembers2 = new Label("Choose Crew Member 2");
+        lblChooseCrewMembers2.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
+        lblChooseCrewMembers2.setTextFill(Color.web("#ffffff"));
+
+        ImageView ChooseCardUndo2 = new ImageView(new Image(getClass().getResourceAsStream("Images\\undo.png")));
+        ChooseCardUndo2.setFitHeight(20);
+        ChooseCardUndo2.setFitWidth(20);
+
+        Button btnTurnBackChooseCrewMember2 = new Button("Go Back", ChooseCardUndo2);
+        btnTurnBackChooseCrewMember2.getStyleClass().add("DefaultButton");
+
+        HBox turnBackChooseCard2 = new HBox();
+        turnBackChooseCard2.setSpacing(20);
+        turnBackChooseCard2.setAlignment(Pos.CENTER);
+        btnTurnBackChooseCrewMember2.setPadding(new Insets(10));
+
+        turnBackChooseCard2.getChildren().addAll(lblChooseCrewMembers2, btnTurnBackChooseCrewMember2);
+        turnBackChooseCard2.setAlignment(Pos.CENTER);
+        turnBackChooseCard2.setPadding(new Insets(0, 10, 0, 10));
+
+        mainVboxCrewMembers2Choice.getChildren().setAll(turnBackChooseCard2, firstLineCrewMembersHbox2, secondLineCrewMembersHbox2, thirdLineCrewMembersHbox2);
+        mainVboxCrewMembers2Choice.setAlignment(Pos.CENTER);
+        mainVboxCrewMembers2Choice.setSpacing(20);
+
+        mainVboxCrewMembers2Choice.getStyleClass().add("ChooseVBox");
+
+        paneLayoutCrewMembers2Choice.setCenter(mainVboxCrewMembers2Choice);
+        Scene ChooseCrewMembers2Scene = new Scene(paneLayoutCrewMembers2Choice, width, height);
+        ChooseCrewMembers2Scene.getStylesheets().add(GraphicInterface.class.getResource("Css\\main.css").toExternalForm());
+        ChooseCrewMembers2Scene.setCursor(new ImageCursor(imageCursor));
+
+        /*#########################################################################*/
         /*##                             Username Scene                          ##*/
         /*#########################################################################*/
 
@@ -596,7 +708,6 @@ public class GraphicInterface {
         /*#########################################################################*/
 
         HBox Options1Line = new HBox();
-
         Label lblOptionsTitle = new Label("Options");
         lblOptionsTitle.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
         lblOptionsTitle.setTextFill(Color.web("#ffffff"));
@@ -710,7 +821,7 @@ public class GraphicInterface {
         OptionsScene.setCursor(new ImageCursor(imageCursor));
 
         /*#########################################################################*/
-        /*##                            Choose Room Scene                        ##*/
+        /*##                          Choose Room Scene 1                        ##*/
         /*#########################################################################*/
 
         BorderPane paneLayoutRoomChoice = new BorderPane();
@@ -835,6 +946,132 @@ public class GraphicInterface {
         Scene ChooseRoomsScene = new Scene(paneLayoutRoomChoice, width, height);
         ChooseRoomsScene.getStylesheets().add(GraphicInterface.class.getResource("Css\\main.css").toExternalForm());
         ChooseRoomsScene.setCursor(new ImageCursor(imageCursor));
+
+        /*#########################################################################*/
+        /*##                          Choose Room Scene 1                        ##*/
+        /*#########################################################################*/
+
+        BorderPane paneLayoutRoomChoice2 = new BorderPane();
+
+        VBox mainVboxRoomChoice2 = new VBox();
+
+        ArrayList<Image> RoomImage2 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+
+            switch (i){
+                case 0:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room1.png")));
+                    break;
+                case 1:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room2.png")));
+                    break;
+                case 2:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room3.png")));
+                    break;
+                case 3:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room4.png")));
+                    break;
+                case 4:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room5.png")));
+                    break;
+                case 5:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room6.png")));
+                    break;
+                case 6:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room7.png")));
+                    break;
+                case 7:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room8.png")));
+                    break;
+                case 8:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room9.png")));
+                    break;
+                case 9:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room10.png")));
+                    break;
+                case 10:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room11.png")));
+                    break;
+                case 11:
+                    RoomImage2.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room12.png")));
+                    break;
+            }
+
+        }
+
+        ArrayList<ImageView> RoomsImageView2 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++){
+            RoomsImageView2.add(new ImageView(RoomImage2.get(i)));
+            RoomsImageView2.get(i).setFitWidth(125);
+            RoomsImageView2.get(i).setFitHeight(125);
+        }
+
+        ArrayList<HBox> RoomsImgHbox2 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            RoomsImgHbox2.add(new HBox());
+            RoomsImgHbox2.get(i).getChildren().add(RoomsImageView2.get(i));
+            RoomsImgHbox2.get(i).getStyleClass().add("ImageView");
+        }
+
+        HBox firstLineRoomsHbox2 = new HBox(RoomsImgHbox2.get(0), RoomsImgHbox2.get(1) ,RoomsImgHbox2.get(2) ,RoomsImgHbox2.get(3));
+        firstLineRoomsHbox2.setSpacing(40);
+        firstLineRoomsHbox2.setAlignment(Pos.CENTER);
+
+        HBox secondLineRoomssHbox2 = new HBox(RoomsImgHbox2.get(4), RoomsImgHbox2.get(5) ,RoomsImgHbox2.get(6) ,RoomsImgHbox2.get(7));
+        secondLineRoomssHbox2.setSpacing(40);
+        secondLineRoomssHbox2.setAlignment(Pos.CENTER);
+
+        HBox thirdLineRoomsHbox2 = new HBox(RoomsImgHbox2.get(8), RoomsImgHbox2.get(9) ,RoomsImgHbox2.get(10) ,RoomsImgHbox2.get(11));
+        thirdLineRoomsHbox2.setSpacing(40);
+        thirdLineRoomsHbox2.setAlignment(Pos.CENTER);
+
+        Label lblChooseRooms2 = new Label("Choose Crew Member 2 Room");
+        lblChooseRooms2.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
+        lblChooseRooms2.setTextFill(Color.web("#ffffff"));
+
+        ImageView ChooseRoomsUndo2 = new ImageView(new Image(getClass().getResourceAsStream("Images\\undo.png")));
+        ChooseRoomsUndo2.setFitHeight(20);
+        ChooseRoomsUndo2.setFitWidth(20);
+
+        Button btnTurnBackChooseRoom2 = new Button("Go Back", ChooseRoomsUndo2);
+        btnTurnBackChooseRoom2.getStyleClass().add("DefaultButton");
+
+        HBox turnBackChooseRoom2 = new HBox();
+        turnBackChooseRoom2.setSpacing(20);
+        turnBackChooseRoom2.setAlignment(Pos.CENTER);
+        btnTurnBackChooseRoom2.setPadding(new Insets(10));
+
+        turnBackChooseRoom2.getChildren().addAll(lblChooseRooms2, btnTurnBackChooseRoom2);
+        turnBackChooseRoom2.setAlignment(Pos.CENTER);
+        turnBackChooseRoom2.setPadding(new Insets(0, 10, 0, 10));
+
+        mainVboxRoomChoice2.getChildren().setAll(turnBackChooseRoom2, firstLineRoomsHbox2, secondLineRoomssHbox2, thirdLineRoomsHbox2);
+        mainVboxRoomChoice2.setAlignment(Pos.CENTER);
+        mainVboxRoomChoice2.setSpacing(20);
+
+        mainVboxRoomChoice2.getStyleClass().add("ChooseVBox");
+
+        RoomsImgHbox2.get(0).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        primaryStage.setScene(ActionScene);
+                        primaryStage.setFullScreen(true);
+                        mediaPlayer.pause();
+                        mediaPlayergame.play();
+
+                    }
+                });
+
+
+
+        paneLayoutRoomChoice2.setCenter(mainVboxRoomChoice2);
+        Scene ChooseRoomsScene2 = new Scene(paneLayoutRoomChoice2, width, height);
+        ChooseRoomsScene2.getStylesheets().add(GraphicInterface.class.getResource("Css\\main.css").toExternalForm());
+        ChooseRoomsScene2.setCursor(new ImageCursor(imageCursor));
 
         /*#########################################################################*/
         /*##                              Main Stage                             ##*/
