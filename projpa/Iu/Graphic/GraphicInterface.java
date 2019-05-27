@@ -888,6 +888,12 @@ public class GraphicInterface {
             }
         });
 
+        btnSubmitName.setOnMouseClicked(e -> {
+            this.game.newUser(txtAreaUserName.getText());
+            this.game.Inputbegining();
+            txtAreaUserName.clear();
+        });
+
         btnTurnBackChooseCrewMember.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
