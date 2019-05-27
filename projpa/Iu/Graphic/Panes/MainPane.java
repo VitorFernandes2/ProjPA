@@ -182,9 +182,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
         HBox Options6Line = new HBox();
 
-        Label lblChangeHealthTrackerTitle = new Label("Change Health Tracker");
-        lblChangeHealthTrackerTitle.setFont(Font.font("Death Star", FontWeight.MEDIUM, 20));
-        lblChangeHealthTrackerTitle.setTextFill(Color.web("#ffffff"));
+        DeathStarLabel lblChangeHealthTrackerTitle = new DeathStarLabel("Change Health Tracker", 20);
 
         Options6Line.getChildren().addAll(lblChangeHealthTrackerTitle);
         Options6Line.setAlignment(Pos.CENTER);

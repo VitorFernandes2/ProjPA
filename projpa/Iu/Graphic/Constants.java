@@ -16,5 +16,7 @@ public interface Constants {
     String ACCEPT_IMAGE = "Images\\accept.png";
     String UNDO_IMAGE = "Images\\undo.png";
     String SAVE_IMAGE = "Images\\save.png";
+    String GAME_PLAY_MUSIC = "Music\\gameplaymusicship.mp3";
+    String MAIN_MUSIC = "Music\\space.mp3";
 
 }
