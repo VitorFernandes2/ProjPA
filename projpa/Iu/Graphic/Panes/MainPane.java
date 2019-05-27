@@ -2,6 +2,7 @@ package projpa.Iu.Graphic.Panes;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -81,6 +82,9 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         });
         btnOptions.setOnMouseClicked(e -> {
             firstStackPaneList.add(OptionsFunction(this));
+        });
+        btnSeeScore.setOnMouseClicked(e -> {
+            firstStackPaneList.add(ShowScoreFunction(this));
         });
 
     }
@@ -235,6 +239,50 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         });
 
         return OptionsSceneVBox;
+
+    }
+
+    /*#########################################################################*/
+    /*##                             Score Scene                          ##*/
+    /*#########################################################################*/
+
+    private VBox ShowScoreFunction(StackPane myStackPane){
+
+        VBox scoreSceneMainVbox = new VBox();
+        HBox scoreTitleHbox = new HBox();
+        HBox turnBackScoreHBox = new HBox();
+        VBox playersScorebox = new VBox();
+        Label lblsPlayersScore = new Label();
+        DeathStarLabel lblScoreTitle = new DeathStarLabel("Top Players", 58);
+
+        Image scoreSceneUndo = new Image(getClass().getResourceAsStream("..\\" + UNDO_IMAGE));
+        DefaultButton btnTurnBackscoreScene = new DefaultButton("Go Back", scoreSceneUndo, 20, 20, 120, 40);
+
+        String scoreStr = new String(this.game.getUserPontuation());
+        lblsPlayersScore.setText(scoreStr);
+        lblsPlayersScore.setFont(Font.font("Death Star", FontWeight.MEDIUM, 30));
+        lblsPlayersScore.setPadding(new Insets(10,0,10,0));
+        lblsPlayersScore.setTextFill(Color.web("#ffffff"));
+        playersScorebox.getChildren().add(lblsPlayersScore);
+
+
+        scoreTitleHbox.getChildren().addAll(lblScoreTitle);
+        scoreTitleHbox.setSpacing(20);
+        scoreTitleHbox.setAlignment(Pos.CENTER);
+        turnBackScoreHBox.setSpacing(20);
+        turnBackScoreHBox.setAlignment(Pos.CENTER);
+        turnBackScoreHBox.getChildren().add(btnTurnBackscoreScene);
+        playersScorebox.setAlignment(Pos.CENTER);
+        scoreSceneMainVbox.getChildren().addAll(scoreTitleHbox, playersScorebox, turnBackScoreHBox);
+        scoreSceneMainVbox.setAlignment(Pos.CENTER);
+        scoreSceneMainVbox.setSpacing(20);
+        scoreSceneMainVbox.getStyleClass().add("ChooseVBox");
+
+        btnTurnBackscoreScene.setOnMouseClicked(e -> {
+            myStackPane.getChildren().remove(scoreSceneMainVbox);
+        });
+
+        return scoreSceneMainVbox;
 
     }
 
