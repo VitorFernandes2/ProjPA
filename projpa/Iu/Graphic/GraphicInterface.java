@@ -119,6 +119,7 @@ public class GraphicInterface {
         leftBox.getStyleClass().add("rightBox");
 
         leftBox.setAlignment(Pos.TOP_CENTER);
+        
 
         /*#########################################################################*/
         /*##                              Top Panel                              ##*/
@@ -191,6 +192,7 @@ public class GraphicInterface {
         topBox.setPadding(new Insets(5, 10, 5, 10));
         topBox.getStyleClass().add("topBox");
         topBox.setAlignment(Pos.CENTER_RIGHT);
+        
 
         /*#########################################################################*/
         /*##                             Right Panel                             ##*/
@@ -233,8 +235,13 @@ public class GraphicInterface {
         // main image
         MainshipImageView2.setFitHeight(1300);
         MainshipImageView2.setPreserveRatio(true);
-        MainshipImageView2.setY(-250);
-        MainshipImageView2.setX(-80);
+        
+        
+        double panewidth = MainshipImageView.getWidth();
+        //width
+        MainshipImageView2.setY(height/2 - 650); // temp
+        MainshipImageView2.setX(width/2 - 745); // temp
+        
 
         // background ships animations
 

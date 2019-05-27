@@ -14,12 +14,17 @@ public class ProjPA extends Application {
      */
 
     public static void main(String[] args) {
+       
+        if (args.length == 1 && args[0].equals("-console")){ // make console work
+        
+            GameLogic game = new GameLogic();
+            TextInterface gameInterface = new TextInterface(game);
 
-//        GameLogic game = new GameLogic();
-//        TextInterface gameInterface = new TextInterface(game);
-//
-//        gameInterface.run();
-        launch(args);
+            gameInterface.run();
+            
+        }
+        else
+            launch(args);
 
     }
 
