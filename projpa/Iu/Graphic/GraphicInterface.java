@@ -918,6 +918,14 @@ public class GraphicInterface {
             }
         });
 
+        btnTurnBackChooseCrewMember.setOnMouseClicked(e -> {
+            this.game.goBack();
+        });
+
+        btnTurnBackChooseRoom.setOnMouseClicked(e -> {
+            this.game.goBack();
+        });
+
         txtAreaUserName.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= 10 ? change : null));
 
