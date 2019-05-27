@@ -93,7 +93,7 @@ public class GameLogic implements Serializable{
     }
 
     public boolean changeJourney(int pos, String info){
-        return this.game.getJourneyTracker().changeJourney( pos, info.toUpperCase());
+        return this.game.getJourneyTracker().changeJourney(pos, info.toUpperCase());
     }
 
     public int getJourneyState(){
@@ -238,10 +238,11 @@ public class GameLogic implements Serializable{
         HashMap<String, Integer> scoreloader = new HashMap<String, Integer>();
         scoreloader = this.game.scoreopener();
 
+        int j = 0;
+
         for (String i : scoreloader.keySet()) {
-            sb.append("Nome: " + i + " com Pontuação: " + scoreloader.get(i));
-            if(i == this.game.getUserName() && scoreloader.get(i)== this.game.getPoints())
-                sb.append(" <- Aqui estas tu");
+            sb.append((j+1) +" - " + i + " - " + scoreloader.get(i));
+            j++;
             sb.append("\n");
         }
 
@@ -352,6 +353,14 @@ public class GameLogic implements Serializable{
 
         return sb.toString();
 
+    }
+
+    public int getHullState(){
+        return this.game.getHullHealth();
+    }
+
+    public int getHealthTrackerHealth(){
+        return this.game.getHealthHealthTracker();
     }
 
     public int getNumberOfParticleDisperser(){
@@ -498,6 +507,18 @@ public class GameLogic implements Serializable{
     public void SaveGame() {
         if (inAwaitSaveGame())
             this.stateOfTheGame = this.stateOfTheGame.saveGame();
+    }
+
+    public ArrayList<String> getJourneyTracker(){
+
+        ArrayList<String> journeyCopy = new ArrayList<>();
+
+        for (int i = 0; i < 15; i++) {
+            journeyCopy.add(this.game.getJourneyTurn(i));
+        }
+
+        return journeyCopy;
+
     }
 
 }

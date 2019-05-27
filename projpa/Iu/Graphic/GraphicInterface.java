@@ -562,7 +562,7 @@ public class GraphicInterface {
         HBox scoreTitleHbox = new HBox();
         HBox turnBackScoreHBox = new HBox();
         VBox playersScorebox = new VBox();
-        ArrayList<Label> lblsPlayersScore = new ArrayList<>();
+        Label lblsPlayersScore = new Label();
         Label lblScoreTitle = new Label("Top Players");
         lblScoreTitle.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
         lblScoreTitle.setTextFill(Color.web("#ffffff"));
@@ -574,14 +574,13 @@ public class GraphicInterface {
         Button btnTurnBackscoreScene = new Button("Go Back", scoreSceneUndo);
         btnTurnBackscoreScene.getStyleClass().add("DefaultButton");
 
-        for (int i = 0; i < 10; i++) {
-            String scoreStr = new String((i + 1) + " - Vitor - 10000");
-            lblsPlayersScore.add(new Label(scoreStr));
-            lblsPlayersScore.get(i).setFont(Font.font("Death Star", FontWeight.MEDIUM, 30));
-            lblsPlayersScore.get(i).setPadding(new Insets(10,0,10,0));
-            lblsPlayersScore.get(i).setTextFill(Color.web("#ffffff"));
-            playersScorebox.getChildren().add(lblsPlayersScore.get(i));
-        }
+        String scoreStr = new String(this.game.getUserPontuation());
+        lblsPlayersScore.setText(scoreStr);
+        lblsPlayersScore.setFont(Font.font("Death Star", FontWeight.MEDIUM, 30));
+        lblsPlayersScore.setPadding(new Insets(10,0,10,0));
+        lblsPlayersScore.setTextFill(Color.web("#ffffff"));
+        playersScorebox.getChildren().add(lblsPlayersScore);
+
 
         scoreTitleHbox.getChildren().addAll(lblScoreTitle);
         scoreTitleHbox.setSpacing(20);
@@ -631,16 +630,14 @@ public class GraphicInterface {
             OptionsText.add(new TextField());
             OptionsText.get(i).getStyleClass().add("TextArea2");
             OptionsText.get(i).setAlignment(Pos.CENTER);
-            OptionsText.get(i).setText("5A");
+            OptionsText.get(i).setText(this.game.getJourneyValue(i));
             OptionsText.get(i).setPrefWidth(80);
             OptionsText.get(i).setFont(Font.font("Death Star", FontWeight.MEDIUM, 15));
             Options3Line.getChildren().addAll(OptionsText.get(i));
         }
 
-        OptionsText.get(0).setText("S");
         OptionsText.get(0).setDisable(true);
         OptionsText.get(0).getStyleClass().add("TextArea3");
-        OptionsText.get(14).setText("E");
         OptionsText.get(14).setDisable(true);
         OptionsText.get(14).getStyleClass().add("TextArea4");
 
@@ -659,7 +656,7 @@ public class GraphicInterface {
         HBox Options5Line = new HBox();
 
         Spinner<Integer> HullTrackerSpinner = new Spinner<>();
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, 12);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, this.game.getHullState());
         HullTrackerSpinner.setValueFactory(valueFactory);
         HullTrackerSpinner.getStyleClass().add("spinner");
 
@@ -680,7 +677,7 @@ public class GraphicInterface {
         HBox Options7Line = new HBox();
 
         Spinner<Integer> HealthTrackerSpinner = new Spinner<>();
-        SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, 12);
+        SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, this.game.getHealthTrackerHealth());
         HealthTrackerSpinner.setValueFactory(valueFactory2);
         HealthTrackerSpinner.getStyleClass().add("spinner");
 
@@ -898,6 +895,12 @@ public class GraphicInterface {
             }
         });
 
+        btnSubmitName.setOnMouseClicked(e -> {
+            this.game.newUser(txtAreaUserName.getText());
+            this.game.Inputbegining();
+            txtAreaUserName.clear();
+        });
+
         btnTurnBackChooseCrewMember.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -920,6 +923,14 @@ public class GraphicInterface {
                 primaryStage.setScene(firstScene);
                 primaryStage.setFullScreen(true);
             }
+        });
+
+        btnTurnBackChooseCrewMember.setOnMouseClicked(e -> {
+            this.game.goBack();
+        });
+
+        btnTurnBackChooseRoom.setOnMouseClicked(e -> {
+            this.game.goBack();
         });
 
         txtAreaUserName.setTextFormatter(new TextFormatter<String>(change ->
@@ -969,6 +980,33 @@ public class GraphicInterface {
                 }
             });
         }
+
+        btnTurnBackOptions.setOnMouseClicked(e -> {
+            for (int i = 0; i < 15; i++) {
+                OptionsText.get(i).setText(this.game.getJourneyValue(i));
+            }
+            valueFactory.setValue(this.game.getHullState());
+            valueFactory2.setValue(this.game.getHealthTrackerHealth());
+        });
+
+        btnTurSaveOptions.setOnMouseClicked(e -> {
+            this.game.setHealthTrackerValue(valueFactory2.getValue());
+            this.game.setHullTrackerValue(valueFactory.getValue());
+
+            for (int i = 0; i < 15; i++) {
+                if (!this.game.validateJourneyTrackerOption(OptionsText.get(i).getText()))
+                    this.game.changeJourney(i, OptionsText.get(i).getText());
+            }
+
+            for (int i = 0; i < 15; i++) {
+                OptionsText.get(i).setText(this.game.getJourneyValue(i));
+            }
+            valueFactory.setValue(this.game.getHullState());
+            valueFactory2.setValue(this.game.getHealthTrackerHealth());
+
+            primaryStage.setScene(firstScene);
+            primaryStage.setFullScreen(true);
+        });
 
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Images\\icon.png")));
 
