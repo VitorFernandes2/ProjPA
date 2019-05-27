@@ -219,6 +219,21 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         OptionsSceneVBox.setSpacing(20);
         OptionsSceneVBox.setAlignment(Pos.CENTER);
 
+        btnTurnBackOptions.setOnMouseClicked(e -> {
+            myStackPane.getChildren().remove(OptionsSceneVBox);
+        });
+
+        btnTurSaveOptions.setOnMouseClicked(e -> {
+            this.game.setHealthTrackerValue(valueFactory2.getValue());
+            this.game.setHullTrackerValue(valueFactory.getValue());
+
+            for (int i = 0; i < 15; i++) {
+                if (!this.game.validateJourneyTrackerOption(OptionsText.get(i).getText()))
+                    this.game.changeJourney(i, OptionsText.get(i).getText());
+            }
+            myStackPane.getChildren().remove(OptionsSceneVBox);
+        });
+
         return OptionsSceneVBox;
 
     }
