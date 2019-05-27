@@ -1,27 +1,28 @@
 package projpa.Iu.Graphic.Buttons;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import projpa.Iu.Graphic.ImageView.ImageViewIcon;
 
 public class DefaultButton extends Button {
 
-    public DefaultButton(String Name, ImageView image) {
+    private ImageView imgVw;
+
+    public DefaultButton(String Name, Image image, double widthImg, double heightImg, double width, double height) {
 
         super(Name);
 
         if (image != null){
 
-            image.setFitHeight(15);
-            image.setFitWidth(15);
-
-            this.setGraphic(image);
-
+            imgVw = new ImageViewIcon(image, heightImg, widthImg);
+            this.setGraphic(imgVw);
             this.getStyleClass().add("DefaultButton");
 
         }
 
-        this.setMinHeight(30);
-        this.setMinWidth(50);
+        this.setPrefWidth(width);
+        this.setPrefHeight(height);
 
     }
 

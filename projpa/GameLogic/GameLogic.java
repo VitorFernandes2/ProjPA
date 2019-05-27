@@ -1,5 +1,6 @@
 package projpa.GameLogic;
 
+import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,20 +11,15 @@ import projpa.GameLogic.Traps.Trap;
 import projpa.GameLogic.User.User;
 
 
-public class GameLogic implements Serializable{
+public class GameLogic extends PropertyChangeSupport implements Serializable{
 
     private GameData game;
     private IStates stateOfTheGame;
     
-    
-    public GameLogic() {
+    public GameLogic(IStates stateOfTheGame) {
+        super(stateOfTheGame);
         this.game = new GameData();
-        this.stateOfTheGame = new AwaitBeginning();
-    }
-    
-    public GameLogic(GameData game) {
-        this.game = new GameData(game);
-        this.stateOfTheGame = new AwaitCrewPhaseActions(this.game);
+        this.stateOfTheGame = stateOfTheGame;
     }
 
     public boolean LoadGame(){

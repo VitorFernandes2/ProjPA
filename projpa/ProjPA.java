@@ -3,6 +3,8 @@ import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import projpa.GameLogic.GameLogic;
+import projpa.GameLogic.StateMachine.AwaitBeginning;
+import projpa.GameLogic.StateMachine.IStates;
 import projpa.Iu.Graphic.GraphicInterface;
 import projpa.Iu.Text.TextInterface;
 
@@ -17,7 +19,7 @@ public class ProjPA extends Application {
        
         if (args.length == 1 && args[0].equals("-console")){ // make console work
         
-            GameLogic game = new GameLogic();
+            GameLogic game = new GameLogic(new AwaitBeginning());
             TextInterface gameInterface = new TextInterface(game);
 
             gameInterface.run();
@@ -31,7 +33,7 @@ public class ProjPA extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        GameLogic game = new GameLogic();
+        GameLogic game = new GameLogic(new AwaitBeginning());
         GraphicInterface gameInterface = new GraphicInterface(primaryStage, game);
         gameInterface.run();
 

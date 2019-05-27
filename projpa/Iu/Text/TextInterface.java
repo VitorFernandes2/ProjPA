@@ -18,7 +18,7 @@ import projpa.GameLogic.User.User;
 public class TextInterface {
 
     private boolean run = false;
-    GameLogic game;
+    private GameLogic game;
 
     /**
      * This constructor starts with the game constructed
