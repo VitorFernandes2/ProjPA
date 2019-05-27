@@ -26,8 +26,45 @@ public class JourneyTracker extends GameConstants implements Serializable{
         return JourneyState;
     }
 
+    public boolean verifyAlienJourney(String Option){
+
+        int count = 0;
+
+        for (int i = 0; i < Option.length(); i++) {
+
+            if (i == Option.length() - 1){
+                if (Option.charAt(i) == 'A' && count > 0)
+                    return true;
+                else
+                if (Option.charAt(i) == '*' && count > 0 && Option.charAt(i - 1) == 'A')
+                    return true;
+            }
+            else{
+
+                if(Character.isDigit(Option.charAt(i)))
+                    count++;
+                else
+                if (i == Option.length() - 2){
+                    if (Option.charAt(i) != 'A')
+                        return false;
+                }
+                else
+                    return false;
+
+            }
+
+        }
+
+        return false;
+
+    }
+
     public Boolean changeJourney(int pos, String value){
-        
+
+        if(!value.toUpperCase().equals("R") && !verifyAlienJourney(value.toUpperCase())) {
+            return false;
+        }
+
         String[] change = new String[15];
         ArrayList<String> temp = new ArrayList<String>();
         
@@ -37,7 +74,7 @@ public class JourneyTracker extends GameConstants implements Serializable{
         }
         
         // modify value and sees if its possible
-            if (pos >0 && pos < 15)
+            if (pos >=0 && pos < 15)
                 temp.set(pos, value);
             else
                 return false;

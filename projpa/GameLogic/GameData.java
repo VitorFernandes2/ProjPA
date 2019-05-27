@@ -926,6 +926,12 @@ public class GameData implements Serializable{
         return this.journeyTracker.getJourneyTurn();
     }
 
+    public String getJourneyTurn(int i){
+        if (i >= 0 || i <= 14)
+            return this.journeyTracker.getJourneyTrackers()[i];
+        return null;
+    }
+
     /**
      * This function returns the number of aliens to spawn
      * @return number of aliens to spawn
