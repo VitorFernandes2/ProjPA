@@ -20,6 +20,8 @@ import projpa.Iu.Graphic.Constants;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class CrewMembersChoicePane extends StackPane implements Constants, PropertyChangeListener {
 
@@ -152,6 +154,17 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
 
         paneLayoutCrewMembersChoice.setCenter(mainVboxCrewMembersChoice);
 
+        CardsImageView.get(0).addEventHandler(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {  
+                game.selectCrewMembers("Captain", "Engineer");
+            }
+        });
+
+        
+        
+        
         btnTurnBackChooseCrewMember.setOnMouseClicked(e -> {
             this.game.goBack();
         });
