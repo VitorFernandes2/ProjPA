@@ -41,6 +41,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
     private RedButton btnExitMain;
     private DeathStarLabel lblTitle;
     private DeathStarLabel lblTitle2;
+    private CrewMembersChoicePane crewMembersChoicePane;
 
     public MainPane(GameLogic game) {
         this.game = game;
@@ -77,8 +78,10 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         boxLineLayout.getStyleClass().add("MainBox");
         boxLineLayout.setAlignment(Pos.CENTER);
 
+        crewMembersChoicePane = new CrewMembersChoicePane(this.game);
+
         ObservableList firstStackPaneList = this.getChildren();
-        firstStackPaneList.addAll(boxLineLayout);
+        firstStackPaneList.addAll(boxLineLayout, crewMembersChoicePane);
         btnExitMain.setOnMouseClicked(e ->{
             firstStackPaneList.add(popupFunction(this));
         });
@@ -350,6 +353,29 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
             this.getChildren().remove(mainVboxUsernameScene);
             this.usernameBool = false;
             this.boxLineLayout.setVisible(true);
+        });
+
+        btnSubmitName.setOnMouseClicked(e -> {
+            this.game.newUser(txtAreaUserName.getText());
+            this.game.Inputbegining();
+            System.out.println("Passei aqui");
+        });
+
+        btnResetUsername.setOnMouseClicked(e -> {
+            txtAreaUserName.clear();
+            btnSubmitName.setDisable(true);
+        });
+
+        txtAreaUserName.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= 10 ? change : null));
+
+        txtAreaUserName.setOnKeyReleased(e -> {
+            if (txtAreaUserName.getLength() > 0){
+                btnSubmitName.setDisable(false);
+            }
+            else{
+                btnSubmitName.setDisable(true);
+            }
         });
 
         return mainVboxUsernameScene;
