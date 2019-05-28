@@ -4,6 +4,7 @@ import static com.sun.glass.ui.Cursor.setVisible;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,23 +15,33 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import projpa.GameLogic.GameLogic;
 
-public class CrewMember2ChooseRoom implements PropertyChangeListener{
+public class CrewMember2ChooseRoom extends StackPane implements PropertyChangeListener{
     
     private GameLogic game;
     
     public CrewMember2ChooseRoom(GameLogic Game) {
-        this.game = Game;
+        this.game = game;
+        this.game.addPropertyChangeListener(this);
+        setupComponents();
+        propertyChange(null);
         
+    }
+        private void setupComponents() {
+
+        ObservableList firstStackPaneList = this.getChildren();
+        firstStackPaneList.add(interfacea(this));
+
     }
     
     
-        public BorderPane interfacea(){
+        public BorderPane interfacea(StackPane myStackPane){
     
         BorderPane paneLayoutRoomChoice = new BorderPane();
 
@@ -155,6 +166,102 @@ public class CrewMember2ChooseRoom implements PropertyChangeListener{
                         
                     }
                 });
+        RoomsImgHbox.get(2).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(2);
+
+                    }
+                });
+
+        RoomsImgHbox.get(3).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(3);
+                        
+                    }
+                });
+        RoomsImgHbox.get(4).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(4);
+
+                    }
+                });
+
+        RoomsImgHbox.get(5).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(5);
+                        
+                    }
+                });
+        RoomsImgHbox.get(6).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(6);
+
+                    }
+                });
+
+        RoomsImgHbox.get(7).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(7);
+                        
+                    }
+                });
+        RoomsImgHbox.get(8).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(8);
+
+                    }
+                });
+
+        RoomsImgHbox.get(9).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(9);
+                        
+                    }
+                });
+        RoomsImgHbox.get(10).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(10);
+
+                    }
+                });
+
+        RoomsImgHbox.get(11).addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                       
+                        game.placeSecondCrewMember(11);
+                        
+                    }
+                });
+
 
         
 
@@ -168,12 +275,9 @@ public class CrewMember2ChooseRoom implements PropertyChangeListener{
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
              
-        if (this.game.inAwaitThirdTokenSecondCrewMember()){
-            
-            interfacea();
+
             setVisible(this.game.inAwaitThirdTokenSecondCrewMember());
             
-        }
         
         
     }

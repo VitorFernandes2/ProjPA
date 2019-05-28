@@ -21,6 +21,8 @@ import projpa.Iu.Graphic.Constants;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class CrewMembersChoicePane extends StackPane implements Constants, PropertyChangeListener {
 
