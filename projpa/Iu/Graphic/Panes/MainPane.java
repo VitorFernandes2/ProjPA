@@ -379,7 +379,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        
+
     }
 
 }

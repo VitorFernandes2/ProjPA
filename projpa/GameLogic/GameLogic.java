@@ -335,9 +335,12 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
     }
 
 	public void selectCrewMembers(String crewMember1, String crewMember2) {
-        this.stateOfTheGame = this.stateOfTheGame.selectCrewMembers(crewMember1, crewMember2);
+        if (!crewMember1.equals(crewMember2))
+            this.stateOfTheGame = this.stateOfTheGame.selectCrewMembers(crewMember1, crewMember2);
+
         firePropertyChange(null, false, true);
-	}
+
+    }
 
 	public String toStringParticleDisperser(){
 
