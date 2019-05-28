@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -297,14 +298,74 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
     private VBox ShowUsernameFunction(StackPane myStackPane){
 
-        return new VBox();
+        Image imgReset = new Image(getClass().getResourceAsStream("..\\Images\\trash.png"));
+        ImageView imgVwReset = new ImageView(imgReset);
+        imgVwReset.setFitWidth(20);
+        imgVwReset.setFitHeight(20);
+
+        ImageView ChooseUsernameSceneUndo = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\undo.png")));
+        ChooseUsernameSceneUndo.setFitHeight(20);
+        ChooseUsernameSceneUndo.setFitWidth(20);
+
+        Button btnTurnBackUserNameScene = new Button("Go Back", ChooseUsernameSceneUndo);
+        btnTurnBackUserNameScene.getStyleClass().add("DefaultButton");
+
+        Image imgPlayUsername = new Image(getClass().getResourceAsStream("..\\Images\\play-button-inside-a-circle.png"));
+        ImageView imgVwPlayUsername = new ImageView(imgPlayUsername);
+        imgVwPlayUsername.setFitHeight(20);
+        imgVwPlayUsername.setFitWidth(20);
+
+        Button btnSubmitName = new Button();
+        btnSubmitName.setGraphic(imgVwPlayUsername);
+        btnSubmitName.getStyleClass().add("GreenButton");
+        btnSubmitName.setDisable(true);
+
+        Button btnResetUsername = new Button();
+        btnResetUsername.setGraphic(imgVwReset);
+        btnResetUsername.getStyleClass().add("RedButton");
+
+        TextField txtAreaUserName = new TextField();
+        txtAreaUserName.getStyleClass().add("TextArea");
+        txtAreaUserName.setPrefHeight(30);
+        txtAreaUserName.setPrefWidth(210);
+        txtAreaUserName.setFont(Font.font("Death Star", FontWeight.MEDIUM, 15));
+
+        Label lblChooseUserName = new Label("Choose Your Username");
+        lblChooseUserName.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
+        lblChooseUserName.setTextFill(Color.web("#ffffff"));
+
+        HBox topHboxChooseUsernameScene = new HBox(lblChooseUserName);
+        topHboxChooseUsernameScene.setAlignment(Pos.CENTER);
+
+        HBox backHboxChooseUsernameScene = new HBox(txtAreaUserName, btnResetUsername, btnSubmitName, btnTurnBackUserNameScene);
+        backHboxChooseUsernameScene.setAlignment(Pos.CENTER);
+        backHboxChooseUsernameScene.setSpacing(10);
+
+        VBox mainVboxUsernameScene = new VBox(topHboxChooseUsernameScene, backHboxChooseUsernameScene);
+        mainVboxUsernameScene.setAlignment(Pos.CENTER);
+        mainVboxUsernameScene.setSpacing(20);
+        mainVboxUsernameScene.getStyleClass().add("ChooseVBox");
+
+        btnTurnBackUserNameScene.setOnMouseClicked(e -> {
+            this.getChildren().remove(mainVboxUsernameScene);
+            this.usernameBool = false;
+            this.boxLineLayout.setVisible(true);
+        });
+
+        return mainVboxUsernameScene;
 
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        setVisible(this.game.inAwaitBeginning());
+        if (this.game.inAwaitBeginning()){
+            setVisible(this.game.inAwaitBeginning());
+        }
+        else{
+            setVisible(this.game.inGameOverState());
+            usernameBool = false;
+        }
 
         if (usernameBool){
             this.boxLineLayout.setVisible(false);
