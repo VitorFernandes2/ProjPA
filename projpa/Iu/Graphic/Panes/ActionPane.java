@@ -10,6 +10,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -19,6 +21,7 @@ import projpa.Iu.Graphic.Buttons.DefaultButton;
 import projpa.Iu.Graphic.Buttons.GreenButton;
 import projpa.Iu.Graphic.Buttons.RedButton;
 import projpa.Iu.Graphic.Constants;
+import projpa.Iu.Graphic.DeathStarLabel;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -123,7 +126,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         apIcon.setFitWidth(20);
         apIcon.setFitHeight(20);
 
-        Label lblAp = new Label(": xxx", apIcon);
+        Label lblAp = new Label(": " + this.game.getActionPoints(), apIcon);
 
         lblAp.setTextFill(Color.web("#ffffff"));
         lblAp.getStyleClass().add("PointsLabel");
@@ -132,7 +135,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         ipIcon.setFitWidth(20);
         ipIcon.setFitHeight(20);
 
-        Label lblIp = new Label(": xxx", ipIcon);
+        Label lblIp = new Label(": " + this.game.getInspirationPoints(), ipIcon);
 
         lblIp.setTextFill(Color.web("#ffffff"));
         lblIp.getStyleClass().add("PointsLabel");
@@ -150,10 +153,15 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         for (int i = 0; i < 15; i++) {
 
-            journeyLabels.add(new Label("5A"));
+            journeyLabels.add(new Label(this.game.getJourneyValue(i)));
             journeyLabels.get(i).setFont(Font.font("Death Star", FontWeight.MEDIUM, 12));
             journeyLabels.get(i).setTextFill(Color.web("#ffffff"));
-            journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
+            System.out.println(this.game.getJourneyState());
+            if (this.game.getJourneyState() + 1 == i)
+                journeyLabels.get(i).getStyleClass().add("journeyLabelsCenterActive");
+            else
+                journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
+
             journeyLabels.get(i).setAlignment(Pos.CENTER);
             journeyLabels.get(i).setPrefWidth(40);
             journeyLabels.get(i).setPrefHeight(30);
@@ -165,7 +173,6 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
         journeyLabels.get(14).setText("E");
         journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
-        journeyLabels.get(1).getStyleClass().add("journeyLabelsCenterActive");
 
         Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
@@ -278,6 +285,22 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         /*##                            Action Scene                             ##*/
         /*#########################################################################*/
 
+        btnNext.setOnMouseClicked(e -> {
+            game.nextTurn();
+            for (int i = 0; i < 15; i++) {
+                if (game.getJourneyState() + 1 == i)
+                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenterActive");
+                else
+                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
+            }
+            journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
+            journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
+        });
+
+        btnExit.setOnMouseClicked(e -> {
+            this.getChildren().add(popupFunctionScene(this));
+        });
+
         StackPane actionStackPane = new StackPane(paneLayout);
         actionStackPane.setAlignment(Pos.CENTER);
 
@@ -285,8 +308,49 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
     }
 
+    private VBox popupFunctionScene(StackPane myStackPane){
+
+        /*#########################################################################*/
+        /*##                             Exit Popup                              ##*/
+        /*#########################################################################*/
+
+        Image btnExitPopupImg = new Image(getClass().getResourceAsStream("..\\Images\\cancel.png"));
+        Image btnAcceptPopupImg = new Image(getClass().getResourceAsStream("..\\Images\\accept.png"));
+        RedButton btnCancelPopup = new RedButton("No", btnExitPopupImg , 20, 20, 90, 40);
+        GreenButton btnAcceptPopup = new GreenButton("Yes", btnAcceptPopupImg, 20 ,20, 90,40);
+        DeathStarLabel lblExitPopup = new DeathStarLabel("Did you want play again?", 38);
+
+        HBox topOfPopup = new HBox(lblExitPopup);
+        topOfPopup.setSpacing(20);
+        topOfPopup.setAlignment(Pos.CENTER);
+
+        HBox bottomOfPopup = new HBox(btnAcceptPopup, btnCancelPopup);
+        bottomOfPopup.setAlignment(Pos.CENTER);
+        bottomOfPopup.setSpacing(20);
+
+        VBox exitPopup = new VBox();
+        exitPopup.getChildren().addAll(topOfPopup, bottomOfPopup);
+        exitPopup.getStyleClass().add("PopUp");
+        exitPopup.setSpacing(20);
+        exitPopup.setAlignment(Pos.CENTER);
+        exitPopup.setMaxSize(600, 200);
+        btnCancelPopup.setOnMouseClicked(e -> {
+            myStackPane.getChildren().remove(exitPopup);
+            this.game.endGame2();
+        });
+        btnAcceptPopup.setOnMouseClicked(event -> {
+            this.game.newGame();
+            myStackPane.getChildren().remove(exitPopup);
+        });
+
+        return exitPopup;
+
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
         setVisible(this.game.inAwaitCrewPhaseActions());
+
     }
 }

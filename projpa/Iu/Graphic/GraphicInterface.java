@@ -28,10 +28,6 @@ public class GraphicInterface implements Constants{
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
 
-        Media soundgame = new Media(getClass().getResource(GAME_PLAY_MUSIC).toExternalForm());
-        MediaPlayer mediaPlayergame = new MediaPlayer(soundgame);
-        mediaPlayergame.setCycleCount(MediaPlayer.INDEFINITE);
-
         PaneOrganizer paneOrganizer = new PaneOrganizer(this.game);
         Scene scene = new Scene(paneOrganizer.getRoot());
         scene.getStylesheets().add(GraphicInterface.class.getResource("Css\\main.css").toExternalForm());

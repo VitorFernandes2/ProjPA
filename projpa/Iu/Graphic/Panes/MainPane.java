@@ -44,11 +44,12 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
     private CrewMember1ChooseRoom crewMember1ChooseRoom;
     private CrewMember2ChooseRoom crewMember2ChooseRoom;
     private ActionPane actionPane;
-    
+    private UsernamePane usernamePane;
 
     public MainPane(GameLogic game) {
         this.game = game;
         this.game.addPropertyChangeListener(this);
+        this.game.endGame();
         setupComponents();
         propertyChange(null);
     }
@@ -84,9 +85,10 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         crewMember1ChooseRoom = new CrewMember1ChooseRoom(this.game);
         crewMember2ChooseRoom = new CrewMember2ChooseRoom(this.game);
         actionPane = new ActionPane(this.game);
+        usernamePane = new UsernamePane(this.game);
 
         ObservableList firstStackPaneList = this.getChildren();
-        firstStackPaneList.addAll(boxLineLayout, crewMembersChoicePane, crewMember1ChooseRoom, crewMember2ChooseRoom, actionPane);
+        firstStackPaneList.addAll(boxLineLayout, usernamePane,crewMembersChoicePane, crewMember1ChooseRoom, crewMember2ChooseRoom, actionPane);
         btnExitMain.setOnMouseClicked(e ->{
             firstStackPaneList.add(popupFunction(this));
         });
@@ -97,7 +99,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
             firstStackPaneList.add(ShowScoreFunction(this));
         });
         btnPlay.setOnMouseClicked(e -> {
-            firstStackPaneList.add(ShowUsernameFunction(this));
+            this.game.startGame();
         });
 
     }
@@ -242,6 +244,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
         btnTurSaveOptions.setOnMouseClicked(e -> {
             this.game.setHealthTrackerValue(valueFactory2.getValue());
+            System.out.println(this.game.getHealthTrackerHealth());
             this.game.setHullTrackerValue(valueFactory.getValue());
 
             for (int i = 0; i < 15; i++) {
@@ -296,91 +299,6 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         });
 
         return scoreSceneMainVbox;
-
-    }
-
-    /*#########################################################################*/
-    /*##                             Username Scene                          ##*/
-    /*#########################################################################*/
-
-    private VBox ShowUsernameFunction(StackPane myStackPane){
-
-        Image imgReset = new Image(getClass().getResourceAsStream("..\\Images\\trash.png"));
-        ImageView imgVwReset = new ImageView(imgReset);
-        imgVwReset.setFitWidth(20);
-        imgVwReset.setFitHeight(20);
-
-        ImageView ChooseUsernameSceneUndo = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\undo.png")));
-        ChooseUsernameSceneUndo.setFitHeight(20);
-        ChooseUsernameSceneUndo.setFitWidth(20);
-
-        Button btnTurnBackUserNameScene = new Button("Go Back", ChooseUsernameSceneUndo);
-        btnTurnBackUserNameScene.getStyleClass().add("DefaultButton");
-
-        Image imgPlayUsername = new Image(getClass().getResourceAsStream("..\\Images\\play-button-inside-a-circle.png"));
-        ImageView imgVwPlayUsername = new ImageView(imgPlayUsername);
-        imgVwPlayUsername.setFitHeight(20);
-        imgVwPlayUsername.setFitWidth(20);
-
-        Button btnSubmitName = new Button();
-        btnSubmitName.setGraphic(imgVwPlayUsername);
-        btnSubmitName.getStyleClass().add("GreenButton");
-        btnSubmitName.setDisable(true);
-
-        Button btnResetUsername = new Button();
-        btnResetUsername.setGraphic(imgVwReset);
-        btnResetUsername.getStyleClass().add("RedButton");
-
-        TextField txtAreaUserName = new TextField();
-        txtAreaUserName.getStyleClass().add("TextArea");
-        txtAreaUserName.setPrefHeight(30);
-        txtAreaUserName.setPrefWidth(210);
-        txtAreaUserName.setFont(Font.font("Death Star", FontWeight.MEDIUM, 15));
-
-        Label lblChooseUserName = new Label("Choose Your Username");
-        lblChooseUserName.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
-        lblChooseUserName.setTextFill(Color.web("#ffffff"));
-
-        HBox topHboxChooseUsernameScene = new HBox(lblChooseUserName);
-        topHboxChooseUsernameScene.setAlignment(Pos.CENTER);
-
-        HBox backHboxChooseUsernameScene = new HBox(txtAreaUserName, btnResetUsername, btnSubmitName, btnTurnBackUserNameScene);
-        backHboxChooseUsernameScene.setAlignment(Pos.CENTER);
-        backHboxChooseUsernameScene.setSpacing(10);
-
-        VBox mainVboxUsernameScene = new VBox(topHboxChooseUsernameScene, backHboxChooseUsernameScene);
-        mainVboxUsernameScene.setAlignment(Pos.CENTER);
-        mainVboxUsernameScene.setSpacing(20);
-        mainVboxUsernameScene.getStyleClass().add("ChooseVBox");
-
-        btnTurnBackUserNameScene.setOnMouseClicked(e -> {
-            this.getChildren().remove(mainVboxUsernameScene);
-        });
-
-        btnSubmitName.setOnMouseClicked(e -> {
-            this.game.newUser(txtAreaUserName.getText());
-            this.game.Inputbegining();
-            this.getChildren().remove(mainVboxUsernameScene);
-        });
-
-        btnResetUsername.setOnMouseClicked(e -> {
-            txtAreaUserName.clear();
-            btnSubmitName.setDisable(true);
-        });
-
-        txtAreaUserName.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= 10 ? change : null));
-
-        txtAreaUserName.setOnKeyReleased(e -> {
-            if (txtAreaUserName.getLength() > 0){
-                btnSubmitName.setDisable(false);
-            }
-            else{
-                btnSubmitName.setDisable(true);
-            }
-        });
-
-        return mainVboxUsernameScene;
 
     }
 

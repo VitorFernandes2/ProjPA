@@ -152,7 +152,7 @@ public class CrewMember2ChooseRoom extends StackPane implements Constants,Proper
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                       
+
                         game.placeSecondCrewMember(0);
 
                     }
