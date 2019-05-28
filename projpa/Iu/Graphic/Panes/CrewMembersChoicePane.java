@@ -154,17 +154,6 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
 
         paneLayoutCrewMembersChoice.setCenter(mainVboxCrewMembersChoice);
 
-        CardsImageView.get(0).addEventHandler(MouseEvent.MOUSE_CLICKED,
-        new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {  
-                game.selectCrewMembers("Captain", "Engineer");
-            }
-        });
-
-        
-        
-        
         btnTurnBackChooseCrewMember.setOnMouseClicked(e -> {
             this.game.goBack();
         });
