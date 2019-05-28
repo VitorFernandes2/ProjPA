@@ -19,10 +19,12 @@ import projpa.Iu.Graphic.Buttons.DefaultButton;
 import projpa.Iu.Graphic.Buttons.GreenButton;
 import projpa.Iu.Graphic.Buttons.RedButton;
 import projpa.Iu.Graphic.Constants;
+import projpa.Iu.Graphic.ShipGps;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javafx.scene.shape.Circle;
 
 public class ActionPane extends StackPane implements Constants, PropertyChangeListener {
 
@@ -246,10 +248,61 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         transtion.play();
 
 
+        Circle test = new Circle();
+        test.setRadius(1);
+        test.setFill(Color.GREEN);
+        
+        // beta
+        
+        double xcenter=((WIDTH- 377)/2) - 29 ;
+        double ycenter= ((HEIGHT - 84)/2)- 7 ;
+        
+        test.setCenterX(xcenter + 120);
+        test.setCenterY(ycenter + 150);
+        
+        //test
+        
+        ShipGps pdata = new ShipGps(xcenter,ycenter) ;
+        
+        Image playerimagem = new Image(getClass().getResourceAsStream("..\\Images\\playerstand.png"));
+        ImageView playerimage = new ImageView(playerimagem);
+        playerimage.setFitHeight(20);
+        playerimage.setPreserveRatio(true);
+        
+        ArrayList<Double> cordstart = new ArrayList<>(); // temp
+        cordstart = pdata.getlocationcords(1);
+        playerimage.setX(cordstart.get(0));
+        playerimage.setY(cordstart.get(1));
+        
+        double tempxa = cordstart.get(0); double tempya = cordstart.get(1);
+        cordstart.clear();
+        cordstart = pdata.getlocationcords(8);
+        
+        
+        double rotaionplayer = pdata.calculatedegree(tempxa, tempya, cordstart.get(0), cordstart.get(1));
+        playerimage.setRotate(rotaionplayer * 100);
+        
+        
+        cordstart.clear();
+        cordstart = pdata.getcords(1,8);
+        TranslateTransition playertranstion = new TranslateTransition(Duration.seconds(3),playerimage);
+        
+        playertranstion.setToX(cordstart.get(0));
+        playertranstion.setToY(cordstart.get(1));
+        playertranstion.setCycleCount(Animation.INDEFINITE);
+        playertranstion.setAutoReverse(true);
+        playertranstion.play();
+        
+
+        
+        // end beta
+
         // adicionas of people in pane
         MainshipImageView.getChildren().add(Randomship1imgview);
         MainshipImageView.getChildren().add(MainshipImageView2);
-
+        MainshipImageView.getChildren().add(test);
+        MainshipImageView.getChildren().add(playerimage);
+        
         VBox navyBox = new VBox();
         navyBox.getChildren().addAll();
 
@@ -281,8 +334,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         StackPane actionStackPane = new StackPane(paneLayout);
         actionStackPane.setAlignment(Pos.CENTER);
 
+        btnExit.setOnAction(e -> System.exit(0)); // temp  -- REMOVER
+        
         return actionStackPane;
-
+        
     }
 
     @Override
