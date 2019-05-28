@@ -119,7 +119,7 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
                     names.add("Commander");
                     break;
                 case 2:
-                    names.add("Comm's Officer");
+                    names.add("CommsOfficer");
                     break;
                 case 3:
                     names.add("Doctor");
@@ -128,25 +128,25 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
                     names.add("Engineer");
                     break;
                 case 5:
-                    names.add("Moral Officer");
+                    names.add("MoralOfficer");
                     break;
                 case 6:
-                    names.add("Navigation Officer");
+                    names.add("NavigationOfficer");
                     break;
                 case 7:
-                    names.add("Red Shirt");
+                    names.add("RedShirt");
                     break;
                 case 8:
-                    names.add("Science Officer");
+                    names.add("ScienceOfficer");
                     break;
                 case 9:
-                    names.add("Security Officer");
+                    names.add("SecurityOfficer");
                     break;
                 case 10:
-                    names.add("Shuttle Pilot");
+                    names.add("ShuttlePilot");
                     break;
                 case 11:
-                    names.add("Transporter Chief");
+                    names.add("TransporterChief");
                     break;
             }
         }
@@ -294,7 +294,7 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
                     names.add("Commander");
                     break;
                 case 2:
-                    names.add("Comm's Officer");
+                    names.add("CommsOfficer");
                     break;
                 case 3:
                     names.add("Doctor");
@@ -303,25 +303,25 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
                     names.add("Engineer");
                     break;
                 case 5:
-                    names.add("Moral Officer");
+                    names.add("MoralOfficer");
                     break;
                 case 6:
-                    names.add("Navigation Officer");
+                    names.add("NavigationOfficer");
                     break;
                 case 7:
-                    names.add("Red Shirt");
+                    names.add("RedShirt");
                     break;
                 case 8:
-                    names.add("Science Officer");
+                    names.add("ScienceOfficer");
                     break;
                 case 9:
-                    names.add("Security Officer");
+                    names.add("SecurityOfficer");
                     break;
                 case 10:
-                    names.add("Shuttle Pilot");
+                    names.add("ShuttlePilot");
                     break;
                 case 11:
-                    names.add("Transporter Chief");
+                    names.add("TransporterChief");
                     break;
             }
         }
