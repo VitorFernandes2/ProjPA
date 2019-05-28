@@ -390,6 +390,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             
         }); // next phase
         
+        btnSave.setOnAction(e -> this.game.SaveGame());// save
+        
+        
+        
         return actionStackPane;
         
     }

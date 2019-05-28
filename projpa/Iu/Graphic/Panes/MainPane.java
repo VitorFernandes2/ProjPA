@@ -101,6 +101,12 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         btnPlay.setOnMouseClicked(e -> {
             this.game.startGame();
         });
+        btnChargeGame.setOnAction(e -> {
+            this.game.LoadGame(); 
+            this.game.startGame();
+        });
+        
+        
 
     }
 
