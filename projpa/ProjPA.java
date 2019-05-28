@@ -30,6 +30,8 @@ public class ProjPA extends Application {
         else
             launch(args);
 
+        System.exit(0);
+        
     }
 
     @Override
