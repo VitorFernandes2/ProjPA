@@ -316,22 +316,27 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
 	public void goBack() {
         this.stateOfTheGame = this.stateOfTheGame.goBack();
+        firePropertyChange(null, false, true);
 	}
 
 	public void setTrap(int roomIndex, int trapIndex) {
         this.stateOfTheGame = this.stateOfTheGame.setTrap(roomIndex, trapIndex);
+        firePropertyChange(null, false, true);
 	}
 
 	public void sealRoom(int option) {
         this.stateOfTheGame = this.stateOfTheGame.sealRoom(option);
+        firePropertyChange(null, false, true);
 	}
 
 	public void selectrandomCrewMembers() {
         this.stateOfTheGame = this.stateOfTheGame.selectRandomCrewMembers();
+        firePropertyChange(null, false, true);
     }
 
 	public void selectCrewMembers(String crewMember1, String crewMember2) {
         this.stateOfTheGame = this.stateOfTheGame.selectCrewMembers(crewMember1, crewMember2);
+        firePropertyChange(null, false, true);
 	}
 
 	public String toStringParticleDisperser(){
@@ -389,26 +394,32 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
 	public void Inputbegining() {
         this.stateOfTheGame = this.stateOfTheGame.InputBeginning(this.game);
+        firePropertyChange(null, false, true);
 	}
 
 	public void placeFirstCrewMember(int room) {
         this.stateOfTheGame = this.stateOfTheGame.placeFirstCrewMember(room);
+        firePropertyChange(null, false, true);
 	}
 
 	public void placeSecondCrewMember(int room) {
         this.stateOfTheGame = this.stateOfTheGame.placeSecondCrewMember(room);
+        firePropertyChange(null, false, true);
 	}
 
 	public void detonateParticleDisperser(String option) {
         this.stateOfTheGame = this.stateOfTheGame.detonateParticleDisperser(option);
+        firePropertyChange(null, false, true);
 	}
 
 	public void move(int i, int option) {
         this.stateOfTheGame = this.stateOfTheGame.move(i, option);
+        firePropertyChange(null, false, true);
 	}
 
 	public void nextTurn() {
         this.stateOfTheGame = this.stateOfTheGame.nextTurn();
+        firePropertyChange(null, false, true);
 	}
 
 	public boolean heal() {

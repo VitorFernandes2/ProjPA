@@ -1,5 +1,6 @@
 package projpa.Iu.Graphic.Panes;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -35,18 +36,18 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
 
     private void setupComponents() {
 
-        this.getChildren().addAll(CrewMember1ChooseRoom(this));
+        ObservableList firstStackPaneList = this.getChildren();
+        firstStackPaneList.add(CrewMember1ChooseRoom(this));
 
     }
 
-    private VBox CrewMember1ChooseRoom(StackPane myStackPane){
+    private BorderPane CrewMember1ChooseRoom(StackPane myStackPane){
 
         /*#########################################################################*/
         /*##                     Choose CrewMember 1 Scene                       ##*/
         /*#########################################################################*/
 
         BorderPane paneLayoutCrewMembersChoice = new BorderPane();
-        String crewmember1Name;
         VBox mainVboxCrewMembersChoice = new VBox();
 
         ArrayList<Image> CardsImage = new ArrayList<>();
@@ -155,7 +156,7 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
             this.game.goBack();
         });
 
-        return mainVboxCrewMembersChoice;
+        return paneLayoutCrewMembersChoice;
 
     }
 

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class MainPane extends StackPane implements Constants, PropertyChangeListener {
 
     private GameLogic game;
-    private boolean usernameBool;
     private Image imgPlay;
     private Image imgExitMain;
     private Image imgScoreMain;
@@ -45,7 +44,6 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
     public MainPane(GameLogic game) {
         this.game = game;
-        usernameBool = false;
         this.game.addPropertyChangeListener(this);
         setupComponents();
         propertyChange(null);
@@ -92,7 +90,6 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
             firstStackPaneList.add(ShowScoreFunction(this));
         });
         btnPlay.setOnMouseClicked(e -> {
-            this.usernameBool = true;
             firstStackPaneList.add(ShowUsernameFunction(this));
         });
 
@@ -351,14 +348,12 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
         btnTurnBackUserNameScene.setOnMouseClicked(e -> {
             this.getChildren().remove(mainVboxUsernameScene);
-            this.usernameBool = false;
-            this.boxLineLayout.setVisible(true);
         });
 
         btnSubmitName.setOnMouseClicked(e -> {
             this.game.newUser(txtAreaUserName.getText());
             this.game.Inputbegining();
-            System.out.println("Passei aqui");
+            this.getChildren().remove(mainVboxUsernameScene);
         });
 
         btnResetUsername.setOnMouseClicked(e -> {
@@ -384,24 +379,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
-        if (this.game.inAwaitBeginning()){
-            setVisible(this.game.inAwaitBeginning());
-        }
-        else{
-            setVisible(this.game.inGameOverState());
-            usernameBool = false;
-        }
-
-        if (usernameBool){
-            this.boxLineLayout.setVisible(false);
-            ObservableList firstStackPaneList = this.getChildren();
-            firstStackPaneList.add(ShowUsernameFunction(this));
-        }
-        else{
-            this.boxLineLayout.setVisible(true);
-        }
-
+        
     }
 
 }
