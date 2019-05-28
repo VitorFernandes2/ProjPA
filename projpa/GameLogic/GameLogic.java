@@ -427,6 +427,60 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         firePropertyChange(null, false, true);
 	}
 
+	public String getCrewmember1Name(){
+        String name = this.game.getCrewMember1Name();
+        return name;
+    }
+
+    public String getCrewmember2Name(){
+        String name = this.game.getCrewMember2Name();
+        return name;
+    }
+
+    public String getCrewmember1RoomName(){
+        String name = this.game.getCrewMember1RoomName();
+        return name;
+    }
+
+    public String getCrewMember1Atack(){
+        switch (this.game.getCrewMembers()[0].getAttack()){
+            case 106:
+                return "1D6";
+            case 206:
+                return "2D6";
+            case 306:
+                return "3D6";
+            default:
+                return "0D6";
+        }
+    }
+
+    public String getCrewMember2Atack(){
+        switch (this.game.getCrewMembers()[1].getAttack()){
+            case 106:
+                return "1D6";
+            case 206:
+                return "2D6";
+            case 306:
+                return "3D6";
+            default:
+                return "0D6";
+        }
+    }
+
+    public int getCrewMember1Move(){
+        return this.game.getCrewMember(0).getMovement();
+    }
+
+    public int getCrewMember2Move(){
+        return this.game.getCrewMember(1).getMovement();
+    }
+
+    public String getCrewmember2RoomName(){
+        String name = this.game.getCrewMember2RoomName();
+        return name;
+    }
+
 	public void detonateParticleDisperser(String option) {
         this.stateOfTheGame = this.stateOfTheGame.detonateParticleDisperser(option);
         firePropertyChange(null, false, true);
