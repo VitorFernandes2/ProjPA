@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -27,22 +26,24 @@ import java.util.ArrayList;
 public class MainPane extends StackPane implements Constants, PropertyChangeListener {
 
     private GameLogic game;
+    private boolean usernameBool;
     private Image imgPlay;
     private Image imgExitMain;
     private Image imgScoreMain;
     private Image imgOptionsMain;
     private Image imgLoadGameMain;
     private VBox boxLineLayout;
-    GreenButton btnPlay;
-    DefaultButton btnChargeGame;
-    DefaultButton btnSeeScore;
-    DefaultButton btnOptions;
-    RedButton btnExitMain;
-    DeathStarLabel lblTitle;
-    DeathStarLabel lblTitle2;
+    private GreenButton btnPlay;
+    private DefaultButton btnChargeGame;
+    private DefaultButton btnSeeScore;
+    private DefaultButton btnOptions;
+    private RedButton btnExitMain;
+    private DeathStarLabel lblTitle;
+    private DeathStarLabel lblTitle2;
 
     public MainPane(GameLogic game) {
         this.game = game;
+        usernameBool = false;
         this.game.addPropertyChangeListener(this);
         setupComponents();
         propertyChange(null);
@@ -76,7 +77,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         boxLineLayout.setAlignment(Pos.CENTER);
 
         ObservableList firstStackPaneList = this.getChildren();
-        firstStackPaneList.add(boxLineLayout);
+        firstStackPaneList.addAll(boxLineLayout);
         btnExitMain.setOnMouseClicked(e ->{
             firstStackPaneList.add(popupFunction(this));
         });
@@ -85,6 +86,10 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         });
         btnSeeScore.setOnMouseClicked(e -> {
             firstStackPaneList.add(ShowScoreFunction(this));
+        });
+        btnPlay.setOnMouseClicked(e -> {
+            this.usernameBool = true;
+            firstStackPaneList.add(ShowUsernameFunction(this));
         });
 
     }
@@ -286,8 +291,29 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
     }
 
+    /*#########################################################################*/
+    /*##                             Username Scene                          ##*/
+    /*#########################################################################*/
+
+    private VBox ShowUsernameFunction(StackPane myStackPane){
+
+        return new VBox();
+
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
+        setVisible(this.game.inAwaitBeginning());
+
+        if (usernameBool){
+            this.boxLineLayout.setVisible(false);
+            ObservableList firstStackPaneList = this.getChildren();
+            firstStackPaneList.add(ShowUsernameFunction(this));
+        }
+        else{
+            this.boxLineLayout.setVisible(true);
+        }
 
     }
 
