@@ -41,6 +41,9 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
     private DeathStarLabel lblTitle;
     private DeathStarLabel lblTitle2;
     private CrewMembersChoicePane crewMembersChoicePane;
+    private CrewMember1ChooseRoom crewMember1ChooseRoom;
+    private CrewMember2ChooseRoom crewMember2ChooseRoom;
+    
 
     public MainPane(GameLogic game) {
         this.game = game;
@@ -77,9 +80,11 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         boxLineLayout.setAlignment(Pos.CENTER);
 
         crewMembersChoicePane = new CrewMembersChoicePane(this.game);
+        crewMember1ChooseRoom = new CrewMember1ChooseRoom(this.game);
+        crewMember2ChooseRoom = new CrewMember2ChooseRoom(this.game);
 
         ObservableList firstStackPaneList = this.getChildren();
-        firstStackPaneList.addAll(boxLineLayout, crewMembersChoicePane);
+        firstStackPaneList.addAll(boxLineLayout, crewMembersChoicePane, crewMember1ChooseRoom, crewMember2ChooseRoom);
         btnExitMain.setOnMouseClicked(e ->{
             firstStackPaneList.add(popupFunction(this));
         });

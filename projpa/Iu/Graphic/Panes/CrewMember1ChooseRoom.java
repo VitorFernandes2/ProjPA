@@ -21,13 +21,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import projpa.GameLogic.GameLogic;
+import projpa.Iu.Graphic.Constants;
 
-public class CrewMember1ChooseRoom extends StackPane implements PropertyChangeListener{
+public class CrewMember1ChooseRoom extends StackPane implements Constants,PropertyChangeListener{
 
     private GameLogic game;
     
     public CrewMember1ChooseRoom(GameLogic Game) {
-        this.game = game;
+        this.game = Game;
         this.game.addPropertyChangeListener(this);
         setupComponents();
         propertyChange(null);
@@ -52,40 +53,40 @@ public class CrewMember1ChooseRoom extends StackPane implements PropertyChangeLi
 
             switch (i){
                 case 0:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room1.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room1.png")));
                     break;
                 case 1:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room2.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room2.png")));
                     break;
                 case 2:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room3.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room3.png")));
                     break;
                 case 3:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room4.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room4.png")));
                     break;
                 case 4:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room5.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room5.png")));
                     break;
                 case 5:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room6.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room6.png")));
                     break;
                 case 6:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room7.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room7.png")));
                     break;
                 case 7:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room8.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room8.png")));
                     break;
                 case 8:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room9.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room9.png")));
                     break;
                 case 9:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room10.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room10.png")));
                     break;
                 case 10:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room11.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room11.png")));
                     break;
                 case 11:
-                    RoomImage.add(new Image(getClass().getResourceAsStream("Images\\Rooms\\Room12.png")));
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room12.png")));
                     break;
             }
 
@@ -124,7 +125,7 @@ public class CrewMember1ChooseRoom extends StackPane implements PropertyChangeLi
         lblChooseRooms.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
         lblChooseRooms.setTextFill(Color.web("#ffffff"));
 
-        ImageView ChooseRoomsUndo = new ImageView(new Image(getClass().getResourceAsStream("Images\\undo.png")));
+        ImageView ChooseRoomsUndo = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\undo.png")));
         ChooseRoomsUndo.setFitHeight(20);
         ChooseRoomsUndo.setFitWidth(20);
 
