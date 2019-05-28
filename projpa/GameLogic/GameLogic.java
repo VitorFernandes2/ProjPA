@@ -248,6 +248,13 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         return this.game.savetoscorefile();
     }
 
+    public int getUserPoints(){
+        if (this.game.getUser() != null)
+            return this.game.getUser().getPoints();
+        else
+            return 0;
+    }
+
     public boolean wasSaved(){
         return this.stateOfTheGame.wasSaved();
     }

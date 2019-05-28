@@ -31,6 +31,34 @@ import javafx.scene.shape.Circle;
 public class ActionPane extends StackPane implements Constants, PropertyChangeListener {
 
     private GameLogic game;
+    private BorderPane paneLayout;
+    private Image imgExit;
+    Image imgNext;
+    Image imgSave;
+    GreenButton btnSave;
+    RedButton btnExit;
+    DefaultButton btnNext;
+    HBox bottomBox;
+    TabPane tabLayout;
+    VBox firstTabImage;
+    Label firstTabLabel;
+    ImageView firstTabIcon;
+    Tab firstTab;
+    VBox secondTabImage;
+    Label secondTabLabel;
+    ImageView secondTabIcon;
+    Tab secondTab;
+    VBox leftBox;
+    ImageView pointsIcon;
+    Label lblPoints;
+    ImageView apIcon;
+    Label lblAp;
+    ImageView ipIcon;
+    Label lblIp;
+    HBox topRightBox;
+    HBox topLeftBox;
+    ArrayList<Label> journeyLabels;
+    Region region;
 
     public ActionPane(GameLogic game) {
         this.game = game;
@@ -51,15 +79,15 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         /*##                             Bottom Panel                            ##*/
         /*#########################################################################*/
 
-        Image imgExit = new Image(getClass().getResourceAsStream("..\\Images\\exit.png"));
-        Image imgNext = new Image(getClass().getResourceAsStream("..\\Images\\next.png"));
-        Image imgSave = new Image(getClass().getResourceAsStream("..\\Images\\save.png"));
+        imgExit = new Image(getClass().getResourceAsStream("..\\Images\\exit.png"));
+        imgNext = new Image(getClass().getResourceAsStream("..\\Images\\next.png"));
+        imgSave = new Image(getClass().getResourceAsStream("..\\Images\\save.png"));
 
-        GreenButton btnSave = new GreenButton("Save", imgSave, 20, 20, 120, 40);
-        RedButton btnExit = new RedButton("Exit", imgExit, 20, 20, 120, 40);
-        DefaultButton btnNext = new DefaultButton("Next", imgNext, 20, 20, 120, 40);
+        btnSave = new GreenButton("Save", imgSave, 20, 20, 120, 40);
+        btnExit = new RedButton("Exit", imgExit, 20, 20, 120, 40);
+        btnNext = new DefaultButton("Next", imgNext, 20, 20, 120, 40);
 
-        HBox bottomBox = new HBox(btnSave, btnNext, btnExit);
+        bottomBox = new HBox(btnSave, btnNext, btnExit);
         bottomBox.setSpacing(10);
         bottomBox.setPadding(new Insets(5, 10, 5, 10));
         bottomBox.getStyleClass().add("topBox");
@@ -70,40 +98,40 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         /*##                             Left Panel                              ##*/
         /*#########################################################################*/
 
-        TabPane tabLayout = new TabPane();
+        tabLayout = new TabPane();
         tabLayout.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        VBox firstTabImage = new VBox();
-        Label firstTabLabel = new Label("Doctor");
+        firstTabImage = new VBox();
+        firstTabLabel = new Label("Doctor");
 
         firstTabLabel.setTextFill(Color.web("#ffffff"));
 
-        ImageView firstTabIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\doctor.png")));
+        firstTabIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\doctor.png")));
         firstTabIcon.setFitWidth(50);
         firstTabIcon.setFitHeight(50);
 
         firstTabImage.getChildren().addAll(firstTabIcon, firstTabLabel);
 
-        Tab firstTab = new Tab();
+        firstTab = new Tab();
         firstTab.setGraphic(firstTabImage);
         tabLayout.getTabs().add(firstTab);
 
-        VBox secondTabImage = new VBox();
-        Label secondTabLabel = new Label("Red Shirt");
+        secondTabImage = new VBox();
+        secondTabLabel = new Label("Red Shirt");
 
         secondTabLabel.setTextFill(Color.web("#ffffff"));
 
-        ImageView secondTabIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\redShirt.png")));
+        secondTabIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\redShirt.png")));
         secondTabIcon.setFitWidth(50);
         secondTabIcon.setFitHeight(50);
 
         secondTabImage.getChildren().addAll(secondTabIcon, secondTabLabel);
 
-        Tab secondTab = new Tab();
+        secondTab = new Tab();
         secondTab.setGraphic(secondTabImage);
         tabLayout.getTabs().add(secondTab);
 
-        VBox leftBox = new VBox(tabLayout);
+        leftBox = new VBox(tabLayout);
         leftBox.getStyleClass().add("rightBox");
 
         leftBox.setAlignment(Pos.TOP_CENTER);
@@ -114,43 +142,43 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         /*#########################################################################*/
 
 
-        ImageView pointsIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\points.png")));
+        pointsIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\points.png")));
         pointsIcon.setFitWidth(20);
         pointsIcon.setFitHeight(20);
 
-        Label lblPoints = new Label(": xxx", pointsIcon);
+        lblPoints = new Label(": " + this.game.getUserPoints(), pointsIcon);
 
         lblPoints.setTextFill(Color.web("#ffffff"));
         lblPoints.getStyleClass().add("PointsLabel");
 
-        ImageView apIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\action.png")));
+        apIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\action.png")));
         apIcon.setFitWidth(20);
         apIcon.setFitHeight(20);
 
-        Label lblAp = new Label(": " + this.game.getActionPoints(), apIcon);
+        lblAp = new Label(": " + this.game.getActionPoints(), apIcon);
 
         lblAp.setTextFill(Color.web("#ffffff"));
         lblAp.getStyleClass().add("PointsLabel");
 
-        ImageView ipIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\influence.png")));
+        ipIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\influence.png")));
         ipIcon.setFitWidth(20);
         ipIcon.setFitHeight(20);
 
-        Label lblIp = new Label(": " + this.game.getInspirationPoints(), ipIcon);
+        lblIp = new Label(": " + this.game.getInspirationPoints(), ipIcon);
 
         lblIp.setTextFill(Color.web("#ffffff"));
         lblIp.getStyleClass().add("PointsLabel");
 
-        HBox topRightBox = new HBox();
+        topRightBox = new HBox();
         topRightBox.getChildren().addAll(lblPoints, lblAp, lblIp);
         topRightBox.setAlignment(Pos.CENTER_RIGHT);
         topRightBox.setSpacing(10);
 
-        HBox topLeftBox = new HBox();
+        topLeftBox = new HBox();
         topLeftBox.getChildren().addAll();
         topLeftBox.setAlignment(Pos.CENTER_LEFT);
 
-        ArrayList<Label> journeyLabels = new ArrayList<>();
+        journeyLabels = new ArrayList<>();
 
         for (int i = 0; i < 15; i++) {
 
@@ -175,7 +203,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         journeyLabels.get(14).setText("E");
         journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
 
-        Region region = new Region();
+        region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
 
         HBox topBox = new HBox();
@@ -321,7 +349,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         /*##                              Main Panel                             ##*/
         /*#########################################################################*/
 
-        BorderPane paneLayout = new BorderPane();
+        paneLayout = new BorderPane();
         paneLayout.setCenter(centerBox);
         paneLayout.setBottom(bottomBox);
         paneLayout.setLeft(leftBox);
@@ -339,14 +367,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         btnNext.setOnMouseClicked(e -> {
             game.nextTurn();
-            for (int i = 0; i < 15; i++) {
-                if (game.getJourneyState() + 1 == i)
-                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenterActive");
-                else
-                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
-            }
-            journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
-            journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
+            refreshJourneyTracker();
         });
 
         btnExit.setOnMouseClicked(e -> {
@@ -399,8 +420,25 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
     }
 
+    private void refreshJourneyTracker(){
+        if (this.game.inAwaitCrewPhaseActions()){
+            for (int i = 0; i < 15; i++) {
+                if (game.getJourneyState() == i)
+                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenterActive");
+                else
+                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
+            }
+            journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
+            journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
+        }
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
+        if (this.game.inAwaitCrewPhaseActions()){
+            refreshJourneyTracker();
+        }
 
         setVisible(this.game.inAwaitCrewPhaseActions());
 
