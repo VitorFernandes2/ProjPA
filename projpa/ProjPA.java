@@ -2,8 +2,10 @@ package projpa;
 import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import projpa.GameLogic.GameData;
 import projpa.GameLogic.GameLogic;
 import projpa.GameLogic.StateMachine.AwaitBeginning;
+import projpa.GameLogic.StateMachine.GameOver;
 import projpa.GameLogic.StateMachine.IStates;
 import projpa.Iu.Graphic.GraphicInterface;
 import projpa.Iu.Text.TextInterface;
@@ -33,7 +35,7 @@ public class ProjPA extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        GameLogic game = new GameLogic(new AwaitBeginning());
+        GameLogic game = new GameLogic(new GameOver(new GameData()));
         GraphicInterface gameInterface = new GraphicInterface(primaryStage, game);
         gameInterface.run();
 

@@ -214,12 +214,10 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
     }
 
     public void setHealthTrackerValue(int value){
-        if (inAwaitBeginning())
             this.game.setHealthTrackervalue(value);
     }
 
     public void setHullTrackerValue(int value){
-        if (inAwaitBeginning())
             this.game.setHullTrackervalue(value);
     }
 
@@ -262,11 +260,15 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         return this.stateOfTheGame.wasSaved();
     }
 
-     /**
-     * @param stateOfTheGame the stateOfTheGame to set
-     */
-    public void setStateOfTheGame(IStates stateOfTheGame) {
-        this.stateOfTheGame = stateOfTheGame;
+    public void endGame(){
+        this.stateOfTheGame = new GameOver(this.game);
+        firePropertyChange(null, false, true);
+    }
+
+    public void endGame2(){
+        this.game = new GameData();
+        this.stateOfTheGame = new GameOver(this.game);
+        firePropertyChange(null, false, true);
     }
 
     public ArrayList<Integer> atack(int i) {
@@ -391,6 +393,10 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         return this.game.getInspirationPoints().getInspstate();
     }
 
+    public int getActionPoints(){
+        return this.game.getActionPoints();
+    }
+
     public ArrayList<Integer> getCrewMembersForMenu(){
 
         ArrayList<Integer> CrewMembersForMenu = new ArrayList<>();
@@ -511,8 +517,16 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
     }
 
     public void newGame() {
-        this.stateOfTheGame = new AwaitBeginning();
         this.game = new GameData();
+        this.stateOfTheGame = new AwaitBeginning();
+        firePropertyChange(null, false, true);
+    }
+
+    public void startGame(){
+        if (inGameOverState()){
+            this.stateOfTheGame = new AwaitBeginning();
+            firePropertyChange(null, false, true);
+        }
     }
 
     public void newUser(String name) {

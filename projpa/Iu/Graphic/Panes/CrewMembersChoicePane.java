@@ -333,8 +333,10 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
             String str = names.get(i);
             CrewCardImgHbox.get(i).setOnMouseClicked(e -> {
                 this.CrewNames.add(str);
-                if (!this.CrewNames.get(0).equals(this.CrewNames.get(1)))
+                if (!this.CrewNames.get(0).equals(this.CrewNames.get(1))){
+                    this.getChildren().remove(paneLayoutCrewMembersChoice);
                     this.game.selectCrewMembers(this.CrewNames.get(0), this.CrewNames.get(1));
+                }
                 else
                     this.CrewNames.remove(1);
             });
@@ -381,6 +383,7 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
         paneLayoutCrewMembersChoice.setCenter(mainVboxCrewMembersChoice);
 
         btnTurnBackChooseCrewMember.setOnMouseClicked(e -> {
+            this.getChildren().remove(paneLayoutCrewMembersChoice);
             this.game.goBack();
         });
 
