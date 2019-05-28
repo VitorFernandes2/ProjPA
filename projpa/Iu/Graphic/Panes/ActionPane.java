@@ -355,8 +355,6 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         StackPane actionStackPane = new StackPane(paneLayout);
         actionStackPane.setAlignment(Pos.CENTER);
-
-        btnExit.setOnAction(e -> System.exit(0)); // temp  -- REMOVER
         
         return actionStackPane;
         
