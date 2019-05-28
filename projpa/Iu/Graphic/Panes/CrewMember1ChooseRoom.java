@@ -147,123 +147,14 @@ public class CrewMember1ChooseRoom extends StackPane implements Constants,Proper
 
         mainVboxRoomChoice.getStyleClass().add("ChooseVBox");
 
-        RoomsImgHbox.get(0).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(0);
-                        
-                    }
-                });
+        for (int i = 0; i < 12; i++) {
 
-        RoomsImgHbox.get(1).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(1);
-                                     
-                    }
-                });
+            final int j = i;
+            RoomsImgHbox.get(i).setOnMouseClicked(e -> {
+                this.game.placeFirstCrewMember(j + 1);
+            });
 
-        RoomsImgHbox.get(2).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(2);
-                        
-                    }
-                });
-
-        RoomsImgHbox.get(3).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(3);
-                                     
-                    }
-                });
-        
-        
-        RoomsImgHbox.get(4).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(4);
-                        
-                    }
-                });
-
-        RoomsImgHbox.get(5).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(5);
-                                     
-                    }
-                });
-        RoomsImgHbox.get(6).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(6);
-                        
-                    }
-                });
-
-        RoomsImgHbox.get(7).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(7);
-                                     
-                    }
-                });
-        RoomsImgHbox.get(8).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(8);
-                        
-                    }
-                });
-
-        RoomsImgHbox.get(9).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(9);
-                                     
-                    }
-                });
-        RoomsImgHbox.get(10).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(0);
-                        
-                    }
-                });
-
-        RoomsImgHbox.get(11).addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       
-                        game.placeFirstCrewMember(11);
-                                     
-                    }
-                });  
+        }
 
         paneLayoutRoomChoice.setCenter(mainVboxRoomChoice);
         

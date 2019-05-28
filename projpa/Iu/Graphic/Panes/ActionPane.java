@@ -188,12 +188,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             journeyLabels.add(new Label(this.game.getJourneyValue(i)));
             journeyLabels.get(i).setFont(Font.font("Death Star", FontWeight.MEDIUM, 12));
             journeyLabels.get(i).setTextFill(Color.web("#ffffff"));
-            System.out.println(this.game.getJourneyState());
-            if (this.game.getJourneyState() + 1 == i)
-                journeyLabels.get(i).getStyleClass().add("journeyLabelsCenterActive");
-            else
-                journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
-
+            journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
             journeyLabels.get(i).setAlignment(Pos.CENTER);
             journeyLabels.get(i).setPrefWidth(40);
             journeyLabels.get(i).setPrefHeight(30);
@@ -443,13 +438,13 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     private void refreshJourneyTracker(){
         if (this.game.inAwaitCrewPhaseActions()){
             for (int i = 0; i < 15; i++) {
-                if (game.getJourneyState() == i)
-                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenterActive");
-                else
-                    journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
+                journeyLabels.get(i).getStyleClass().remove("journeyLabelsCenter");
+                journeyLabels.get(i).getStyleClass().remove("journeyLabelsCenterActive");
+                journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
             }
             journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
             journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
+            journeyLabels.get(this.game.getJourneyState()).getStyleClass().add("journeyLabelsCenterActive");
         }
     }
 
