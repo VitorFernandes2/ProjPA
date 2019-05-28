@@ -1805,4 +1805,13 @@ public class GameData implements Serializable{
         this.aliens.clear();
 
     }
+    
+    public boolean wasusercreated() {
+        
+        if (this.user == null)
+            return false;
+        else
+            return true;
+    }
+    
 }

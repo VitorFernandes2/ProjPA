@@ -24,11 +24,23 @@ import projpa.Iu.Graphic.ShipGps;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.shape.Circle;
+import projpa.GameLogic.Alien;
 
 public class ActionPane extends StackPane implements Constants, PropertyChangeListener {
 
     private GameLogic game;
+    private VBox rightBox;
+    private final int maxnumberofshownalien = 20;
+    
+    //allow interce update in enter -> ADD HERE TO UPDATE INTERFACE
+    private ArrayList<Label> alienslabel;
+    private Label lblPoints;
+    private Label lblAp;
+    private Label lblIp;
 
     public ActionPane(GameLogic game) {
         this.game = game;
@@ -116,7 +128,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         pointsIcon.setFitWidth(20);
         pointsIcon.setFitHeight(20);
 
-        Label lblPoints = new Label(": xxx", pointsIcon);
+        lblPoints = new Label(": xxx", pointsIcon);
 
         lblPoints.setTextFill(Color.web("#ffffff"));
         lblPoints.getStyleClass().add("PointsLabel");
@@ -125,7 +137,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         apIcon.setFitWidth(20);
         apIcon.setFitHeight(20);
 
-        Label lblAp = new Label(": xxx", apIcon);
+        lblAp = new Label(": xxx", apIcon);
 
         lblAp.setTextFill(Color.web("#ffffff"));
         lblAp.getStyleClass().add("PointsLabel");
@@ -134,7 +146,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         ipIcon.setFitWidth(20);
         ipIcon.setFitHeight(20);
 
-        Label lblIp = new Label(": xxx", ipIcon);
+        lblIp = new Label(": xxx", ipIcon);
 
         lblIp.setTextFill(Color.web("#ffffff"));
         lblIp.getStyleClass().add("PointsLabel");
@@ -184,30 +196,42 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         /*##                             Right Panel                             ##*/
         /*#########################################################################*/
 
-        VBox rightBox = new VBox();
+        rightBox = new VBox();
         rightBox.setPadding(new Insets(5, 10, 5, 10));
+        
 
-        Label lbl1 = new Label("Alien1: Aquele sitio");
-        Label lbl2 = new Label("Alien2: Aquele sitio");
-        Label lbl3 = new Label("Alien3: Aquele sitio");
-        Label lbl4 = new Label("Alien4: Aquele sitio");
-        Label lbl5 = new Label("Alien5: Aquele sitio");
-
-        lbl1.setTextFill(Color.web("#ffffff"));
-        lbl2.setTextFill(Color.web("#ffffff"));
-        lbl3.setTextFill(Color.web("#ffffff"));
-        lbl4.setTextFill(Color.web("#ffffff"));
-        lbl5.setTextFill(Color.web("#ffffff"));
-
-        lbl1.getStyleClass().add("AliensLabel");
-        lbl2.getStyleClass().add("AliensLabel");
-        lbl3.getStyleClass().add("AliensLabel");
-        lbl4.getStyleClass().add("AliensLabel");
-        lbl5.getStyleClass().add("AliensLabel");
-
-        rightBox.getChildren().addAll(lbl1, lbl2, lbl3, lbl4, lbl5);
+        ArrayList<String> menu = new ArrayList<String>();
+        alienslabel = new ArrayList<Label>();
+        //menu = updaterightbox();        
+              
+        Label lblPoint = new Label(": xxx", pointsIcon);
+        Label titulealien = new Label("List Of Aliens:");
+        titulealien.setTextFill(Color.web("#ffffff"));
+        titulealien.getStyleClass().add("AliensLabel");
+        
+        
+        for (int i = 0; i< maxnumberofshownalien; i++){ // TEMP -> REVERRR
+            
+            if(i==0){
+                //alienslabel.add(new Label("List Of Aliens:                          "));
+                alienslabel.add(new Label(String.format("%-60s", "List Of Aliens: ")));
+                
+                alienslabel.get(i).setTextFill(Color.web("#ffffff"));
+                alienslabel.get(i).getStyleClass().add("AliensLabel");
+                alienslabel.get(i).setVisible(true);
+            }
+            else{
+                alienslabel.add(new Label("Alien1: "));
+                alienslabel.get(i).setTextFill(Color.web("#ffffff"));
+                alienslabel.get(i).getStyleClass().add("AliensLabel");
+                alienslabel.get(i).setVisible(false);
+            }
+        }
+        
+        
+        rightBox.getChildren().addAll(alienslabel);
         rightBox.getStyleClass().add("rightBox");
-        rightBox.setAlignment(Pos.TOP_CENTER);
+        rightBox.setAlignment(Pos.TOP_LEFT);
 
         /*#########################################################################*/
         /*##                              Center Panel                           ##*/
@@ -336,6 +360,11 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         btnExit.setOnAction(e -> System.exit(0)); // temp  -- REMOVER
         
+        btnNext.setOnAction(e -> {this.game.nextTurn();
+            updaterightbox();
+            
+        }); // next phase
+        
         return actionStackPane;
         
     }
@@ -343,5 +372,30 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         setVisible(this.game.inAwaitCrewPhaseActions());
+        updaterightbox();
+    }
+
+    private void updaterightbox() {
+        
+        List<Alien> returnalien = new ArrayList<Alien>(); 
+        returnalien = this.game.getalienarraycopy();
+        
+        for (int i = 0; i < returnalien.size() ; i++){
+            
+            if(i < maxnumberofshownalien - 1)
+            
+            {
+            alienslabel.get(i+1).setText("Alien " + (i+1) + " in: " + returnalien.get(i).getRoom().getName());
+            alienslabel.get(i+1).setVisible(true);
+            
+            }
+        }
+        
+        lblPoints.setText(": " + this.game.getPoints());
+        
+        lblIp.setText(": " + this.game.getInspirationPoints());
+        
+        lblAp.setText(": " + this.game.getActionPoints());
+        
     }
 }

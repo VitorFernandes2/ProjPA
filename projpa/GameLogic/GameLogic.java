@@ -4,6 +4,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import projpa.GameLogic.MapRooms.Room1;
 import projpa.GameLogic.StateMachine.*;
@@ -157,6 +158,13 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         return sb.toString();
 
     }
+    
+    public List<Alien> getalienarraycopy (){
+        
+        List<Alien> copy = new ArrayList<Alien>(game.getAliens());
+        return copy;
+    }
+    
 
     public boolean isAnTransporterChief(int crewMemberIndex){
 
@@ -529,6 +537,18 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
         return journeyCopy;
 
+    }
+    
+    public int getActionPoints() {
+        return this.game.getActionPoints();
+    }
+    
+        public int getPoints(){
+           
+            if (this.game.wasusercreated() == false)
+                return 0;
+            else
+                return this.game.getPoints();
     }
 
 }
