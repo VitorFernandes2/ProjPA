@@ -539,7 +539,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         List<Alien> returnalien = new ArrayList<Alien>(); 
         returnalien = this.game.getalienarraycopy();
         
-        for (int j = 0; j < maxnumberofshownalien ; j++){
+        for (int j = 1; j < maxnumberofshownalien ; j++){
             alienslabel.get(j).setVisible(false);
         }
         
