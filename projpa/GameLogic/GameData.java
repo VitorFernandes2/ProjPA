@@ -938,7 +938,7 @@ public class GameData implements Serializable{
      */
     private int getNumberOfAliens(){
 
-        if (correctSpawnPhase()) {
+        /*if (correctSpawnPhase()) {
         
             String str = new String(getJourneyTurn());
             char aux[];
@@ -965,7 +965,24 @@ public class GameData implements Serializable{
 
         }
 
+        return 0;*/
+        
+    if (correctSpawnPhase()) {
+        
+            String str = new String(getJourneyTurn());
+            char aux[] = new char[str.length() - 1];
+
+            str.getChars(0, str.length() - 1, aux, 0);
+
+            String str2 = new String(aux);
+            int value = Integer.parseInt(str2);
+            
+            return value;
+
+        }
+
         return 0;
+        
 
     }
 

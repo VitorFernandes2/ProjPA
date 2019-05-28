@@ -383,10 +383,6 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         /*##                            Action Scene                             ##*/
         /*#########################################################################*/
 
-        btnNext.setOnMouseClicked(e -> {
-            game.nextTurn();
-            refreshJourneyTracker();
-        });
 
         btnExit.setOnMouseClicked(e -> {
             this.getChildren().add(popupFunctionScene(this));
@@ -395,8 +391,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         StackPane actionStackPane = new StackPane(paneLayout);
         actionStackPane.setAlignment(Pos.CENTER);
         
-        btnNext.setOnAction(e -> {this.game.nextTurn();
+        btnNext.setOnAction(e -> {
+            this.game.nextTurn();
             updaterightbox();
+            refreshJourneyTracker();
             
         }); // next phase
         
@@ -444,7 +442,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     }
 
     private void refreshJourneyTracker(){
-        if (this.game.inAwaitCrewPhaseActions()){
+        if (this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions()){
             for (int i = 0; i < 15; i++) {
                 journeyLabels.get(i).getStyleClass().remove("journeyLabelsCenter");
                 journeyLabels.get(i).getStyleClass().remove("journeyLabelsCenterActive");
@@ -522,12 +520,12 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        if (this.game.inAwaitCrewPhaseActions()){
+        if (this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions()){
             refreshJourneyTracker();
             refreshLeftPanel();
         }
 
-        setVisible(this.game.inAwaitCrewPhaseActions());
+        setVisible(this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions());
         updaterightbox();
 
     }
@@ -537,7 +535,11 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         List<Alien> returnalien = new ArrayList<Alien>(); 
         returnalien = this.game.getalienarraycopy();
         
-        for (int i = 0; i < returnalien.size() ; i++){
+        for (int j = 0; j < maxnumberofshownalien ; j++){
+            alienslabel.get(j).setVisible(false);
+        }
+        
+        for (int i = 0; i < returnalien.size() ; i++){ // update alien screen
             
             if(i < maxnumberofshownalien - 1)
             
@@ -548,12 +550,22 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             }
         }
         
-        lblPoints.setText(": " + this.game.getPoints());
+        //lblPoints.setText(": " + this.game.getPoints()); // point screen
+        lblPoints.setText(": " + this.game.getJourneyState());
         
-        lblIp.setText(": " + this.game.getInspirationPoints());
+        lblIp.setText(": " + this.game.getInspirationPoints()); // inspirationpoint screen
         
-        lblAp.setText(": " + this.game.getActionPoints());
+        lblAp.setText(": " + this.game.getActionPoints()); // action point screen
         
+        
+        for (int i = 0; i < 15; i++) { // Jouney tracker update
+                   
+            journeyLabels.get(i).setText(this.game.getJourneyValue(i));
 
+        }
+        
+        
+        
+        
     }
 }
