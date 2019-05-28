@@ -943,7 +943,7 @@ public class GameData implements Serializable{
             String str = new String(getJourneyTurn());
             char aux[];
 
-            System.out.println("\n\n" + str);
+            //System.out.println("\n\n" + str);
 
             if (str.endsWith("*")){
                 aux = new char[str.length() - 2];
@@ -957,7 +957,7 @@ public class GameData implements Serializable{
 
             String str2 = new String(aux);
 
-            System.out.println("\n\n" + str2);
+            //System.out.println("\n\n" + str2);
 
             int value = Integer.parseInt(str2);
             
