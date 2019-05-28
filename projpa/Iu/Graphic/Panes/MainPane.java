@@ -43,6 +43,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
     private CrewMembersChoicePane crewMembersChoicePane;
     private CrewMember1ChooseRoom crewMember1ChooseRoom;
     private CrewMember2ChooseRoom crewMember2ChooseRoom;
+    private ActionPane actionPane;
     
 
     public MainPane(GameLogic game) {
@@ -54,7 +55,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
     private void setupComponents(){
 
-        this.setPrefHeight(HEIGTH);
+        this.setPrefHeight(HEIGHT);
         this.setPrefWidth(WIDTH);
 
         imgPlay = new Image(getClass().getResourceAsStream("..\\" + PLAY_IMAGE));
@@ -82,9 +83,10 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         crewMembersChoicePane = new CrewMembersChoicePane(this.game);
         crewMember1ChooseRoom = new CrewMember1ChooseRoom(this.game);
         crewMember2ChooseRoom = new CrewMember2ChooseRoom(this.game);
+        actionPane = new ActionPane(this.game);
 
         ObservableList firstStackPaneList = this.getChildren();
-        firstStackPaneList.addAll(boxLineLayout, crewMembersChoicePane, crewMember1ChooseRoom, crewMember2ChooseRoom);
+        firstStackPaneList.addAll(boxLineLayout, crewMembersChoicePane, crewMember1ChooseRoom, crewMember2ChooseRoom, actionPane);
         btnExitMain.setOnMouseClicked(e ->{
             firstStackPaneList.add(popupFunction(this));
         });

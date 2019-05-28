@@ -41,7 +41,7 @@ public class GraphicInterface implements Constants{
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Images\\icon.png")));
 
         //Minimum Dimensions
-        primaryStage.setMinHeight(HEIGTH);
+        primaryStage.setMinHeight(HEIGHT);
         primaryStage.setMinWidth(WIDTH);
 
         primaryStage.initStyle(StageStyle.UNDECORATED);

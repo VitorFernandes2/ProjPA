@@ -6,7 +6,7 @@ import javafx.stage.Screen;
 public interface Constants {
 
     int WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
-    int HEIGTH = (int) Screen.getPrimary().getBounds().getHeight();
+    int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     String EXIT_IMAGE = "Images\\exit.png";
     String PLAY_IMAGE = "Images\\play-button-inside-a-circle.png";
     String SCORE_IMAGE = "Images\\score.png";
