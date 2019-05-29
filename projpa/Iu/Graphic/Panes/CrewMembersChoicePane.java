@@ -336,6 +336,7 @@ public class CrewMembersChoicePane extends StackPane implements Constants, Prope
                 if (!this.CrewNames.get(0).equals(this.CrewNames.get(1))){
                     this.getChildren().remove(paneLayoutCrewMembersChoice);
                     this.game.selectCrewMembers(this.CrewNames.get(0), this.CrewNames.get(1));
+                    this.CrewNames.clear();
                 }
                 else
                     this.CrewNames.remove(1);
