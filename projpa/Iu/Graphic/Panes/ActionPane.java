@@ -1145,6 +1145,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         Image addSealTokenImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
         Image addGainAtackImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
         Image addOneDiceImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addOneParticleDisperserImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
         Image nextImg = new Image(getClass().getResourceAsStream("..\\Images\\next.png"));
 
         DeathStarLabel titleRest = new DeathStarLabel("Rest Phase", 58);
@@ -1152,11 +1153,11 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         DefaultButton btnAddOneHealth = new DefaultButton("Add One Health Point", addHealthImg, 20 ,20, 320,40);
         DefaultButton btnAddOneHull = new DefaultButton("Add One Hull Point", addHullImg, 20 ,20, 320,40);
         DefaultButton btnAddOneOrganicDetonater = new DefaultButton("Add One Organic Detonator", addOrganicDetonater, 20 ,20, 320,40);
+        DefaultButton btnAddOneParticleDisperser = new DefaultButton("Add One Particle Disperser", addOneParticleDisperserImg, 20 ,20, 320,40);
         DefaultButton btnAddOneMovement = new DefaultButton("Add One Movement Crew Member", addMovementImg, 20 ,20, 320,40);
         DefaultButton btnAddOneSealToken = new DefaultButton("Add One Seal Room Token", addSealTokenImg, 20 ,20, 320,40);
         DefaultButton btnAddOneGainAtack = new DefaultButton("Add One Atack CrewMember", addGainAtackImg, 20 ,20, 320,40);
         DefaultButton btnAddOneDice = new DefaultButton("Add One Dice Result", addOneDiceImg, 20 ,20, 320,40);
-        DefaultButton btnAddOneParticleDisperser = new DefaultButton("Add One Health", addParticleDisperserImg, 20 ,20, 320,40);
         DefaultButton btnNext = new DefaultButton("Next Turn", nextImg, 20 ,20, 320,40);
 
         restPhaseMainVBox.getChildren().addAll(titleRest, btnAddOneHealth, btnAddOneHull, btnAddOneOrganicDetonater, btnAddOneMovement, btnAddOneSealToken, btnAddOneGainAtack, btnAddOneDice, btnAddOneParticleDisperser, btnNext);
@@ -1169,35 +1170,35 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         btnAddOneHealth.setOnMouseClicked(e -> {
             this.game.addonehealth();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
         btnAddOneHull.setOnMouseClicked(e -> {
             this.game.fixOneHull();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
         btnAddOneOrganicDetonater.setOnMouseClicked(e -> {
             this.game.buildorganicdetonator();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
         btnAddOneMovement.setOnMouseClicked(e -> {
             chooseCrewMemberGainMovement();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
         btnAddOneSealToken.setOnMouseClicked(e -> {
             this.game.gainonesealedromtoken();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
         btnAddOneGainAtack.setOnMouseClicked(e -> {
             chooseCrewMemberGainAtack();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
         btnAddOneDice.setOnMouseClicked(e -> {
             this.game.addonethedice();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
         btnAddOneParticleDisperser.setOnMouseClicked(e -> {
             this.game.builoneparticleddispenser();
-            updaterightbox();
+            lblIp.setText(": " + this.game.getInspirationPoints());
         });
 
         btnNext.setOnMouseClicked(e -> {
