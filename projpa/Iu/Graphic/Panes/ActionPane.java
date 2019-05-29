@@ -737,27 +737,35 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         btnAddOneHealth.setOnMouseClicked(e -> {
             this.game.addonehealth();
+            updaterightbox();
         });
         btnAddOneHull.setOnMouseClicked(e -> {
             this.game.fixOneHull();
+            updaterightbox();
         });
         btnAddOneOrganicDetonater.setOnMouseClicked(e -> {
             this.game.buildorganicdetonator();
+            updaterightbox();
         });
         btnAddOneMovement.setOnMouseClicked(e -> {
-
+            chooseCrewMemberGainMovement();
+            updaterightbox();
         });
         btnAddOneSealToken.setOnMouseClicked(e -> {
             this.game.gainonesealedromtoken();
+            updaterightbox();
         });
         btnAddOneGainAtack.setOnMouseClicked(e -> {
-
+            chooseCrewMemberGainAtack();
+            updaterightbox();
         });
         btnAddOneDice.setOnMouseClicked(e -> {
             this.game.addonethedice();
+            updaterightbox();
         });
         btnAddOneParticleDisperser.setOnMouseClicked(e -> {
             this.game.builoneparticleddispenser();
+            updaterightbox();
         });
 
         btnNext.setOnMouseClicked(e -> {
@@ -769,11 +777,96 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
     }
 
+    public void chooseCrewMemberGainAtack(){
+
+        /*#########################################################################*/
+        /*##                             Exit Popup                              ##*/
+        /*#########################################################################*/
+
+        Image btnExitPopupImg = new Image(getClass().getResourceAsStream("..\\Images\\user.png"));
+        Image btnAcceptPopupImg = new Image(getClass().getResourceAsStream("..\\Images\\user.png"));
+        RedButton btnCancelPopup = new RedButton("Crew Member 2", btnExitPopupImg , 20, 20, 180, 40);
+        GreenButton btnAcceptPopup = new GreenButton("Crew Member 1", btnAcceptPopupImg, 20 ,20, 180,40);
+        DeathStarLabel lblExitPopup = new DeathStarLabel("Who is the Crew Member?", 38);
+
+        HBox topOfPopup = new HBox(lblExitPopup);
+        topOfPopup.setSpacing(20);
+        topOfPopup.setAlignment(Pos.CENTER);
+
+        HBox bottomOfPopup = new HBox(btnAcceptPopup, btnCancelPopup);
+        bottomOfPopup.setAlignment(Pos.CENTER);
+        bottomOfPopup.setSpacing(20);
+
+        VBox gainAtackPopup = new VBox();
+        gainAtackPopup.getChildren().addAll(topOfPopup, bottomOfPopup);
+        gainAtackPopup.getStyleClass().add("PopUp");
+        gainAtackPopup.setSpacing(20);
+        gainAtackPopup.setAlignment(Pos.CENTER);
+        gainAtackPopup.setMaxSize(600, 200);
+
+        BorderPane pane = new BorderPane();
+        pane.setCenter(gainAtackPopup);
+
+        this.getChildren().add(pane);
+
+        btnCancelPopup.setOnMouseClicked(e -> {
+            this.game.gainoneattack(1);
+            this.getChildren().remove(pane);
+        });
+        btnAcceptPopup.setOnMouseClicked(event -> {
+            this.game.gainoneattack(0);
+            this.getChildren().remove(pane);
+        });
+
+    }
+
+    public void chooseCrewMemberGainMovement(){
+
+        /*#########################################################################*/
+        /*##                             Exit Popup                              ##*/
+        /*#########################################################################*/
+
+        Image btnExitPopupImg = new Image(getClass().getResourceAsStream("..\\Images\\user.png"));
+        Image btnAcceptPopupImg = new Image(getClass().getResourceAsStream("..\\Images\\user.png"));
+        RedButton btnCancelPopup = new RedButton("Crew Member 2", btnExitPopupImg , 20, 20, 180, 40);
+        GreenButton btnAcceptPopup = new GreenButton("Crew Member 1", btnAcceptPopupImg, 20 ,20, 180,40);
+        DeathStarLabel lblExitPopup = new DeathStarLabel("Who is the Crew Member?", 38);
+
+        HBox topOfPopup = new HBox(lblExitPopup);
+        topOfPopup.setSpacing(20);
+        topOfPopup.setAlignment(Pos.CENTER);
+
+        HBox bottomOfPopup = new HBox(btnAcceptPopup, btnCancelPopup);
+        bottomOfPopup.setAlignment(Pos.CENTER);
+        bottomOfPopup.setSpacing(20);
+
+        VBox gainMovementPopup = new VBox();
+        gainMovementPopup.getChildren().addAll(topOfPopup, bottomOfPopup);
+        gainMovementPopup.getStyleClass().add("PopUp");
+        gainMovementPopup.setSpacing(20);
+        gainMovementPopup.setAlignment(Pos.CENTER);
+        gainMovementPopup.setMaxSize(600, 200);
+
+        BorderPane pane = new BorderPane();
+        pane.setCenter(gainMovementPopup);
+
+        this.getChildren().add(pane);
+
+        btnCancelPopup.setOnMouseClicked(e -> {
+            this.game.addonemovement(1);
+            this.getChildren().remove(pane);
+        });
+        btnAcceptPopup.setOnMouseClicked(event -> {
+            this.game.addonemovement(0);
+            this.getChildren().remove(pane);
+        });
+
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
         if (this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions()){
-            this.getChildren().add(restPhaseLayout());
             refreshJourneyTracker();
             refreshLeftPanel();
         }
