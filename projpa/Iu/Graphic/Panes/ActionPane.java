@@ -2,8 +2,13 @@ package projpa.Iu.Graphic.Panes;
 
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -34,40 +39,44 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     private GameLogic game;
     private BorderPane paneLayout;
     private Image imgExit;
-    Image imgNext;
-    Image imgSave;
-    GreenButton btnSave;
-    RedButton btnExit;
-    DefaultButton btnNext;
-    HBox bottomBox;
-    TabPane tabLayout;
-    VBox firstTabImage;
-    Label firstTabLabel;
-    ImageView firstTabIcon;
-    Tab firstTab;
-    VBox secondTabImage;
-    Label secondTabLabel;
-    ImageView secondTabIcon;
-    Tab secondTab;
-    VBox leftBox;
-    ImageView pointsIcon;
-    Label lblPoints;
-    ImageView apIcon;
-    Label lblAp;
-    ImageView ipIcon;
-    Label lblIp;
-    HBox topRightBox;
-    HBox topLeftBox;
-    ArrayList<Label> journeyLabels;
-    Region region;
+    private Image imgNext;
+    private Image imgSave;
+    private GreenButton btnSave;
+    private RedButton btnExit;
+    private DefaultButton btnNext;
+    private HBox bottomBox;
+    private TabPane tabLayout;
+    private VBox firstTabImage;
+    private Label firstTabLabel;
+    private ImageView firstTabIcon;
+    private Tab firstTab;
+    private VBox secondTabImage;
+    private Label secondTabLabel;
+    private ImageView secondTabIcon;
+    private Tab secondTab;
+    private VBox leftBox;
+    private ImageView pointsIcon;
+    private Label lblPoints;
+    private ImageView apIcon;
+    private Label lblAp;
+    private ImageView ipIcon;
+    private Label lblIp;
+    private HBox topRightBox;
+    private HBox topLeftBox;
+    private ArrayList<Label> journeyLabels;
+    private Region region;
     private VBox rightBox;
     private final int maxnumberofshownalien = 20;
     private ArrayList<Label> alienslabel;
-    ArrayList<String> menu;
-    Label healthTracker;
-    Label HullTracker;
-    ImageView healthIcon;
-    ImageView hullIcon;
+    private ArrayList<String> menu;
+    private Label healthTracker;
+    private Label HullTracker;
+    private ImageView healthIcon;
+    private ImageView hullIcon;
+    private VBox secondCrewVBox;
+    private VBox firstCrewVBox;
+    private ComboBox<Integer> chooseRoomMove1;
+    private ComboBox<Integer> chooseRoomMove2;
 
     public ActionPane(GameLogic game) {
         this.game = game;
@@ -446,6 +455,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     }
 
     private void refreshJourneyTracker(){
+
         if (this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions()){
             for (int i = 0; i < 15; i++) {
                 journeyLabels.get(i).getStyleClass().remove("journeyLabelsCenter");
@@ -456,6 +466,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
             journeyLabels.get(this.game.getJourneyState()).getStyleClass().add("journeyLabelsCenterActive");
         }
+
     }
 
     private void refreshLeftPanel(){
@@ -479,7 +490,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         DefaultButton btnHealCrew1 = new DefaultButton("Heal", new Image(getClass().getResourceAsStream("..\\Images\\potion.png")), 20 , 20, 120, 40);
         DefaultButton btnSacrificeCrew1 = new DefaultButton("Sacrifice", new Image(getClass().getResourceAsStream("..\\Images\\death.png")), 20 , 20, 120, 40);
 
-        VBox firstCrewVBox = new VBox();
+        firstCrewVBox = new VBox();
         firstCrewVBox.getChildren().addAll(btnMoveCrew1, btnAtackCrew1, btnHealCrew1, btnSacrificeCrew1);
         firstCrewVBox.setAlignment(Pos.CENTER);
         firstCrewVBox.setSpacing(20);
@@ -499,7 +510,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         if (!this.game.getCrewmember2Name().equals("Red Shirt"))
             btnSacrificeCrew2.setDisable(true);
 
-        VBox secondCrewVBox = new VBox();
+        secondCrewVBox = new VBox();
         secondCrewVBox.getChildren().addAll(btnMoveCrew2, btnAtackCrew2, btnHealCrew2, btnSacrificeCrew2);
         secondCrewVBox.setAlignment(Pos.CENTER);
         secondCrewVBox.setSpacing(20);
@@ -515,6 +526,58 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         secondTabVbox.setAlignment(Pos.TOP_CENTER);
         secondTabVbox.setSpacing(20);
         secondTabVbox.setPadding(new Insets(0,0,0,5));
+
+        btnAtackCrew1.setOnMouseClicked(e -> {
+            this.game.atack(0);
+        });
+
+        btnAtackCrew2.setOnMouseClicked(e -> {
+            this.game.atack(1);
+        });
+
+        btnHealCrew1.setOnMouseClicked(e -> {
+            this.game.heal();
+        });
+
+        btnHealCrew2.setOnMouseClicked(e -> {
+            this.game.heal();
+        });
+
+        btnMoveCrew1.setOnMouseClicked(e -> {
+            firstCrewVBox.getChildren().remove(chooseRoomMove1);
+            chooseRoomMove1 = new ComboBox<>(FXCollections.observableArrayList(this.game.getNearAvailableRooms(0)));
+            firstCrewVBox.getChildren().add(chooseRoomMove1);
+            chooseRoomMove1.valueProperty().addListener(new ChangeListener<Integer>() {
+                @Override
+                public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+                    game.move(0, newValue);
+                    firstCrewVBox.getChildren().remove(chooseRoomMove1);
+                }
+            });
+        });
+
+        btnMoveCrew2.setOnMouseClicked(e -> {
+            secondCrewVBox.getChildren().remove(chooseRoomMove2);
+            chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(this.game.getNearAvailableRooms(1)));
+            secondCrewVBox.getChildren().add(chooseRoomMove2);
+            chooseRoomMove2.valueProperty().addListener(new ChangeListener<Integer>() {
+                @Override
+                public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+                    game.move(1, newValue);
+                    secondCrewVBox.getChildren().remove(chooseRoomMove2);
+                }
+            });
+        });
+
+        btnSacrificeCrew1.setOnMouseClicked(e -> {
+            this.game.redShirtSpecial();
+            this.firstCrewVBox.setDisable(true);
+        });
+
+        btnSacrificeCrew2.setOnMouseClicked(e -> {
+            this.game.redShirtSpecial();
+            this.secondCrewVBox.setDisable(true);
+        });
 
         secondTab.setContent(secondTabVbox);
         firstTab.setContent(firstTabVbox);
@@ -560,6 +623,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         lblIp.setText(": " + this.game.getInspirationPoints()); // inspirationpoint screen
         
         lblAp.setText(": " + this.game.getActionPoints()); // action point screen
+
+        HullTracker.setText(": " + this.game.getHullState());
+
+        healthTracker.setText(": " + this.game.getHealthTrackerHealth());
         
         
         for (int i = 0; i < 15; i++) { // Jouney tracker update
@@ -567,9 +634,6 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             journeyLabels.get(i).setText(this.game.getJourneyValue(i));
 
         }
-        
-        
-        
         
     }
 }
