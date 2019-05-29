@@ -195,7 +195,6 @@ public class ShipGps {
         
         xb = xb - xa;
         yb = yb - ya;
-        yb = -yb;
         
         return atan2(xb,yb);
     }

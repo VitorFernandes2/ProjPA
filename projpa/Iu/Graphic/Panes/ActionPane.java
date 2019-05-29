@@ -142,7 +142,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         tabLayout.getTabs().add(secondTab);
 
         tabLayout.getSelectionModel().select(0);
-
+       
         leftBox = new VBox(tabLayout);
         leftBox.getStyleClass().add("rightBox");
 
@@ -333,7 +333,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         
         
         double rotaionplayer = pdata.calculatedegree(tempxa, tempya, cordstart.get(0), cordstart.get(1));
-        playerimage.setRotate(rotaionplayer * 100);
+        playerimage.setRotate(180 - (rotaionplayer * 100));
         
         
         cordstart.clear();
