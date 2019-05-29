@@ -649,8 +649,8 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             }
         }
         
-        //lblPoints.setText(": " + this.game.getPoints()); // point screen
-        lblPoints.setText(": " + this.game.getJourneyState());
+        lblPoints.setText(": " + this.game.getPoints()); // point screen
+        //lblPoints.setText(": " + this.game.getJourneyState());
         
         lblIp.setText(": " + this.game.getInspirationPoints()); // inspirationpoint screen
         
