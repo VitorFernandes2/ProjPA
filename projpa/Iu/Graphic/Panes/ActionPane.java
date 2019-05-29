@@ -8,10 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -628,12 +625,161 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
     }
 
+    private BorderPane restPhaseLayout(){
+
+        BorderPane restPhasePane = new BorderPane();
+        VBox restPhaseMainVBox = new VBox();
+
+        pointsIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\points.png")));
+        pointsIcon.setFitWidth(20);
+        pointsIcon.setFitHeight(20);
+
+        lblPoints = new Label(": " + this.game.getUserPoints(), pointsIcon);
+        lblPoints.setTextFill(Color.web("#ffffff"));
+        lblPoints.getStyleClass().add("PointsLabel");
+
+        apIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\action.png")));
+        apIcon.setFitWidth(20);
+        apIcon.setFitHeight(20);
+        lblAp = new Label(": " + this.game.getActionPoints(), apIcon);
+        lblAp.setTextFill(Color.web("#ffffff"));
+        lblAp.getStyleClass().add("PointsLabel");
+
+        ipIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\influence.png")));
+        ipIcon.setFitWidth(20);
+        ipIcon.setFitHeight(20);
+        lblIp = new Label(": " + this.game.getInspirationPoints(), ipIcon);
+        lblIp.setTextFill(Color.web("#ffffff"));
+        lblIp.getStyleClass().add("PointsLabel");
+
+        healthIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\health.png")));
+        healthIcon.setFitWidth(20);
+        healthIcon.setFitHeight(20);
+        healthTracker = new Label(": " + this.game.getHealthTrackerHealth(), healthIcon);
+        healthTracker.setTextFill(Color.web("#ffffff"));
+        healthTracker.getStyleClass().add("PointsLabel");
+
+        hullIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\hull.png")));
+        hullIcon.setFitWidth(20);
+        hullIcon.setFitHeight(20);
+        HullTracker = new Label(": " + this.game.getHullState(), hullIcon);
+        HullTracker.setTextFill(Color.web("#ffffff"));
+        HullTracker.getStyleClass().add("PointsLabel");
+
+        topRightBox = new HBox();
+        topRightBox.getChildren().addAll(HullTracker, healthTracker, lblPoints, lblAp, lblIp);
+        topRightBox.setAlignment(Pos.CENTER_RIGHT);
+        topRightBox.setSpacing(10);
+
+        topLeftBox = new HBox();
+        topLeftBox.getChildren().addAll();
+        topLeftBox.setAlignment(Pos.CENTER_LEFT);
+
+        journeyLabels = new ArrayList<>();
+
+        for (int i = 0; i < 15; i++) {
+
+            journeyLabels.add(new Label(this.game.getJourneyValue(i)));
+            journeyLabels.get(i).setFont(Font.font("Death Star", FontWeight.MEDIUM, 12));
+            journeyLabels.get(i).setTextFill(Color.web("#ffffff"));
+            journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
+            journeyLabels.get(i).setAlignment(Pos.CENTER);
+            journeyLabels.get(i).setPrefWidth(40);
+            journeyLabels.get(i).setPrefHeight(30);
+            topLeftBox.getChildren().add(journeyLabels.get(i));
+
+        }
+
+        journeyLabels.get(0).setText("S");
+        journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
+        journeyLabels.get(14).setText("E");
+        journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
+
+        region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+
+        HBox topBox = new HBox();
+        topBox.getChildren().addAll(topLeftBox, region, topRightBox);
+        topBox.setSpacing(10);
+        topBox.setPadding(new Insets(5, 10, 5, 10));
+        topBox.getStyleClass().add("topBox");
+        topBox.setAlignment(Pos.CENTER_RIGHT);
+
+        Image addHealthImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addHullImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addOrganicDetonater = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addParticleDisperserImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addMovementImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addSealTokenImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addGainAtackImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image addOneDiceImg = new Image(getClass().getResourceAsStream("..\\Images\\addHealth.png"));
+        Image nextImg = new Image(getClass().getResourceAsStream("..\\Images\\next.png"));
+
+        DeathStarLabel titleRest = new DeathStarLabel("Rest Phase", 58);
+
+        DefaultButton btnAddOneHealth = new DefaultButton("Add One Health Point", addHealthImg, 20 ,20, 320,40);
+        DefaultButton btnAddOneHull = new DefaultButton("Add One Hull Point", addHullImg, 20 ,20, 320,40);
+        DefaultButton btnAddOneOrganicDetonater = new DefaultButton("Add One Organic Detonator", addOrganicDetonater, 20 ,20, 320,40);
+        DefaultButton btnAddOneMovement = new DefaultButton("Add One Movement Crew Member", addMovementImg, 20 ,20, 320,40);
+        DefaultButton btnAddOneSealToken = new DefaultButton("Add One Seal Room Token", addSealTokenImg, 20 ,20, 320,40);
+        DefaultButton btnAddOneGainAtack = new DefaultButton("Add One Atack CrewMember", addGainAtackImg, 20 ,20, 320,40);
+        DefaultButton btnAddOneDice = new DefaultButton("Add One Dice Result", addOneDiceImg, 20 ,20, 320,40);
+        DefaultButton btnAddOneParticleDisperser = new DefaultButton("Add One Health", addParticleDisperserImg, 20 ,20, 320,40);
+        DefaultButton btnNext = new DefaultButton("Next Turn", nextImg, 20 ,20, 320,40);
+
+        restPhaseMainVBox.getChildren().addAll(titleRest, btnAddOneHealth, btnAddOneHull, btnAddOneOrganicDetonater, btnAddOneMovement, btnAddOneSealToken, btnAddOneGainAtack, btnAddOneDice, btnAddOneParticleDisperser, btnNext);
+        restPhaseMainVBox.setAlignment(Pos.CENTER);
+        restPhaseMainVBox.setSpacing(20);
+
+        restPhasePane.setTop(topBox);
+        restPhasePane.setCenter(restPhaseMainVBox);
+        restPhasePane.getStyleClass().add("ChooseVBox");
+
+        btnAddOneHealth.setOnMouseClicked(e -> {
+            this.game.addonehealth();
+        });
+        btnAddOneHull.setOnMouseClicked(e -> {
+            this.game.fixOneHull();
+        });
+        btnAddOneOrganicDetonater.setOnMouseClicked(e -> {
+            this.game.buildorganicdetonator();
+        });
+        btnAddOneMovement.setOnMouseClicked(e -> {
+
+        });
+        btnAddOneSealToken.setOnMouseClicked(e -> {
+            this.game.gainonesealedromtoken();
+        });
+        btnAddOneGainAtack.setOnMouseClicked(e -> {
+
+        });
+        btnAddOneDice.setOnMouseClicked(e -> {
+            this.game.addonethedice();
+        });
+        btnAddOneParticleDisperser.setOnMouseClicked(e -> {
+            this.game.builoneparticleddispenser();
+        });
+
+        btnNext.setOnMouseClicked(e -> {
+            this.game.nextTurn();
+            this.getChildren().remove(restPhasePane);
+        });
+
+        return restPhasePane;
+
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
         if (this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions()){
+            this.getChildren().add(restPhaseLayout());
             refreshJourneyTracker();
             refreshLeftPanel();
+        }
+
+        if (this.game.inAwaitRestPhaseActions()) {
+            this.getChildren().add(restPhaseLayout());
         }
 
         setVisible(this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions());

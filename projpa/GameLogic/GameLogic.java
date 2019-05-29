@@ -511,7 +511,6 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         
     public boolean addonehealth(){
         return this.stateOfTheGame.addonehealth();
-            
     }
      
     public boolean repairhull(){
