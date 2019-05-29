@@ -630,11 +630,13 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         btnSacrificeCrew1.setOnMouseClicked(e -> {
             this.game.redShirtSpecial();
+            LCrew2Local.setVisible(false);
             this.firstCrewVBox.setDisable(true);
         });
 
         btnSacrificeCrew2.setOnMouseClicked(e -> {
             this.game.redShirtSpecial();
+            LCrew2Local.setVisible(false);
             this.secondCrewVBox.setDisable(true);
         });
 
