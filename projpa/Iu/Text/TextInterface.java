@@ -1187,7 +1187,7 @@ public class TextInterface {
     private void mostrapont() {
             clearConsole();
             System.out.println("---Pontuação---");
-            this.game.getUserPontuation();
+            System.out.println(this.game.getUserPontuation());
             String opt = scanString("\nPressione Enter para continuar...");
 
     }
