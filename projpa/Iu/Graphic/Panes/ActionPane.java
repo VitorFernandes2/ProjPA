@@ -561,18 +561,22 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         btnAtackCrew1.setOnMouseClicked(e -> {
             this.game.atack(0);
+            this.updaterightbox();
         });
 
         btnAtackCrew2.setOnMouseClicked(e -> {
             this.game.atack(1);
+            this.updaterightbox();
         });
 
         btnHealCrew1.setOnMouseClicked(e -> {
             this.game.heal();
+            this.updaterightbox();
         });
 
         btnHealCrew2.setOnMouseClicked(e -> {
             this.game.heal();
+            this.updaterightbox();
         });
 
         btnMoveCrew1.setOnMouseClicked(e -> {
@@ -582,6 +586,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             chooseRoomMove1.valueProperty().addListener(new ChangeListener<Integer>() {
                 @Override
                 public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+                    game.move(0, newValue);
                     game.move(0, newValue);
                     firstCrewVBox.getChildren().remove(chooseRoomMove1);
                 }
@@ -595,6 +600,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             chooseRoomMove2.valueProperty().addListener(new ChangeListener<Integer>() {
                 @Override
                 public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+                    game.move(1, newValue);
                     game.move(1, newValue);
                     secondCrewVBox.getChildren().remove(chooseRoomMove2);
                 }
@@ -659,7 +665,8 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         HullTracker.setText(": " + this.game.getHullState());
 
         healthTracker.setText(": " + this.game.getHealthTrackerHealth());
-        
+
+        refreshLeftPanel();
         
         for (int i = 0; i < 15; i++) { // Jouney tracker update
                    
