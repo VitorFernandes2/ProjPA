@@ -581,10 +581,10 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
     }
 
     public void startGame(){
-        if (inGameOverState()){
+        //if (inAwaitPeekRoom()){
             this.stateOfTheGame = new AwaitBeginning();
             firePropertyChange(null, false, true);
-        }
+        //}
     }
 
     public void newUser(String name) {
@@ -615,7 +615,7 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         return this.game.getActionPoints();
     }
     
-        public int getPoints(){
+    public int getPoints(){
            
             if (this.game.wasusercreated() == false)
                 return 0;

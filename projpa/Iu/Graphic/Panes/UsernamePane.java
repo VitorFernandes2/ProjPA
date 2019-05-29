@@ -80,7 +80,8 @@ public class UsernamePane extends StackPane implements Constants, PropertyChange
         mainVboxUsernameScene.getStyleClass().add("ChooseVBox");
 
         btnTurnBackUserNameScene.setOnMouseClicked(e -> {
-            this.game.endGame();
+            //this.game.endGame();
+            this.setVisible(false);
         });
 
         btnSubmitName.setOnMouseClicked(e -> {

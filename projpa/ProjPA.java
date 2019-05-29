@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import projpa.GameLogic.GameData;
 import projpa.GameLogic.GameLogic;
 import projpa.GameLogic.StateMachine.AwaitBeginning;
+import projpa.GameLogic.StateMachine.AwaitPeekRoom;
 import projpa.GameLogic.StateMachine.GameOver;
 import projpa.GameLogic.StateMachine.IStates;
 import projpa.Iu.Graphic.GraphicInterface;
@@ -37,7 +38,7 @@ public class ProjPA extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        GameLogic game = new GameLogic(new GameOver(new GameData()));
+        GameLogic game = new GameLogic(new AwaitPeekRoom(new GameData()));
         GraphicInterface gameInterface = new GraphicInterface(primaryStage, game);
         gameInterface.run();
 
