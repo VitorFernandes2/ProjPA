@@ -103,12 +103,32 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         btnExit = new RedButton("Exit", imgExit, 20, 20, 120, 40);
         btnNext = new DefaultButton("Next", imgNext, 20, 20, 120, 40);
 
-        bottomBox = new HBox(btnSave, btnNext, btnExit);
+        bottomBox = new HBox();
         bottomBox.setSpacing(10);
         bottomBox.setPadding(new Insets(5, 10, 5, 10));
         bottomBox.getStyleClass().add("topBox");
 
-        bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
+        HBox leftBottomBox = new HBox();
+        leftBottomBox.setAlignment(Pos.CENTER_LEFT);
+
+        DefaultButton sealRoom = new DefaultButton("Seal Room", new Image(getClass().getResourceAsStream("..\\Images\\seal.png")), 20, 20, 140, 40);
+
+        leftBottomBox.getChildren().addAll(sealRoom);
+
+        sealRoom.setOnMouseClicked(e -> {
+            if (this.game.canSealRoom())
+                sealRoom();
+        });
+
+        region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+
+        HBox rigthBottomBox = new HBox(btnSave, btnNext, btnExit);
+        rigthBottomBox.setAlignment(Pos.CENTER_RIGHT);
+        rigthBottomBox.setSpacing(20);
+        bottomBox.getChildren().addAll(leftBottomBox, region,rigthBottomBox);
+
+        bottomBox.setAlignment(Pos.CENTER);
 
         /*#########################################################################*/
         /*##                             Left Panel                              ##*/
@@ -417,6 +437,118 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         
         return actionStackPane;
         
+    }
+
+    private void sealRoom(){
+        BorderPane paneLayoutRoomChoice = new BorderPane();
+
+        VBox mainVboxRoomChoice = new VBox();
+
+        ArrayList<Image> RoomImage = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+
+            switch (i){
+                case 0:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room1.png")));
+                    break;
+                case 1:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room2.png")));
+                    break;
+                case 2:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room3.png")));
+                    break;
+                case 3:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room4.png")));
+                    break;
+                case 4:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room5.png")));
+                    break;
+                case 5:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room6.png")));
+                    break;
+                case 6:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room7.png")));
+                    break;
+                case 7:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room8.png")));
+                    break;
+                case 8:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room9.png")));
+                    break;
+                case 9:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room10.png")));
+                    break;
+                case 10:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room11.png")));
+                    break;
+                case 11:
+                    RoomImage.add(new Image(getClass().getResourceAsStream("..\\Images\\Rooms\\Room12.png")));
+                    break;
+            }
+
+        }
+
+        ArrayList<ImageView> RoomsImageView = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++){
+            RoomsImageView.add(new ImageView(RoomImage.get(i)));
+            RoomsImageView.get(i).setFitWidth(125);
+            RoomsImageView.get(i).setFitHeight(125);
+        }
+
+        ArrayList<HBox> RoomsImgHbox = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            RoomsImgHbox.add(new HBox());
+            RoomsImgHbox.get(i).getChildren().add(RoomsImageView.get(i));
+            RoomsImgHbox.get(i).getStyleClass().add("ImageView");
+
+        }
+
+        HBox firstLineRoomsHbox = new HBox(RoomsImgHbox.get(0), RoomsImgHbox.get(1) ,RoomsImgHbox.get(2) ,RoomsImgHbox.get(3));
+        firstLineRoomsHbox.setSpacing(40);
+        firstLineRoomsHbox.setAlignment(Pos.CENTER);
+
+        HBox secondLineRoomssHbox = new HBox(RoomsImgHbox.get(4), RoomsImgHbox.get(5) ,RoomsImgHbox.get(6) ,RoomsImgHbox.get(7));
+        secondLineRoomssHbox.setSpacing(40);
+        secondLineRoomssHbox.setAlignment(Pos.CENTER);
+
+        HBox thirdLineRoomsHbox = new HBox(RoomsImgHbox.get(8), RoomsImgHbox.get(9) ,RoomsImgHbox.get(10) ,RoomsImgHbox.get(11));
+        thirdLineRoomsHbox.setSpacing(40);
+        thirdLineRoomsHbox.setAlignment(Pos.CENTER);
+
+        Label lblChooseRooms = new Label("Seal Room");
+        lblChooseRooms.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
+        lblChooseRooms.setTextFill(Color.web("#ffffff"));
+
+        ImageView ChooseRoomsUndo = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\undo.png")));
+        ChooseRoomsUndo.setFitHeight(20);
+        ChooseRoomsUndo.setFitWidth(20);
+
+        mainVboxRoomChoice.getChildren().setAll(lblChooseRooms, firstLineRoomsHbox, secondLineRoomssHbox, thirdLineRoomsHbox);
+        mainVboxRoomChoice.setAlignment(Pos.CENTER);
+        mainVboxRoomChoice.setSpacing(20);
+
+        mainVboxRoomChoice.getStyleClass().add("ChooseVBox");
+
+        for (int i = 0; i < 12; i++) {
+            if (!this.game.roomsToSeal().contains(i))
+                RoomsImgHbox.get(i).setVisible(false);
+
+            final int j = i;
+            RoomsImgHbox.get(i).setOnMouseClicked(e -> {
+                this.game.sealRoom(j);
+                this.game.sealRoom(j);
+                this.getChildren().remove(paneLayoutRoomChoice);
+            });
+
+        }
+
+        paneLayoutRoomChoice.setCenter(mainVboxRoomChoice);
+
+        this.getChildren().add(paneLayoutRoomChoice);
+
     }
     
         private HBox popupsavegame(StackPane myStackPane){

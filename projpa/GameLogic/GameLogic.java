@@ -347,6 +347,10 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         firePropertyChange(null, false, true);
 	}
 
+	public boolean canSealRoom(){
+        return this.game.getActionPoints() > 4 && this.game.hasUpgradeSealedToken();
+    }
+
 	public void selectrandomCrewMembers() {
         this.stateOfTheGame = this.stateOfTheGame.selectRandomCrewMembers();
         firePropertyChange(null, false, true);
