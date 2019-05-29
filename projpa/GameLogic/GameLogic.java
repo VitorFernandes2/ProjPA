@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import projpa.GameLogic.General.General;
 import projpa.GameLogic.MapRooms.Room1;
+import projpa.GameLogic.MapRooms.RoomState;
 import projpa.GameLogic.StateMachine.*;
 import projpa.GameLogic.Traps.Trap;
 import projpa.GameLogic.User.User;
@@ -489,12 +491,30 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 	public void detonateParticleDisperser(String option) {
         this.stateOfTheGame = this.stateOfTheGame.detonateParticleDisperser(option);
         firePropertyChange(null, false, true);
-	}
+    }
+
+    public void detonateParticleDisperser(int option) {
+        String str = new General().convertIntToRoom(option).getName();
+        this.detonateParticleDisperser(str);
+        this.detonateParticleDisperser(str);
+    }
 
 	public void move(int i, int option) {
         this.stateOfTheGame = this.stateOfTheGame.move(i, option);
         firePropertyChange(null, false, true);
 	}
+
+	public boolean hasParticleDispersersToPlace(){
+        return this.getUnplacedParticleDisperser().size() > 0;
+    }
+
+    public boolean hasOrganicDetonatorToPlace(){
+        return this.getUnplacedOrganicDetonaters().size() > 0;
+    }
+
+    public boolean hasOrganicDetonatorToExplode(){
+        return this.getPlacedParticleDisperser().size() > 0;
+    }
 
 	public void nextTurn() {
         this.stateOfTheGame = this.stateOfTheGame.nextTurn();
@@ -523,6 +543,84 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
     
     public boolean buildorganicdetonator(){
         return this.stateOfTheGame.buildorganicdetonator();
+    }
+
+    public ArrayList<Integer> getUnplacedOrganicDetonaters(){
+
+        ArrayList<Integer> unplacedOrganicDetonaters = new ArrayList<>();
+
+        for (int i = 0; i < this.game.getTraps().size(); i++) {
+
+            if (this.game.getTraps().get(i).getName().equals("OrganicDetonator") && this.game.getTraps().get(i).getRoom() == null)
+                unplacedOrganicDetonaters.add(i);
+
+        }
+
+        return unplacedOrganicDetonaters;
+
+    }
+
+    public ArrayList<Integer> getUnplacedParticleDisperser(){
+
+        ArrayList<Integer> unplacedOrganicDetonaters = new ArrayList<>();
+
+        for (int i = 0; i < this.game.getTraps().size(); i++) {
+
+            if (this.game.getTraps().get(i).getName().equals("ParticleDisperser") && this.game.getTraps().get(i).getRoom() == null)
+                unplacedOrganicDetonaters.add(i);
+
+        }
+
+        return unplacedOrganicDetonaters;
+
+    }
+
+    public ArrayList<Integer> getPlacedParticleDisperser(){
+
+        ArrayList<Integer> placedOrganicDetonaters = new ArrayList<>();
+
+        for (int i = 0; i < this.game.getTraps().size(); i++) {
+
+            if (this.game.getTraps().get(i).getName().equals("ParticleDisperser") && this.game.getTraps().get(i).getRoom() != null)
+                placedOrganicDetonaters.add(i);
+
+        }
+
+        return placedOrganicDetonaters;
+
+    }
+
+    public ArrayList<Integer> getAvailableTrapRooms(){
+
+        ArrayList<Integer> availableTrapRooms = new ArrayList<>();
+
+        for (int i = 1; i <= new Room1().getNumberOfRooms(); i++) {
+
+            boolean canPlace = true;
+            RoomState room2 = new General().convertIntToRoom(i);
+
+            if (room2.getsealledstatus()){
+                canPlace = false;
+            }
+            else
+                if (this.game.isCrewMember1SameRoomName(room2.getName()) || this.game.isCrewMember2SameRoomName(room2.getName())){
+                    for (int j = 0; j < this.game.getTraps().size(); j++) {
+                        RoomState room = this.game.getTraps().get(i).getTrapRoom();
+                        if (room.getName().equals(room2.getName()))
+                            canPlace = false;
+                    }
+                }
+                else{
+                    canPlace = false;
+                }
+
+            if (canPlace)
+                availableTrapRooms.add(i);
+
+        }
+
+        return availableTrapRooms;
+
     }
     
     public boolean addonemovement(int crewmemeber){

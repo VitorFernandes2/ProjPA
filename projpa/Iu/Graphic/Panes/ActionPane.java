@@ -5,7 +5,6 @@ import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -112,12 +111,31 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         leftBottomBox.setAlignment(Pos.CENTER_LEFT);
 
         DefaultButton sealRoom = new DefaultButton("Seal Room", new Image(getClass().getResourceAsStream("..\\Images\\seal.png")), 20, 20, 140, 40);
+        DefaultButton ParticleDisperser = new DefaultButton("Place Particle Disperser", new Image(getClass().getResourceAsStream("..\\Images\\particle.png")), 20, 20, 260, 40);
+        DefaultButton OrganicDetonator = new DefaultButton("Place Organic Detonator", new Image(getClass().getResourceAsStream("..\\Images\\seal.png")), 20, 20, 260, 40);
+        DefaultButton Detonate = new DefaultButton("Explode Organic Detonator", new Image(getClass().getResourceAsStream("..\\Images\\detonator.png")), 20, 20, 280, 40);
 
-        leftBottomBox.getChildren().addAll(sealRoom);
+        leftBottomBox.getChildren().addAll(sealRoom, ParticleDisperser, OrganicDetonator, Detonate);
+        leftBottomBox.setSpacing(10);
 
         sealRoom.setOnMouseClicked(e -> {
             if (this.game.canSealRoom())
                 sealRoom();
+        });
+
+        ParticleDisperser.setOnMouseClicked(e -> {
+            if (this.game.hasParticleDispersersToPlace())
+                placeParticle(this);
+        });
+
+        OrganicDetonator.setOnMouseClicked(e -> {
+            if (this.game.hasOrganicDetonatorToPlace())
+                placeOrganic(this);
+        });
+
+        Detonate.setOnMouseClicked(e -> {
+            if (this.game.hasOrganicDetonatorToExplode())
+                detonate(this);
         });
 
         region = new Region();
@@ -125,7 +143,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         HBox rigthBottomBox = new HBox(btnSave, btnNext, btnExit);
         rigthBottomBox.setAlignment(Pos.CENTER_RIGHT);
-        rigthBottomBox.setSpacing(20);
+        rigthBottomBox.setSpacing(10);
         bottomBox.getChildren().addAll(leftBottomBox, region,rigthBottomBox);
 
         bottomBox.setAlignment(Pos.CENTER);
@@ -157,7 +175,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         secondTabLabel.setTextFill(Color.web("#ffffff"));
 
-        secondTabIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\redShirt.png")));
+        secondTabIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\doctor.png")));
         secondTabIcon.setFitWidth(50);
         secondTabIcon.setFitHeight(50);
 
@@ -550,8 +568,173 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         this.getChildren().add(paneLayoutRoomChoice);
 
     }
+
+    private void placeParticle(StackPane pane){
+        BorderPane paneLayoutRoomChoice = new BorderPane();
+
+        VBox mainVboxRoomChoice = new VBox();
+
+        ComboBox<Integer> chooseRoomMove1;
+        ComboBox<Integer> chooseRoomMove2;
+
+        chooseRoomMove1 = new ComboBox<>(FXCollections.observableArrayList(game.getUnplacedParticleDisperser()));
+        chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(game.getAvailableTrapRooms()));
+
+        chooseRoomMove2.setVisible(false);
+
+        HBox firstLineRoomsHbox = new HBox(chooseRoomMove1);
+        firstLineRoomsHbox.setSpacing(40);
+        firstLineRoomsHbox.setAlignment(Pos.CENTER);
+
+        HBox secondLineRoomssHbox = new HBox(chooseRoomMove2);
+        secondLineRoomssHbox.setSpacing(40);
+        secondLineRoomssHbox.setAlignment(Pos.CENTER);
+
+        Label lblChooseRooms = new Label("Place Particle Disperser");
+        lblChooseRooms.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
+        lblChooseRooms.setTextFill(Color.web("#ffffff"));
+
+        mainVboxRoomChoice.getChildren().setAll(lblChooseRooms, firstLineRoomsHbox, secondLineRoomssHbox);
+        mainVboxRoomChoice.setAlignment(Pos.CENTER);
+        mainVboxRoomChoice.setSpacing(20);
+
+        mainVboxRoomChoice.getStyleClass().add("ChooseVBox");
+
+        chooseRoomMove1.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+
+                boolean visibi = chooseRoomMove2.isVisible();
+
+                if (visibi)
+                    visibi = false;
+                else
+                    visibi = true;
+
+                chooseRoomMove2.setVisible(visibi);
+            }
+        });
+
+        chooseRoomMove2.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+
+                game.setTrap(newValue, chooseRoomMove1.getValue());
+                game.setTrap(newValue, chooseRoomMove1.getValue());
+
+                pane.getChildren().remove(paneLayoutRoomChoice);
+
+            }
+        });
+
+        paneLayoutRoomChoice.setCenter(mainVboxRoomChoice);
+
+        this.getChildren().add(paneLayoutRoomChoice);
+
+    }
+
+    private void placeOrganic(StackPane pane){
+        BorderPane paneLayoutRoomChoice = new BorderPane();
+
+        VBox mainVboxRoomChoice = new VBox();
+
+        ComboBox<Integer> chooseRoomMove1;
+        ComboBox<Integer> chooseRoomMove2;
+
+        chooseRoomMove1 = new ComboBox<>(FXCollections.observableArrayList(this.game.getUnplacedOrganicDetonaters()));
+        chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(this.game.getAvailableTrapRooms()));
+
+        chooseRoomMove2.setVisible(false);
+
+        HBox firstLineRoomsHbox = new HBox(chooseRoomMove1);
+        firstLineRoomsHbox.setSpacing(40);
+        firstLineRoomsHbox.setAlignment(Pos.CENTER);
+
+        HBox secondLineRoomssHbox = new HBox(chooseRoomMove2);
+        secondLineRoomssHbox.setSpacing(40);
+        secondLineRoomssHbox.setAlignment(Pos.CENTER);
+
+        Label lblChooseRooms = new Label("Place  Organic  Detonator");
+        lblChooseRooms.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
+        lblChooseRooms.setTextFill(Color.web("#ffffff"));
+
+        mainVboxRoomChoice.getChildren().setAll(lblChooseRooms, firstLineRoomsHbox, secondLineRoomssHbox);
+        mainVboxRoomChoice.setAlignment(Pos.CENTER);
+        mainVboxRoomChoice.setSpacing(20);
+
+        chooseRoomMove1.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+
+                boolean visibi = chooseRoomMove2.isVisible();
+
+                if (visibi)
+                    visibi = false;
+                else
+                    visibi = true;
+
+                chooseRoomMove2.setVisible(visibi);
+            }
+        });
+
+        chooseRoomMove2.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+
+                game.setTrap(newValue, chooseRoomMove1.getValue());
+                game.setTrap(newValue, chooseRoomMove1.getValue());
+
+                pane.getChildren().remove(paneLayoutRoomChoice);
+
+            }
+        });
+
+        mainVboxRoomChoice.getStyleClass().add("ChooseVBox");
+        paneLayoutRoomChoice.setCenter(mainVboxRoomChoice);
+
+        this.getChildren().add(paneLayoutRoomChoice);
+
+    }
+
+    private void detonate(StackPane pane){
+        BorderPane paneLayoutRoomChoice = new BorderPane();
+
+        VBox mainVboxRoomChoice = new VBox();
+
+        ComboBox<Integer> chooseRoomMove2;
+        chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(this.game.getPlacedParticleDisperser()));
+
+        HBox firstLineRoomsHbox = new HBox(chooseRoomMove2);
+        firstLineRoomsHbox.setSpacing(40);
+        firstLineRoomsHbox.setAlignment(Pos.CENTER);
+
+        Label lblChooseRooms = new Label("Detonate Particle Disperser");
+        lblChooseRooms.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
+        lblChooseRooms.setTextFill(Color.web("#ffffff"));
+
+        mainVboxRoomChoice.getChildren().setAll(lblChooseRooms, firstLineRoomsHbox);
+        mainVboxRoomChoice.setAlignment(Pos.CENTER);
+        mainVboxRoomChoice.setSpacing(20);
+
+        mainVboxRoomChoice.getStyleClass().add("ChooseVBox");
+
+        chooseRoomMove2.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+
+                game.detonateParticleDisperser(newValue);
+                pane.getChildren().remove(paneLayoutRoomChoice);
+
+            }
+        });
+
+        paneLayoutRoomChoice.setCenter(mainVboxRoomChoice);
+
+        this.getChildren().add(paneLayoutRoomChoice);
+
+    }
     
-        private HBox popupsavegame(StackPane myStackPane){
+    private HBox popupsavegame(StackPane myStackPane){
 
         /*#########################################################################*/
         /*##                        Save Game Popup                              ##*/
@@ -573,8 +756,6 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         return topOfPopup;
 
     }
-    
-    
 
     private VBox popupFunctionScene(StackPane myStackPane){
 
@@ -929,7 +1110,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
     }
 
-    public void chooseCrewMemberGainAtack(){
+    private void chooseCrewMemberGainAtack(){
 
         /*#########################################################################*/
         /*##                             Exit Popup                              ##*/
@@ -972,7 +1153,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
     }
 
-    public void chooseCrewMemberGainMovement(){
+    private void chooseCrewMemberGainMovement(){
 
         /*#########################################################################*/
         /*##                             Exit Popup                              ##*/
