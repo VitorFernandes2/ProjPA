@@ -665,8 +665,6 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         HullTracker.setText(": " + this.game.getHullState());
 
         healthTracker.setText(": " + this.game.getHealthTrackerHealth());
-
-        refreshLeftPanel();
         
         for (int i = 0; i < 15; i++) { // Jouney tracker update
                    
