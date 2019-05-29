@@ -30,6 +30,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.animation.PauseTransition;
 
 import javafx.scene.shape.Circle;
 import projpa.GameLogic.Alien;
@@ -407,13 +408,44 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             
         }); // next phase
         
-        btnSave.setOnAction(e -> this.game.SaveGame());// save
+        btnSave.setOnAction(e -> {
+            this.game.saveGame();
+            this.game.SaveGame();
+            
+            this.getChildren().add(popupsavegame(this));
+            
+        });// save
         
         
         
         return actionStackPane;
         
     }
+    
+        private HBox popupsavegame(StackPane myStackPane){
+
+        /*#########################################################################*/
+        /*##                        Save Game Popup                              ##*/
+        /*#########################################################################*/
+
+        DeathStarLabel lblExitPopup = new DeathStarLabel("Game Saved", 38);
+        
+        HBox topOfPopup = new HBox(lblExitPopup);
+        topOfPopup.setSpacing(20);
+        topOfPopup.setAlignment(Pos.CENTER);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        delay.setOnFinished( e -> myStackPane.getChildren().remove(topOfPopup) );
+        delay.play();
+        
+        
+        myStackPane.getChildren().remove(topOfPopup);
+        
+        return topOfPopup;
+
+    }
+    
+    
 
     private VBox popupFunctionScene(StackPane myStackPane){
 

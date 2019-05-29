@@ -102,13 +102,59 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
             this.game.startGame();
         });
         btnChargeGame.setOnAction(e -> {
-            this.game.LoadGame(); 
-            this.game.startGame();
+            
+            firstStackPaneList.add(LoadFunction(this));
+            
+            //this.game.LoadGame(); 
+            //this.game.startGame();
         });
         
         
 
     }
+    
+    /*#########################################################################*/
+    /*##                             Load Game Scene                         ##*/
+    /*#########################################################################*/
+
+    private VBox LoadFunction(StackPane myStackPane){
+
+        VBox MainlayoutVbox = new VBox();
+
+        HBox Optionsbutns = new HBox();
+
+        DeathStarLabel lblScoreTitle = new DeathStarLabel("Are you sure you want to load?", 58);
+
+        Image loadyesimg = new Image(getClass().getResourceAsStream("..\\" + ACCEPT_IMAGE));
+        GreenButton loadyesbtn = new GreenButton("Yes", loadyesimg, 20, 20, 120, 40);
+
+        Image loadnoimg = new Image(getClass().getResourceAsStream("..\\" + CANCEL_IMAGE));
+        RedButton loadnobtn = new RedButton("No", loadnoimg, 20, 20, 120, 40);
+        
+
+        Optionsbutns.setSpacing(20);
+        Optionsbutns.setAlignment(Pos.CENTER);
+        Optionsbutns.getChildren().addAll(loadyesbtn, loadnobtn);
+        MainlayoutVbox.getChildren().addAll(lblScoreTitle, Optionsbutns);
+        MainlayoutVbox.setAlignment(Pos.CENTER);
+        MainlayoutVbox.setSpacing(20);
+        MainlayoutVbox.getStyleClass().add("ChooseVBox");
+
+        loadnobtn.setOnAction(e-> {
+            myStackPane.getChildren().remove(MainlayoutVbox);
+        
+        });
+        
+        loadyesbtn.setOnAction(e-> {
+            myStackPane.getChildren().remove(MainlayoutVbox);
+            this.game.LoadGame(); 
+            this.game.startGame();
+        });
+        
+        return MainlayoutVbox;
+
+    }
+    
 
     /*#########################################################################*/
     /*##                             Exit Popup                              ##*/
