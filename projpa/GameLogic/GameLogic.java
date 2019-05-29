@@ -37,6 +37,7 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
             this.game = new GameData(pr1);
             this.stateOfTheGame = new AwaitCrewPhaseActions(this.game);
+            firePropertyChange(null, false, true); // inform interface what state it is
 
         } catch (IOException e) {
 
