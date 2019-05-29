@@ -302,3 +302,32 @@
     -fx-text-fill: #ffffff;
 
 }
+
+.combo-box{
+    -fx-font-family: "Death Star";
+    -fx-background-color: #3282cc;
+    -fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.combo-box .list-cell 
+{
+    -fx-font-family: "Death Star";
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-background-color: #3282cc;
+    -fx-background-radius: 10;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-border-radius: 10;
+    -fx-font-weight: bold;
+}
+
+.combo-box-popup .list-view 
+{
+    -fx-background-color: rgba(255, 255, 255, 0);
+} 
