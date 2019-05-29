@@ -547,14 +547,20 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         secondCrewVBox.setAlignment(Pos.CENTER);
         secondCrewVBox.setSpacing(20);
 
+        chooseRoomMove1 = new ComboBox<>();
+        chooseRoomMove1.setVisible(false);
+
+        chooseRoomMove2 = new ComboBox<>();
+        chooseRoomMove2.setVisible(false);
+
         VBox firstTabVbox = new VBox();
-        firstTabVbox.getChildren().addAll(Crew1Name, LCrew1Local, ACrew1Local, MCrew1Local, firstCrewVBox);
+        firstTabVbox.getChildren().addAll(Crew1Name, LCrew1Local, ACrew1Local, MCrew1Local, firstCrewVBox, chooseRoomMove1);
         firstTabVbox.setAlignment(Pos.TOP_CENTER);
         firstTabVbox.setPadding(new Insets(0,0,0,5));
         firstTabVbox.setSpacing(20);
 
         VBox secondTabVbox = new VBox();
-        secondTabVbox.getChildren().addAll(Crew2Name, LCrew2Local, ACrew2Local, MCrew2Local, secondCrewVBox);
+        secondTabVbox.getChildren().addAll(Crew2Name, LCrew2Local, ACrew2Local, MCrew2Local, secondCrewVBox, chooseRoomMove2);
         secondTabVbox.setAlignment(Pos.TOP_CENTER);
         secondTabVbox.setSpacing(20);
         secondTabVbox.setPadding(new Insets(0,0,0,5));
