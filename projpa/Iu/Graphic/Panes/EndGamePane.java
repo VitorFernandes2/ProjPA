@@ -2,6 +2,7 @@ package projpa.Iu.Graphic.Panes;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,7 +19,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import projpa.GameLogic.GameLogic;
+import projpa.Iu.Graphic.Buttons.GreenButton;
+import projpa.Iu.Graphic.Buttons.RedButton;
 import projpa.Iu.Graphic.Constants;
+import static projpa.Iu.Graphic.Constants.ACCEPT_IMAGE;
+import static projpa.Iu.Graphic.Constants.CANCEL_IMAGE;
 
 public class EndGamePane extends StackPane implements Constants,PropertyChangeListener{
 
@@ -38,36 +43,58 @@ public class EndGamePane extends StackPane implements Constants,PropertyChangeLi
 
     }
     
-    public VBox interfacea(StackPane myStackPane){
+    public BorderPane interfacea(StackPane myStackPane){
     
+        BorderPane paneLayoutRoomChoice = new BorderPane();
+        
         VBox paneLayoutendgame= new VBox();
     
-        Button btnyes = new Button();
-        btnyes.getStyleClass().add("GreenButton");
+        Image loadyesimg = new Image(getClass().getResourceAsStream("..\\" + ACCEPT_IMAGE));
+        GreenButton btnyes = new GreenButton("Yes", loadyesimg, 20, 20, 120, 40);
 
-        Button btnno = new Button();
-        btnno.getStyleClass().add("RedButton");
-
+        Image loadnoimg = new Image(getClass().getResourceAsStream("..\\" + CANCEL_IMAGE));
+        RedButton btnno = new RedButton("No", loadnoimg, 20, 20, 120, 40);
 
         Label lblChooseUserName = new Label("Game Over - Play Again");
         lblChooseUserName.setFont(Font.font("Death Star", FontWeight.MEDIUM, 58));
         lblChooseUserName.setTextFill(Color.web("#ffffff"));
+        lblChooseUserName.setAlignment(Pos.CENTER);
+        
 
-
-        HBox backHboxChooseUsernameScene = new HBox(lblChooseUserName, btnyes, btnno);
+        Label scorelabel = new Label("Score: " + this.game.getPoints());
+        scorelabel.setFont(Font.font("Death Star", FontWeight.MEDIUM, 28));
+        scorelabel.setTextFill(Color.web("#ffffff"));
+        scorelabel.setAlignment(Pos.CENTER);
+        
+        
+        HBox backHboxChooseUsernameScene = new HBox(btnyes, btnno);
         backHboxChooseUsernameScene.setAlignment(Pos.CENTER);
         backHboxChooseUsernameScene.setSpacing(10);
 
-
+        paneLayoutendgame.getChildren().addAll(lblChooseUserName,scorelabel,backHboxChooseUsernameScene);
+        paneLayoutendgame.setAlignment(Pos.CENTER);
+        
+        VBox mainVboxUsernameScene = new VBox(paneLayoutendgame);
+        mainVboxUsernameScene.setAlignment(Pos.CENTER);
+        mainVboxUsernameScene.setSpacing(20);
+        mainVboxUsernameScene.getStyleClass().add("ChooseVBox");
+        
+        
         btnyes.setOnMouseClicked(e -> {
+            this.game.startGame();
             
         });
 
         btnno.setOnMouseClicked(e -> {
-            
+            this.setVisible(false);
         });
+        
+        paneLayoutRoomChoice.setCenter(paneLayoutendgame);
+        
+        this.getChildren().add(mainVboxUsernameScene);
 
-        return paneLayoutendgame;
+
+        return paneLayoutRoomChoice;
         
     }
     
@@ -75,6 +102,9 @@ public class EndGamePane extends StackPane implements Constants,PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+        
+       setVisible(this.game.inGameOverState());
+        
     }
     
 }

@@ -43,13 +43,14 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
     private CrewMembersChoicePane crewMembersChoicePane;
     private CrewMember1ChooseRoom crewMember1ChooseRoom;
     private CrewMember2ChooseRoom crewMember2ChooseRoom;
+    private EndGamePane endgamepane;
     private ActionPane actionPane;
     private UsernamePane usernamePane;
 
     public MainPane(GameLogic game) {
         this.game = game;
         this.game.addPropertyChangeListener(this);
-        this.game.endGame();
+        //this.game.endGame2();
         setupComponents();
         propertyChange(null);
     }
@@ -84,11 +85,12 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         crewMembersChoicePane = new CrewMembersChoicePane(this.game);
         crewMember1ChooseRoom = new CrewMember1ChooseRoom(this.game);
         crewMember2ChooseRoom = new CrewMember2ChooseRoom(this.game);
+        endgamepane = new EndGamePane(this.game);
         actionPane = new ActionPane(this.game);
         usernamePane = new UsernamePane(this.game);
 
         ObservableList firstStackPaneList = this.getChildren();
-        firstStackPaneList.addAll(boxLineLayout, usernamePane,crewMembersChoicePane, crewMember1ChooseRoom, crewMember2ChooseRoom, actionPane);
+        firstStackPaneList.addAll(boxLineLayout, usernamePane,crewMembersChoicePane, crewMember1ChooseRoom, crewMember2ChooseRoom, actionPane , endgamepane);
         btnExitMain.setOnMouseClicked(e ->{
             firstStackPaneList.add(popupFunction(this));
         });
@@ -168,7 +170,7 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         GreenButton btnAcceptPopup = new GreenButton("Yes", btnAcceptPopupImg, 20, 20, 90, 40);
         btnAcceptPopup.setOnMouseClicked(event -> Platform.exit());
 
-        DeathStarLabel lblExitPopup = new DeathStarLabel("Did You Really Want To Go?", 38);
+        DeathStarLabel lblExitPopup = new DeathStarLabel("Do You Really Want To Go?", 38);
 
         HBox topOfPopup = new HBox(lblExitPopup);
         topOfPopup.setSpacing(20);
