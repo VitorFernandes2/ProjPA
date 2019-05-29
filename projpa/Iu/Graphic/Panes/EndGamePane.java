@@ -82,11 +82,11 @@ public class EndGamePane extends StackPane implements Constants,PropertyChangeLi
         
         
         btnyes.setOnMouseClicked(e -> {
-            this.game.startGame();
-            
+            this.game.newGame();
         });
 
         btnno.setOnMouseClicked(e -> {
+            this.game.startGame2();
             this.setVisible(false);
         });
         

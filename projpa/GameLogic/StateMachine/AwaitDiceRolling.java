@@ -78,11 +78,12 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
                 }
                 else{
                     
-                    diceendstat = 0;
+                    diceendstat = -1;
                     //Health tracker - 1
                     this.game.healthTrackerHit();
                     
                     if(this.game.isDead()){
+                        diceendstat = 0;
                         //return new GameOver(this.game);         
                         return this;
                     }          
