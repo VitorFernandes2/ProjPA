@@ -336,8 +336,8 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         double xcenter=((WIDTH- 377)/2) - 29 ;
         double ycenter= ((HEIGHT - 84)/2)- 7 ;
         
-        test.setCenterX(xcenter + 120);
-        test.setCenterY(ycenter + 150);
+        test.setCenterX(xcenter);
+        test.setCenterY(ycenter);
         
         //test
         
@@ -345,7 +345,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         
         Image playerimagem = new Image(getClass().getResourceAsStream("..\\Images\\playerstand.png"));
         ImageView playerimage = new ImageView(playerimagem);
-        playerimage.setFitHeight(20);
+        playerimage.setFitHeight(15);
         playerimage.setPreserveRatio(true);
         
         ArrayList<Double> cordstart = new ArrayList<>(); // temp
@@ -372,7 +372,8 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         playertranstion.setAutoReverse(true);
         playertranstion.play();
         
-
+        ArrayList<VBox> arraytest = new ArrayList<VBox>();
+        arraytest = pdata.setbackgroundstats(xcenter,ycenter);
         
         // end beta
 
@@ -381,7 +382,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         MainshipImageView.getChildren().add(MainshipImageView2);
         MainshipImageView.getChildren().add(test);
         MainshipImageView.getChildren().add(playerimage);
-        
+        MainshipImageView.getChildren().addAll(arraytest);//test
+
+       
+       
         VBox navyBox = new VBox();
         navyBox.getChildren().addAll();
 

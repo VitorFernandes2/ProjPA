@@ -7,6 +7,12 @@ package projpa.Iu.Graphic;
 
 import static java.lang.Math.atan2;
 import java.util.ArrayList;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -106,7 +112,7 @@ public class ShipGps {
         
         ArrayList<Double> cords = new ArrayList<>();
         
-        // movement database
+        // movement database -> get(0) = x || get(1) = y
         
         switch(roomnumber){
             case 1:
@@ -190,13 +196,194 @@ public class ShipGps {
         return cords;
     }
     
+    // auxiliar to define location for counter for aliens in room
+    public ArrayList<Double> auxlocationinfo(int roomnumber){
+        
+        ArrayList<Double> cords = new ArrayList<>();
+        
+        // movement database -> get(0) = x || get(1) = y
+        
+        switch(roomnumber){
+            case 0: // room 1
+                
+                cords.add(shipbasex + 55);
+                cords.add(shipbasey - 325);
+                
+                break;
+            case 1: // room 2
+                
+                cords.add(shipbasex + 50);
+                cords.add(shipbasey + 5);
+                
+                break;
+            case 2: // room 3
+                
+                cords.add(shipbasex - 110);
+                cords.add(shipbasey - 230);
+                
+                break;
+            case 3: // room 4
+                
+                cords.add(shipbasex + 85);
+                cords.add(shipbasey - 230);
+                
+                break;
+            case 4: // room 5
+                
+                cords.add(shipbasex - 78);
+                cords.add(shipbasey - 230);
+                
+                break;
+            case 5: // room 6
+                
+                cords.add(shipbasex - 60);
+                cords.add(shipbasey + 270);
+                
+                break;
+            case 6: // room 7
+                
+                cords.add(shipbasex + 85);
+                cords.add(shipbasey + 85);
+                
+                break;
+                
+            case 7: // room 8
+                
+                cords.add(shipbasex + 50);
+                cords.add(shipbasey - 230);
+                
+                break;
+            case 8: // room 9
+                
+                cords.add(shipbasex - 110);
+                cords.add(shipbasey - 72);
+                
+                break;                 
+            case 9: // room 10
+                
+                cords.add(shipbasex - 78);
+                cords.add(shipbasey + 5);
+                
+                break;
+                
+            case 10: // room 11
+                
+                cords.add(shipbasex + 85);
+                cords.add(shipbasey - 72);
+                
+                break;
+            
+            case 11: // room 12
+                
+                cords.add(shipbasex - 110);
+                cords.add(shipbasey + 85);
+                
+                break;    
+                
+        }
+        
+        return cords;
+    }
+    
+    
+    
+    public ArrayList<VBox> setbackgroundstats(double xcenter,double ycenter){
+          
+        
+        ArrayList<VBox> array = new ArrayList<VBox>();
+        
+        // Player Image
+        
+        for (int i = 0; i < 12 ; i++){
+        
+            Image playerimagem = new Image(getClass().getResourceAsStream("\\Images\\playerstand.png"));
+            ImageView playerimage = new ImageView(playerimagem);
+            playerimage.setFitHeight(12);
+            playerimage.setPreserveRatio(true);
+
+            Label playerlabel = new Label("0");
+            
+            HBox temparray = new HBox(playerimage,playerlabel);
+            
+            Image alienimagem = new Image(getClass().getResourceAsStream("\\Images\\alienicon.png"));
+            ImageView alienimage = new ImageView(alienimagem);
+            alienimage.setFitHeight(12);
+            alienimage.setPreserveRatio(true);
+
+            Label alienlabel = new Label("0");
+            
+            HBox temparray2 = new HBox(alienimage,alienlabel);
+            
+            //int i=4;
+
+            
+            array.add(new VBox(temparray,temparray2));
+            
+            array.get(i).setLayoutX(auxlocationinfo(i).get(0));
+            array.get(i).setLayoutY(auxlocationinfo(i).get(1));
+            
+            
+        }
+        
+        
+        return array;
+        
+        
+        
+        
+        
+        /*ArrayList<GridPane > array = new ArrayList<GridPane >();
+        
+        // Player Image
+        
+        //for (int i = 0; i < 2 ; i++){
+        
+            Image playerimagem = new Image(getClass().getResourceAsStream("\\Images\\playerstand.png"));
+            ImageView playerimage = new ImageView(playerimagem);
+            playerimage.setFitHeight(12);
+            playerimage.setPreserveRatio(true);
+
+            Label playerlabel = new Label("0");
+
+            Image alienimagem = new Image(getClass().getResourceAsStream("\\Images\\alienicon.png"));
+            ImageView alienimage = new ImageView(alienimagem);
+            alienimage.setFitHeight(12);
+            alienimage.setPreserveRatio(true);
+
+            Label alienlabel = new Label("0");
+            
+            //int i=4;
+            
+            for (int i = 0; i < 2 ; i++){
+            
+            array.add(new GridPane());
+            array.get(i).setLayoutX(auxlocationinfo(i).get(0));
+            array.get(i).setLayoutY(auxlocationinfo(i).get(1));
+            array.get(i).add(playerimage, 0, 0);
+            playerlabel.setText(String.valueOf(i));
+            array.get(i).add(playerlabel, 1, 0);
+            array.get(i).add(alienimage, 0, 1);
+            array.get(i).add(alienlabel, 1, 1);
+            
+            }
+        //}
+        
+        
+        return array;*/
+        
+        
+    }
+    
+    
+    
+    
     public double calculatedegree(double xa, double ya, double xb, double yb){
         
         
         xb = xb - xa;
         yb = yb - ya;
         
-        return atan2(xb,yb);
+        return atan2(xb,yb); // needs -180 ao x100 from interface
     }
     
 }
