@@ -86,6 +86,8 @@ public class UsernamePane extends StackPane implements Constants, PropertyChange
 
         btnSubmitName.setOnMouseClicked(e -> {
             this.game.newUser(txtAreaUserName.getText());
+            txtAreaUserName.clear();
+            btnSubmitName.setDisable(true);
             this.game.Inputbegining();
         });
 

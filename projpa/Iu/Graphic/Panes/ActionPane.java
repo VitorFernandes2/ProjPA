@@ -119,21 +119,25 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         leftBottomBox.setSpacing(10);
 
         sealRoom.setOnMouseClicked(e -> {
+            disableMove();
             if (this.game.canSealRoom())
                 sealRoom();
         });
 
         ParticleDisperser.setOnMouseClicked(e -> {
+            disableMove();
             if (this.game.hasParticleDispersersToPlace())
                 placeParticle(this);
         });
 
         OrganicDetonator.setOnMouseClicked(e -> {
+            disableMove();
             if (this.game.hasOrganicDetonatorToPlace())
                 placeOrganic(this);
         });
 
         Detonate.setOnMouseClicked(e -> {
+            disableMove();
             if (this.game.hasOrganicDetonatorToExplode())
                 detonate(this);
         });
@@ -430,6 +434,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
 
         btnExit.setOnMouseClicked(e -> {
+            disableMove();
             this.getChildren().add(popupFunctionScene(this));
         });
 
@@ -437,6 +442,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         actionStackPane.setAlignment(Pos.CENTER);
         
         btnNext.setOnAction(e -> {
+            disableMove();
             this.game.nextTurn();
             updaterightbox();
             refreshJourneyTracker();
@@ -444,17 +450,28 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         }); // next phase
         
         btnSave.setOnAction(e -> {
+            disableMove();
             this.game.saveGame();
             this.game.SaveGame();
-            
             this.getChildren().add(popupsavegame(this));
             
         });// save
         
-        
-        
+        firstTab.setOnSelectionChanged(e -> {
+            disableMove();
+        });
+
+        secondTab.setOnSelectionChanged(e -> {
+            disableMove();
+        });
+
         return actionStackPane;
         
+    }
+
+    private void disableMove(){
+        this.chooseRoomMove1.setVisible(false);
+        this.chooseRoomMove2.setVisible(false);
     }
 
     private void sealRoom(){
@@ -767,7 +784,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         Image btnAcceptPopupImg = new Image(getClass().getResourceAsStream("..\\Images\\accept.png"));
         RedButton btnCancelPopup = new RedButton("No", btnExitPopupImg , 20, 20, 90, 40);
         GreenButton btnAcceptPopup = new GreenButton("Yes", btnAcceptPopupImg, 20 ,20, 90,40);
-        DeathStarLabel lblExitPopup = new DeathStarLabel("Did you want play again?", 38);
+        DeathStarLabel lblExitPopup = new DeathStarLabel("Do you want play again?", 38);
 
         HBox topOfPopup = new HBox(lblExitPopup);
         topOfPopup.setSpacing(20);
@@ -799,14 +816,18 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     private void refreshJourneyTracker(){
 
         if (this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions()){
+
             for (int i = 0; i < 15; i++) {
+                journeyLabels.get(i).setText(this.game.getJourneyValue(i));
                 journeyLabels.get(i).getStyleClass().remove("journeyLabelsCenter");
                 journeyLabels.get(i).getStyleClass().remove("journeyLabelsCenterActive");
                 journeyLabels.get(i).getStyleClass().add("journeyLabelsCenter");
             }
+
             journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
             journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
             journeyLabels.get(this.game.getJourneyState()).getStyleClass().add("journeyLabelsCenterActive");
+
         }
 
     }
@@ -883,43 +904,50 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         secondTabVbox.setPadding(new Insets(0,0,0,5));
 
         btnAtackCrew1.setOnMouseClicked(e -> {
-            ArrayList<Integer> attackresults = new ArrayList<Integer>();
-            attackresults = this.game.atack(0);
+            disableMove();
+            ArrayList<Integer> attackresults;
+            this.game.atack(0);
             attackresults = this.game.atack(0);
             this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
         });
 
         btnAtackCrew2.setOnMouseClicked(e -> {
-            ArrayList<Integer> attackresults = new ArrayList<Integer>();
-            attackresults = this.game.atack(1);
+            disableMove();
+            ArrayList<Integer> attackresults;
+            this.game.atack(1);
             attackresults = this.game.atack(1);
             this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
         });
 
         btnHealCrew1.setOnMouseClicked(e -> {
+            disableMove();
             this.game.heal();
             this.updaterightbox();
         });
 
         btnHealCrew2.setOnMouseClicked(e -> {
+            disableMove();
             this.game.heal();
             this.updaterightbox();
         });
         
         btnreapairhull1.setOnAction(e -> {
+            disableMove();
             this.game.fixOneHull();
             this.updaterightbox();
         });
         
         btnreapairhull2.setOnAction(e -> {
+            disableMove();
             this.game.fixOneHull();
             this.updaterightbox();
         });
         
 
         btnMoveCrew1.setOnMouseClicked(e -> {
+            disableMove();
             firstCrewVBox.getChildren().remove(chooseRoomMove1);
             chooseRoomMove1 = new ComboBox<>(FXCollections.observableArrayList(this.game.getNearAvailableRooms(0)));
             firstCrewVBox.getChildren().add(chooseRoomMove1);
@@ -934,6 +962,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         });
 
         btnMoveCrew2.setOnMouseClicked(e -> {
+            disableMove();
             secondCrewVBox.getChildren().remove(chooseRoomMove2);
             chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(this.game.getNearAvailableRooms(1)));
             secondCrewVBox.getChildren().add(chooseRoomMove2);
@@ -948,12 +977,14 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         });
 
         btnSacrificeCrew1.setOnMouseClicked(e -> {
+            disableMove();
             this.game.redShirtSpecial();
             LCrew2Local.setVisible(false);
             this.firstCrewVBox.setDisable(true);
         });
 
         btnSacrificeCrew2.setOnMouseClicked(e -> {
+            disableMove();
             this.game.redShirtSpecial();
             LCrew2Local.setVisible(false);
             this.secondCrewVBox.setDisable(true);
@@ -1000,9 +1031,9 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
                 DiceResult.setTextFill(Color.web("#ffffff"));
 
                 if (attackresults.get(2) == 1)
-                    DiceResult.setText("The Crew Memeber as killed the alien");
+                    DiceResult.setText("The Crew Member as killed the alien");
                 else if (attackresults.get(2) == 0)
-                    DiceResult.setText("The Crew Memeber as unable to kill the alien");
+                    DiceResult.setText("The Crew Member as unable to kill the alien");
                 else
                     DiceResult.setText("There was no alien in the selected room");
 
@@ -1020,60 +1051,58 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         return topOfPopup;
 
     }
-    
-    
 
     private BorderPane restPhaseLayout(){
 
         BorderPane restPhasePane = new BorderPane();
         VBox restPhaseMainVBox = new VBox();
 
-        pointsIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\points.png")));
+        ImageView pointsIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\points.png")));
         pointsIcon.setFitWidth(20);
         pointsIcon.setFitHeight(20);
 
-        lblPoints = new Label(": " + this.game.getUserPoints(), pointsIcon);
+        Label lblPoints = new Label(": " + this.game.getUserPoints(), pointsIcon);
         lblPoints.setTextFill(Color.web("#ffffff"));
         lblPoints.getStyleClass().add("PointsLabel");
 
-        apIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\action.png")));
+        ImageView apIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\action.png")));
         apIcon.setFitWidth(20);
         apIcon.setFitHeight(20);
-        lblAp = new Label(": " + this.game.getActionPoints(), apIcon);
+        Label lblAp = new Label(": " + this.game.getActionPoints(), apIcon);
         lblAp.setTextFill(Color.web("#ffffff"));
         lblAp.getStyleClass().add("PointsLabel");
 
-        ipIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\influence.png")));
+        ImageView ipIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\influence.png")));
         ipIcon.setFitWidth(20);
         ipIcon.setFitHeight(20);
-        lblIp = new Label(": " + this.game.getInspirationPoints(), ipIcon);
+        Label lblIp = new Label(": " + this.game.getInspirationPoints(), ipIcon);
         lblIp.setTextFill(Color.web("#ffffff"));
         lblIp.getStyleClass().add("PointsLabel");
 
-        healthIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\health.png")));
+        ImageView healthIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\health.png")));
         healthIcon.setFitWidth(20);
         healthIcon.setFitHeight(20);
-        healthTracker = new Label(": " + this.game.getHealthTrackerHealth(), healthIcon);
+        Label healthTracker = new Label(": " + this.game.getHealthTrackerHealth(), healthIcon);
         healthTracker.setTextFill(Color.web("#ffffff"));
         healthTracker.getStyleClass().add("PointsLabel");
 
-        hullIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\hull.png")));
+        ImageView hullIcon = new ImageView(new Image(getClass().getResourceAsStream("..\\Images\\hull.png")));
         hullIcon.setFitWidth(20);
         hullIcon.setFitHeight(20);
-        HullTracker = new Label(": " + this.game.getHullState(), hullIcon);
+        Label HullTracker = new Label(": " + this.game.getHullState(), hullIcon);
         HullTracker.setTextFill(Color.web("#ffffff"));
         HullTracker.getStyleClass().add("PointsLabel");
 
-        topRightBox = new HBox();
+        HBox topRightBox = new HBox();
         topRightBox.getChildren().addAll(HullTracker, healthTracker, lblPoints, lblAp, lblIp);
         topRightBox.setAlignment(Pos.CENTER_RIGHT);
         topRightBox.setSpacing(10);
 
-        topLeftBox = new HBox();
+        HBox topLeftBox = new HBox();
         topLeftBox.getChildren().addAll();
         topLeftBox.setAlignment(Pos.CENTER_LEFT);
 
-        journeyLabels = new ArrayList<>();
+        ArrayList<Label> journeyLabels = new ArrayList<>();
 
         for (int i = 0; i < 15; i++) {
 
@@ -1092,6 +1121,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         journeyLabels.get(0).getStyleClass().add("journeyLabelsLeft");
         journeyLabels.get(14).setText("E");
         journeyLabels.get(14).getStyleClass().add("journeyLabelsRight");
+        journeyLabels.get(this.game.getJourneyState()).getStyleClass().add("journeyLabelsCenterActive");
 
         region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
@@ -1268,10 +1298,12 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
             refreshJourneyTracker();
             refreshLeftPanel();
+
         }
 
         if (this.game.inAwaitRestPhaseActions()) {
             this.getChildren().add(restPhaseLayout());
+            refreshJourneyTracker();
         }
 
         setVisible(this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions());
@@ -1309,9 +1341,9 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         HullTracker.setText(": " + this.game.getHullState());
 
         healthTracker.setText(": " + this.game.getHealthTrackerHealth());
-        
+
         for (int i = 0; i < 15; i++) { // Jouney tracker update
-                   
+
             journeyLabels.get(i).setText(this.game.getJourneyValue(i));
 
         }

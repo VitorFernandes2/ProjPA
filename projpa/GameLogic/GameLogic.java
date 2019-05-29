@@ -18,6 +18,7 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
     private GameData game;
     private IStates stateOfTheGame;
+    private boolean wascrew;
     
     public GameLogic(IStates stateOfTheGame) {
         super(stateOfTheGame);
@@ -279,9 +280,13 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
     public ArrayList<Integer> atack(int i) {
 
-        boolean wascrew = false;
-        if(inAwaitCrewPhaseActions())
+
+        if(inAwaitCrewPhaseActions()){
             wascrew = true;
+        }
+        else{
+            wascrew = false;
+        }
 
         this.stateOfTheGame = this.stateOfTheGame.atack(i);
 
@@ -681,6 +686,12 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         //if (inAwaitPeekRoom()){
             this.stateOfTheGame = new AwaitBeginning();
             firePropertyChange(null, false, true);
+        //}
+    }
+
+    public void startGame2(){
+        //if (inAwaitPeekRoom()){
+        this.game = new GameData();
         //}
     }
 

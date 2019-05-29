@@ -50,7 +50,7 @@ public abstract class CrewMember implements Serializable{
      * @param movementToDo the movementToDo to set
      */
     public void setMovementToDo(int movementToDo) {
-        this.movementToDo = movementToDo;
+        this.movementToDo = 999;
     }
 
     /**
