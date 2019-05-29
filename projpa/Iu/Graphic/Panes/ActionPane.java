@@ -518,9 +518,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         DefaultButton btnAtackCrew1 = new DefaultButton("Atack", new Image(getClass().getResourceAsStream("..\\Images\\sword.png")), 20 , 20, 120, 40);
         DefaultButton btnHealCrew1 = new DefaultButton("Heal", new Image(getClass().getResourceAsStream("..\\Images\\potion.png")), 20 , 20, 120, 40);
         DefaultButton btnSacrificeCrew1 = new DefaultButton("Sacrifice", new Image(getClass().getResourceAsStream("..\\Images\\death.png")), 20 , 20, 120, 40);
+        DefaultButton btnreapairhull1 = new DefaultButton("Fix Hull", new Image(getClass().getResourceAsStream("..\\Images\\hullrepair.png")), 20 , 20, 120, 40);
 
         firstCrewVBox = new VBox();
-        firstCrewVBox.getChildren().addAll(btnMoveCrew1, btnAtackCrew1, btnHealCrew1, btnSacrificeCrew1);
+        firstCrewVBox.getChildren().addAll(btnMoveCrew1, btnAtackCrew1, btnHealCrew1, btnSacrificeCrew1,btnreapairhull1);
         firstCrewVBox.setAlignment(Pos.CENTER);
         firstCrewVBox.setSpacing(20);
 
@@ -528,11 +529,17 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         DefaultButton btnAtackCrew2 = new DefaultButton("Atack", new Image(getClass().getResourceAsStream("..\\Images\\sword.png")), 20 , 20, 120, 40);
         DefaultButton btnHealCrew2 = new DefaultButton("Heal", new Image(getClass().getResourceAsStream("..\\Images\\potion.png")), 20 , 20, 120, 40);
         DefaultButton btnSacrificeCrew2 = new DefaultButton("Sacrifice", new Image(getClass().getResourceAsStream("..\\Images\\death.png")), 20 , 20, 120, 40);
+        DefaultButton btnreapairhull2 = new DefaultButton("Fix Hull", new Image(getClass().getResourceAsStream("..\\Images\\hullrepair.png")), 20 , 20, 120, 40);
 
         if (!this.game.getCrewmember1Name().equals("Doctor"))
             btnHealCrew1.setDisable(true);
         if (!this.game.getCrewmember2Name().equals("Doctor"))
             btnHealCrew2.setDisable(true);
+        
+        if (!this.game.getCrewmember1Name().equals("Engineer"))
+            btnreapairhull1.setDisable(true);
+        if (!this.game.getCrewmember2Name().equals("Engineer"))
+            btnreapairhull2.setDisable(true);
 
         if (!this.game.getCrewmember1Name().equals("Red Shirt"))
             btnSacrificeCrew1.setDisable(true);
@@ -540,7 +547,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             btnSacrificeCrew2.setDisable(true);
 
         secondCrewVBox = new VBox();
-        secondCrewVBox.getChildren().addAll(btnMoveCrew2, btnAtackCrew2, btnHealCrew2, btnSacrificeCrew2);
+        secondCrewVBox.getChildren().addAll(btnMoveCrew2, btnAtackCrew2, btnHealCrew2, btnSacrificeCrew2,btnreapairhull2);
         secondCrewVBox.setAlignment(Pos.CENTER);
         secondCrewVBox.setSpacing(20);
 
@@ -581,6 +588,17 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             this.game.heal();
             this.updaterightbox();
         });
+        
+        btnreapairhull1.setOnAction(e -> {
+            this.game.fixOneHull();
+            this.updaterightbox();
+        });
+        
+        btnreapairhull2.setOnAction(e -> {
+            this.game.fixOneHull();
+            this.updaterightbox();
+        });
+        
 
         btnMoveCrew1.setOnMouseClicked(e -> {
             firstCrewVBox.getChildren().remove(chooseRoomMove1);
@@ -773,7 +791,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
 
         if (this.game.inAwaitCrewPhaseActions() || this.game.inAwaitRestPhaseActions()){
-            this.getChildren().add(restPhaseLayout());
+            //this.getChildren().add(restPhaseLayout());
             refreshJourneyTracker();
             refreshLeftPanel();
         }

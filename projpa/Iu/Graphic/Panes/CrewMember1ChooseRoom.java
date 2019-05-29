@@ -155,6 +155,8 @@ public class CrewMember1ChooseRoom extends StackPane implements Constants,Proper
             });
 
         }
+        
+        btnTurnBackChooseRoom.setOnAction(e -> this.game.goBack());
 
         paneLayoutRoomChoice.setCenter(mainVboxRoomChoice);
         
