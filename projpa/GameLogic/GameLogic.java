@@ -114,8 +114,6 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
                     + this.game.getCrewMember1Name()
                     + " - Location: "
                     + this.game.returnplayerslocation(0)
-                    + " - Can move: "
-                    + this.game.getCrewMembers()[0].getMovementToDo()
             );}
         else
             sb.append("\nCrew Member 1 - Name: " + this.game.getCrewMember1Name() + " is dead");
@@ -125,8 +123,6 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
                     + this.game.getCrewMember2Name()
                     + " - Location: "
                     + this.game.returnplayerslocation(1)
-                    + " - Can move: "
-                    + this.game.getCrewMembers()[1].getMovementToDo()
             );}
         else
             sb.append("\nCrew Member 2 - Name: " + this.game.getCrewMember2Name() + " is dead");

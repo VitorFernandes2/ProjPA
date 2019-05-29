@@ -63,7 +63,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     private ArrayList<Label> journeyLabels;
     private Region region;
     private VBox rightBox;
-    private final int maxnumberofshownalien = 20;
+    private final int maxnumberofshownalien = 15;
     private ArrayList<Label> alienslabel;
     private ArrayList<String> menu;
     private Label healthTracker;
@@ -883,12 +883,18 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         secondTabVbox.setPadding(new Insets(0,0,0,5));
 
         btnAtackCrew1.setOnMouseClicked(e -> {
-            this.game.atack(0);
+            ArrayList<Integer> attackresults = new ArrayList<Integer>();
+            attackresults = this.game.atack(0);
+            attackresults = this.game.atack(0);
+            this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
         });
 
         btnAtackCrew2.setOnMouseClicked(e -> {
-            this.game.atack(1);
+            ArrayList<Integer> attackresults = new ArrayList<Integer>();
+            attackresults = this.game.atack(1);
+            attackresults = this.game.atack(1);
+            this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
         });
 
@@ -957,6 +963,65 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         firstTab.setContent(firstTabVbox);
 
     }
+    
+    private VBox Dicescreenresult(StackPane myStackPane,ArrayList<Integer> attackresults){
+
+        /*#########################################################################*/
+        /*##                        Dice Game Popup                              ##*/
+        /*#########################################################################*/
+
+        DeathStarLabel lblExitPopup = new DeathStarLabel("Dice", 38);
+        VBox topOfPopup = new VBox();
+        
+        if (attackresults.size()==0){
+            
+                Label Dicevalue = new Label("Unable to do any action");
+                Dicevalue.setFont(Font.font("Death Star", FontWeight.MEDIUM, 38));
+                Dicevalue.setTextFill(Color.web("#ffffff"));
+            
+               
+                topOfPopup.getChildren().addAll(lblExitPopup,Dicevalue);
+                topOfPopup.setSpacing(20);
+                topOfPopup.setAlignment(Pos.CENTER);
+
+                PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                delay.setOnFinished( e -> myStackPane.getChildren().remove(topOfPopup) );
+                delay.play();
+                
+                
+        }
+        else{
+                Label Dicevalue = new Label("Dice result: " + attackresults.get(0) );
+                Dicevalue.setFont(Font.font("Death Star", FontWeight.MEDIUM, 38));
+                Dicevalue.setTextFill(Color.web("#ffffff"));
+
+                Label DiceResult = new Label("Dice result");
+                DiceResult.setFont(Font.font("Death Star", FontWeight.MEDIUM, 38));
+                DiceResult.setTextFill(Color.web("#ffffff"));
+
+                if (attackresults.get(2) == 1)
+                    DiceResult.setText("The Crew Memeber as killed the alien");
+                else if (attackresults.get(2) == 0)
+                    DiceResult.setText("The Crew Memeber as unable to kill the alien");
+                else
+                    DiceResult.setText("There was no alien in the selected room");
+
+                topOfPopup.getChildren().addAll(lblExitPopup,Dicevalue,DiceResult);
+                topOfPopup.setSpacing(20);
+                topOfPopup.setAlignment(Pos.CENTER);
+
+                PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                delay.setOnFinished( e -> myStackPane.getChildren().remove(topOfPopup) );
+                delay.play();
+        }
+        
+        myStackPane.getChildren().remove(topOfPopup);
+        
+        return topOfPopup;
+
+    }
+    
+    
 
     private BorderPane restPhaseLayout(){
 

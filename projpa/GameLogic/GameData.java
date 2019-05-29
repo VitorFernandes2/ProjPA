@@ -967,7 +967,7 @@ public class GameData implements Serializable{
 
         return 0;*/
         
-    if (correctSpawnPhase()) {
+                if (correctSpawnPhase()) {
         
             String str = new String(getJourneyTurn());
             char aux[] = new char[str.length() - 1];

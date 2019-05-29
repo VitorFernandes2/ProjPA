@@ -28,6 +28,7 @@ import static projpa.Iu.Graphic.Constants.CANCEL_IMAGE;
 public class EndGamePane extends StackPane implements Constants,PropertyChangeListener{
 
     private GameLogic game;
+    Label scorelabel;
     
     public EndGamePane(GameLogic Game) {
         this.game = Game;
@@ -61,7 +62,7 @@ public class EndGamePane extends StackPane implements Constants,PropertyChangeLi
         lblChooseUserName.setAlignment(Pos.CENTER);
         
 
-        Label scorelabel = new Label("Score: " + this.game.getPoints());
+        scorelabel = new Label("Score: " + this.game.getPoints());
         scorelabel.setFont(Font.font("Death Star", FontWeight.MEDIUM, 28));
         scorelabel.setTextFill(Color.web("#ffffff"));
         scorelabel.setAlignment(Pos.CENTER);
@@ -102,9 +103,11 @@ public class EndGamePane extends StackPane implements Constants,PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+       if(this.game.inGameOverState())
+            scorelabel.setText("Score: " + this.game.getPoints()); 
         
        setVisible(this.game.inGameOverState());
-        
+       
     }
     
 }

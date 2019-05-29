@@ -36,7 +36,7 @@ public abstract class CrewMember implements Serializable{
      * This function refill the movements of the CrewMembers
      */
     public void refillMovementToDo(){
-        this.movementToDo = this.movement;
+        this.movementToDo = 999;//this.movement;
     }
 
     /**
