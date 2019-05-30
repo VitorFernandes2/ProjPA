@@ -611,9 +611,10 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
             else
                 if (this.game.isCrewMember1SameRoomName(room2.getName()) || this.game.isCrewMember2SameRoomName(room2.getName())){
                     for (int j = 0; j < this.game.getTraps().size(); j++) {
-                        RoomState room = this.game.getTraps().get(i).getTrapRoom();
-                        if (room.getName().equals(room2.getName()))
-                            canPlace = false;
+                        RoomState room = this.game.getTraps().get(j).getTrapRoom();
+                        if (room != null)
+                            if (room.getName().equals(room2.getName()))
+                                canPlace = false;
                     }
                 }
                 else{
