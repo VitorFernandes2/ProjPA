@@ -27,9 +27,11 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.PauseTransition;
+import javafx.scene.Node;
 
 import javafx.scene.shape.Circle;
 import projpa.GameLogic.Alien;
+import projpa.GameLogic.General.General;
 
 public class ActionPane extends StackPane implements Constants, PropertyChangeListener {
 
@@ -74,6 +76,8 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     private VBox firstCrewVBox;
     private ComboBox<Integer> chooseRoomMove1;
     private ComboBox<Integer> chooseRoomMove2;
+    private ArrayList<VBox> getarrayindicators;
+    private ImageView playerimage;
 
     public ActionPane(GameLogic game) {
         this.game = game;
@@ -366,14 +370,15 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         ShipGps pdata = new ShipGps(xcenter,ycenter) ;
         
         Image playerimagem = new Image(getClass().getResourceAsStream("..\\Images\\playerstand.png"));
-        ImageView playerimage = new ImageView(playerimagem);
+        playerimage = new ImageView(playerimagem);
         playerimage.setFitHeight(15);
         playerimage.setPreserveRatio(true);
+        playerimage.setVisible(false);
         
         ArrayList<Double> cordstart = new ArrayList<>(); // temp
         cordstart = pdata.getlocationcords(1);
-        playerimage.setX(cordstart.get(0));
-        playerimage.setY(cordstart.get(1));
+        //playerimage.setX(cordstart.get(0));
+        //playerimage.setY(cordstart.get(1));
         
         double tempxa = cordstart.get(0); double tempya = cordstart.get(1);
         cordstart.clear();
@@ -392,10 +397,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         playertranstion.setToY(cordstart.get(1));
         playertranstion.setCycleCount(Animation.INDEFINITE);
         playertranstion.setAutoReverse(true);
-        playertranstion.play();
+        //playertranstion.play();
         
-        ArrayList<VBox> arraytest = new ArrayList<VBox>();
-        arraytest = pdata.setbackgroundstats(xcenter,ycenter);
+        getarrayindicators = new ArrayList<VBox>();
+        getarrayindicators = pdata.setbackgroundstats(xcenter,ycenter);
         
         // end beta
 
@@ -404,7 +409,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         MainshipImageView.getChildren().add(MainshipImageView2);
         MainshipImageView.getChildren().add(test);
         MainshipImageView.getChildren().add(playerimage);
-        MainshipImageView.getChildren().addAll(arraytest);//test
+        MainshipImageView.getChildren().addAll(getarrayindicators);//test
 
        
        
@@ -914,6 +919,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             attackresults = this.game.atack(0);
             this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
+            updateindicators();
         });
 
         btnAtackCrew2.setOnMouseClicked(e -> {
@@ -923,6 +929,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             attackresults = this.game.atack(1);
             this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
+            updateindicators();
         });
 
         btnHealCrew1.setOnMouseClicked(e -> {
@@ -951,6 +958,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         
 
         btnMoveCrew1.setOnMouseClicked(e -> {
+            String oldlocation= this.game.getCrewmember1RoomName();
             disableMove();
             firstCrewVBox.getChildren().remove(chooseRoomMove1);
             chooseRoomMove1 = new ComboBox<>(FXCollections.observableArrayList(this.game.getNearAvailableRooms(0)));
@@ -961,11 +969,13 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
                     game.move(0, newValue);
                     game.move(0, newValue);
                     firstCrewVBox.getChildren().remove(chooseRoomMove1);
+                    domoveanimationplayer(1,oldlocation);
                 }
             });
         });
 
         btnMoveCrew2.setOnMouseClicked(e -> {
+            String oldlocation= this.game.getCrewmember2RoomName();
             disableMove();
             secondCrewVBox.getChildren().remove(chooseRoomMove2);
             chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(this.game.getNearAvailableRooms(1)));
@@ -976,6 +986,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
                     game.move(1, newValue);
                     game.move(1, newValue);
                     secondCrewVBox.getChildren().remove(chooseRoomMove2);
+                    domoveanimationplayer(2,oldlocation);
                 }
             });
         });
@@ -985,6 +996,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             this.game.redShirtSpecial();
             LCrew2Local.setVisible(false);
             this.firstCrewVBox.setDisable(true);
+            updateindicators();
         });
 
         btnSacrificeCrew2.setOnMouseClicked(e -> {
@@ -992,6 +1004,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             this.game.redShirtSpecial();
             LCrew2Local.setVisible(false);
             this.secondCrewVBox.setDisable(true);
+            updateindicators();
         });
 
         secondTab.setContent(secondTabVbox);
@@ -1302,6 +1315,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
             refreshJourneyTracker();
             refreshLeftPanel();
+            updateindicators();
 
         }
 
@@ -1352,5 +1366,116 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         }
         
+        
+        
+        
     }
+    
+    private void domoveanimationplayer(int crewmemebt, String oldlocation){
+        
+        String newlocation;
+        
+        if(crewmemebt == 1)
+            newlocation = this.game.getCrewmember1RoomName();
+        else
+            newlocation = this.game.getCrewmember2RoomName();
+                
+
+        General converthelp = new General();
+        int oldlocal = converthelp.convertRoomStrinToInt(oldlocation);
+        int newlocal = converthelp.convertRoomStrinToInt(newlocation);
+        
+        ShipGps animhelp = new ShipGps();
+        
+        double xcenter=((WIDTH- 377)/2) - 29 ;
+        double ycenter= ((HEIGHT - 84)/2)- 7 ;
+        
+        
+        if(this.game.getActionPoints() >= 0)
+            playerimage.setVisible(true);
+        
+        playerimage.setTranslateX(animhelp.getlocationcords(oldlocal).get(0) + xcenter);
+        playerimage.setTranslateY(animhelp.getlocationcords(oldlocal).get(1) + ycenter);
+        
+        ArrayList<Double> cordstart = new ArrayList<>(); // temp
+
+        
+        cordstart = animhelp.getcords(oldlocal,newlocal);
+        
+        TranslateTransition transtion = new TranslateTransition(Duration.seconds(2),playerimage);
+        
+        transtion.setByX(cordstart.get(0));
+        transtion.setByY(cordstart.get(1));
+        //transtion.setCycleCount(Animation.INDEFINITE);
+        transtion.play();
+        
+        transtion.setOnFinished(e -> playerimage.setVisible(false));
+        
+        updateindicators();
+    }
+    
+    private void updateindicators(){
+    
+        General converthelp = new General();
+        int crew1location = converthelp.convertRoomStrinToInt(this.game.getCrewmember1RoomName()) - 1;
+        int crew2location = converthelp.convertRoomStrinToInt(this.game.getCrewmember2RoomName()) - 1;
+        
+
+        for (int i = 0; i < 12; i++ ){ // user update
+            
+            int value = 0;
+            if(crew1location == i) {value++;}
+            if(crew2location == i) {value++;}
+        
+            Node nodeOut = getarrayindicators.get(i).getChildren().get(0);
+            if(nodeOut instanceof HBox){
+                for(Node nodeIn:((HBox)nodeOut).getChildren()){
+                    if(nodeIn instanceof Label){
+                        ((Label) nodeIn).setText(String.valueOf(value));
+                    }
+                }
+            } 
+        }
+        
+        List<Alien> returnalien = new ArrayList<Alien>(); 
+        returnalien = this.game.getalienarraycopy();
+        General funchelp = new General();
+        
+        
+        for (int i = 0; i < 12; i++ ){ // alien update
+            
+            int value = 0;
+            
+            for (int j=0; j < returnalien.size();j++){
+                
+                int room = funchelp.convertRoomStrinToInt(returnalien.get(j).getRoom().getName()) - 1;
+                
+                if(room == i)
+                {
+                    value++;
+                }
+                 
+            }
+            Node nodeOut = getarrayindicators.get(i).getChildren().get(1);
+            if(nodeOut instanceof HBox){
+                for(Node nodeIn:((HBox)nodeOut).getChildren()){
+                    if(nodeIn instanceof Label){
+                        ((Label) nodeIn).setText(String.valueOf(value));
+                    }
+                }
+            } 
+        }
+        
+        // update sealed rooms
+        for (int i = 0; i < 12; i++ ){  
+            boolean returnaswer = this.game.seelockedroom(i);
+            
+            if (returnaswer == true);
+                
+        }
+        
+        
+        
+    }
+    
 }

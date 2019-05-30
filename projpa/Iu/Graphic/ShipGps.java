@@ -35,74 +35,18 @@ public class ShipGps {
     
     public ArrayList<Double> getcords(int ini, int end){
         
-        ArrayList<Double> cords = new ArrayList<>();
+        ArrayList<Double> cords = new ArrayList<Double>();
         
         // TEMP -> change with game implementation
         
-        switch(ini){
-            case 1:
-                
-                if ( end == 8){
-                    cords.add(40.0);
-                    cords.add(200.0);  
-                }
+        ArrayList<Double> inicords = new ArrayList<Double>();
+        inicords = getlocationcords(ini);
+        ArrayList<Double> endcords = new ArrayList<Double>();
+        endcords = getlocationcords(end);
+        
+        cords.add(endcords.get(0) - inicords.get(0));
+        cords.add(endcords.get(1) - inicords.get(1));
 
-                if ( end == 5){ 
-                    cords.add(-40.0);
-                    cords.add(200.0); 
-                }
-  
-                break;
-            case 2:
-                
-                if ( end == 8){
-                    cords.add(0.0);
-                    cords.add(-200.0);  
-                }
-
-                if ( end == 7){ 
-                    cords.add(-40.0);
-                    cords.add(200.0); 
-                }
-                
-                break;
-            case 3:
-                
-                break;
-            case 4:
-                
-                break;
-            case 5:
-                
-                break;
-            case 6:
-                
-                break;
-            case 7:
-                
-                break;
-                
-            case 8:
-                
-                break;
-            case 9:
-                
-                break;
-                
-                        
-            case 10:
-                
-                break;
-                
-            case 11:
-                
-                break;
-            
-            case 12:
-                
-                break;    
-                
-        }
         
         return cords;
     }
@@ -110,7 +54,7 @@ public class ShipGps {
     // return "real" pixel location in game panel
     public ArrayList<Double> getlocationcords(int roomnumber){
         
-        ArrayList<Double> cords = new ArrayList<>();
+        ArrayList<Double> cords = new ArrayList<Double>();
         
         // movement database -> get(0) = x || get(1) = y
         
@@ -179,8 +123,8 @@ public class ShipGps {
                 
             case 11:
                 
-                cords.add(shipbasex );
-                cords.add(shipbasey + 120);
+                cords.add(shipbasex + 120);
+                cords.add(shipbasey);
                 
                 break;
             
@@ -314,7 +258,6 @@ public class ShipGps {
             
             HBox temparray2 = new HBox(alienimage,alienlabel);
             
-            //int i=4;
 
             
             array.add(new VBox(temparray,temparray2));
@@ -328,48 +271,6 @@ public class ShipGps {
         
         return array;
         
-        
-        
-        
-        
-        /*ArrayList<GridPane > array = new ArrayList<GridPane >();
-        
-        // Player Image
-        
-        //for (int i = 0; i < 2 ; i++){
-        
-            Image playerimagem = new Image(getClass().getResourceAsStream("\\Images\\playerstand.png"));
-            ImageView playerimage = new ImageView(playerimagem);
-            playerimage.setFitHeight(12);
-            playerimage.setPreserveRatio(true);
-
-            Label playerlabel = new Label("0");
-
-            Image alienimagem = new Image(getClass().getResourceAsStream("\\Images\\alienicon.png"));
-            ImageView alienimage = new ImageView(alienimagem);
-            alienimage.setFitHeight(12);
-            alienimage.setPreserveRatio(true);
-
-            Label alienlabel = new Label("0");
-            
-            //int i=4;
-            
-            for (int i = 0; i < 2 ; i++){
-            
-            array.add(new GridPane());
-            array.get(i).setLayoutX(auxlocationinfo(i).get(0));
-            array.get(i).setLayoutY(auxlocationinfo(i).get(1));
-            array.get(i).add(playerimage, 0, 0);
-            playerlabel.setText(String.valueOf(i));
-            array.get(i).add(playerlabel, 1, 0);
-            array.get(i).add(alienimage, 0, 1);
-            array.get(i).add(alienlabel, 1, 1);
-            
-            }
-        //}
-        
-        
-        return array;*/
         
         
     }

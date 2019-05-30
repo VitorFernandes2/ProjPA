@@ -61,6 +61,57 @@ public class General {
 
     }
 
+    public int convertRoomStrinToInt(String roomNumber){
+
+        int room = 0;
+
+        switch(roomNumber){
+
+            case "Bridge":
+                room = 1;
+                break;
+            case "Sick Bay":
+                room = 2;
+                break;
+            case "Brig":
+                room = 3;
+                break;
+            case "Crew Quarters":
+                room = 4;
+                break;
+            case "Conference Room":
+                room = 5;
+                break;
+            case "Shuttle Bay":
+                room = 6;
+                break;
+            case "Weapons Bay":
+                room = 7;
+                break;
+            case "Mess Hall":
+                room = 8;
+                break;
+            case "Engineering":
+                room = 9;
+                break;
+            case "Astrometrics":
+                room = 10;
+                break;
+            case "Holodeck":
+                room = 11;
+                break;
+            case "Hydroponics":
+                room = 12;
+                break;
+            default:
+
+        }
+
+        return room;
+
+    }
+    
+    
     public CrewMember convertStringToCrewMember(String CrewMemberName, GameData game){
 
         switch(CrewMemberName){

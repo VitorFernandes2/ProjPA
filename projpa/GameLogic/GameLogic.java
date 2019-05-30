@@ -446,8 +446,13 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
     }
 
     public String getCrewmember1RoomName(){
+        
+        //if(this.game.getCrewMember1RoomName() != null){
         String name = this.game.getCrewMember1RoomName();
         return name;
+        //}
+        //else
+           // return String.valueOf(-1);
     }
 
     public String getCrewMember1Atack(){
