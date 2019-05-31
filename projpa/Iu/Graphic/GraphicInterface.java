@@ -26,7 +26,7 @@ public class GraphicInterface implements Constants{
         Media sound = new Media(getClass().getResource(MAIN_MUSIC).toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        //mediaPlayer.play();
+        mediaPlayer.play();
 
         PaneOrganizer paneOrganizer = new PaneOrganizer(this.game);
         Scene scene = new Scene(paneOrganizer.getRoot());

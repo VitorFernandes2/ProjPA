@@ -104,7 +104,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         imgExit = new Image(getClass().getResourceAsStream("..\\Images\\exit.png"));
         imgNext = new Image(getClass().getResourceAsStream("..\\Images\\next.png"));
         imgSave = new Image(getClass().getResourceAsStream("..\\Images\\save.png"));
-
+        
         btnSave = new GreenButton("Save", imgSave, 20, 20, 120, 40);
         btnExit = new RedButton("Exit", imgExit, 20, 20, 120, 40);
         btnNext = new DefaultButton("Next", imgNext, 20, 20, 120, 40);
