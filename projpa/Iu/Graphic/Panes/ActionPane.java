@@ -354,7 +354,26 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         transtion.setToY(-1700);
         transtion.setCycleCount(Animation.INDEFINITE);
         transtion.play();
+        
+        
+        
+        Image Randomship1img2 = new Image(getClass().getResourceAsStream("..\\Images\\8-bit-spaceship-6.png"));
+        ImageView Randomship1imgview2 = new ImageView(Randomship1img2);
+        // set off screen and correct size and rotation
+        Randomship1imgview2.setLayoutX(-2000);
+        Randomship1imgview2.setLayoutY(500);
+        Randomship1imgview2.setFitHeight(50);
+        Randomship1imgview2.setPreserveRatio(true);
+        Randomship1imgview2.setRotate(86);
 
+        TranslateTransition transtion2 = new TranslateTransition(Duration.seconds(12),Randomship1imgview2);
+        //transtion.setDuration(Duration.seconds(3));
+        transtion2.setToX(8000);
+        transtion2.setToY(-500);
+        transtion2.setCycleCount(Animation.INDEFINITE);
+        transtion2.play();
+
+        
 
         Circle test = new Circle(); // main image debug
         test.setRadius(1);
@@ -458,6 +477,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         // adicionas of people in pane
         MainshipImageView.getChildren().add(Randomship1imgview);
+        MainshipImageView.getChildren().add(Randomship1imgview2);
         MainshipImageView.getChildren().add(MainshipImageView2);
         MainshipImageView.getChildren().add(test);
         MainshipImageView.getChildren().add(playerimage);
