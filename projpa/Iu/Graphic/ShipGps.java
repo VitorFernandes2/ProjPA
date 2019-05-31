@@ -140,6 +140,96 @@ public class ShipGps {
         return cords;
     }
     
+        // return "real" pixel location in game panel
+    public ArrayList<Double> getlocationlocked(int roomnumber){
+        
+        ArrayList<Double> cords = new ArrayList<Double>();
+        
+        // movement database -> get(0) = x || get(1) = y
+        
+        switch(roomnumber){
+            case 1:
+                
+                cords.add(shipbasex - 10);
+                cords.add(shipbasey - 300);
+                
+                break;
+            case 2:
+                
+                cords.add(shipbasex + 30);
+                cords.add(shipbasey + 115);
+                
+                break;
+            case 3:
+                
+                cords.add(shipbasex - 130);
+                cords.add(shipbasey - 160);
+                
+                break;
+            case 4:
+                
+                cords.add(shipbasex + 110);
+                cords.add(shipbasey - 160);
+                
+                break;
+            case 5:
+                
+                cords.add(shipbasex - 50);
+                cords.add(shipbasey - 120);
+                
+                break;
+            case 6:
+                
+                cords.add(shipbasex - 10);
+                cords.add(shipbasey + 255);
+                
+                break;
+            case 7:
+                
+                cords.add(shipbasex + 110);
+                cords.add(shipbasey + 150);
+                
+                break;
+                
+            case 8:
+                
+                cords.add(shipbasex + 30);
+                cords.add(shipbasey - 120);
+                
+                break;
+            case 9:
+                
+                cords.add(shipbasex - 130);
+                cords.add(shipbasey - 10);
+                
+                break;                 
+            case 10:
+                
+                cords.add(shipbasex - 50);
+                cords.add(shipbasey + 115);
+                
+                break;
+                
+            case 11:
+                
+                cords.add(shipbasex + 110);
+                cords.add(shipbasey - 10);
+                
+                break;
+            
+            case 12:
+                
+                cords.add(shipbasex - 130);
+                cords.add(shipbasey + 150);
+                
+                break;    
+                
+        }
+        
+        return cords;
+    }
+    
+    
     // auxiliar to define location for counter for aliens in room
     public ArrayList<Double> auxlocationinfo(int roomnumber){
         
@@ -280,9 +370,9 @@ public class ShipGps {
     
     public double calculatedegree(double xa, double ya, double xb, double yb){
         
-        
         xb = xb - xa;
         yb = yb - ya;
+        yb = -yb;
         
         return atan2(xb,yb); // needs -180 ao x100 from interface
     }

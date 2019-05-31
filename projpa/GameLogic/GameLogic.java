@@ -595,6 +595,21 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         return placedOrganicDetonaters;
 
     }
+    
+        public ArrayList<Integer> getPlacedorganicdetonator(){
+
+        ArrayList<Integer> placedOrganicDetonaters = new ArrayList<>();
+
+        for (int i = 0; i < this.game.getTraps().size(); i++) {
+
+            if (this.game.getTraps().get(i).getName().equals("OrganicDetonator") && this.game.getTraps().get(i).getRoom() != null)
+                placedOrganicDetonaters.add(i);
+
+        }
+
+        return placedOrganicDetonaters;
+
+    }
 
     public ArrayList<Integer> getAvailableTrapRooms(){
 
@@ -735,6 +750,14 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
                 return 0;
             else
                 return this.game.getPoints();
+    }
+    
+    
+    public List<Trap> gettrapsclone (){
+        
+        List<Trap> clone = new ArrayList<Trap>(this.game.getTraps());
+        return clone;
+        
     }
 
 }

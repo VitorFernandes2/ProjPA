@@ -34,6 +34,8 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
             
             int alienPosition = this.game.verifyalien(room.getName()); 
             
+            diceendstat = -1;
+            
             if(alienPosition != -1){
 
                 Dice crewMemberDice = new Dice();
@@ -78,12 +80,12 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
                 }
                 else{
                     
-                    diceendstat = -1;
+                    diceendstat = 0;
                     //Health tracker - 1
                     this.game.healthTrackerHit();
                     
                     if(this.game.isDead()){
-                        diceendstat = 0;
+                        diceendstat = -2; // temp
                         //return new GameOver(this.game);         
                         return this;
                     }          
@@ -103,7 +105,7 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
         
         if (diceendstat == 1 || diceendstat == -1)
             return new AwaitCrewPhaseActions(this.game);
-        if (diceendstat == 0)
+        if (diceendstat == -2)
             return new GameOver(this.game);
         return this;
     }

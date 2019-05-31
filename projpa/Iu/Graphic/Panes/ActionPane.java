@@ -77,6 +77,9 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     private ComboBox<Integer> chooseRoomMove1;
     private ComboBox<Integer> chooseRoomMove2;
     private ArrayList<VBox> getarrayindicators;
+    private ArrayList<ImageView> sealedroomarray;
+    private ArrayList<ImageView> particledisperserarray;
+    private ArrayList<ImageView> organidetonatorarray;
     private ImageView playerimage;
 
     public ActionPane(GameLogic game) {
@@ -353,9 +356,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         transtion.play();
 
 
-        Circle test = new Circle();
+        Circle test = new Circle(); // main image debug
         test.setRadius(1);
         test.setFill(Color.GREEN);
+        test.setVisible(false);
         
         // beta
         
@@ -386,7 +390,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         
         
         double rotaionplayer = pdata.calculatedegree(tempxa, tempya, cordstart.get(0), cordstart.get(1));
-        playerimage.setRotate(180 - (rotaionplayer * 100));
+        //playerimage.setRotate(180 - (rotaionplayer * 100));
         
         
         cordstart.clear();
@@ -402,6 +406,54 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         getarrayindicators = new ArrayList<VBox>();
         getarrayindicators = pdata.setbackgroundstats(xcenter,ycenter);
         
+        
+        
+        Image closeimagem = new Image(getClass().getResourceAsStream("..\\Images\\cancel2.png"));
+        sealedroomarray = new ArrayList<ImageView>();
+        
+        
+        for (int i=0 ; i < 12;i++){
+            
+            sealedroomarray.add(new ImageView(closeimagem));
+            ArrayList<Double> returncloselocal = new ArrayList<Double>();
+            returncloselocal = pdata.getlocationlocked(i+1);
+            sealedroomarray.get(i).setFitHeight(20);
+            sealedroomarray.get(i).setPreserveRatio(true);
+            sealedroomarray.get(i).setLayoutX(returncloselocal.get(0));
+            sealedroomarray.get(i).setLayoutY(returncloselocal.get(1));
+            sealedroomarray.get(i).setVisible(false);
+        }
+        
+        Image closeimagem2 = new Image(getClass().getResourceAsStream("..\\Images\\detonator3.png"));
+        particledisperserarray = new ArrayList<ImageView>();
+        
+        for (int i=0 ; i < 12;i++){
+            
+            particledisperserarray.add(new ImageView(closeimagem2));
+            ArrayList<Double> returncloselocal = new ArrayList<Double>();
+            returncloselocal = pdata.getlocationlocked(i+1);
+            particledisperserarray.get(i).setFitHeight(20);
+            particledisperserarray.get(i).setPreserveRatio(true);
+            particledisperserarray.get(i).setLayoutX(returncloselocal.get(0));
+            particledisperserarray.get(i).setLayoutY(returncloselocal.get(1));
+            particledisperserarray.get(i).setVisible(false);
+        }
+        
+        Image closeimagem3 = new Image(getClass().getResourceAsStream("..\\Images\\detonator2.png"));
+        organidetonatorarray = new ArrayList<ImageView>();
+        
+        for (int i=0 ; i < 12;i++){
+            
+            organidetonatorarray.add(new ImageView(closeimagem3));
+            ArrayList<Double> returncloselocal = new ArrayList<Double>();
+            returncloselocal = pdata.getlocationlocked(i+1);
+            organidetonatorarray.get(i).setFitHeight(20);
+            organidetonatorarray.get(i).setPreserveRatio(true);
+            organidetonatorarray.get(i).setLayoutX(returncloselocal.get(0));
+            organidetonatorarray.get(i).setLayoutY(returncloselocal.get(1));
+            organidetonatorarray.get(i).setVisible(false);
+        }
+        
         // end beta
 
         // adicionas of people in pane
@@ -410,6 +462,9 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         MainshipImageView.getChildren().add(test);
         MainshipImageView.getChildren().add(playerimage);
         MainshipImageView.getChildren().addAll(getarrayindicators);//test
+        MainshipImageView.getChildren().addAll(sealedroomarray);
+        MainshipImageView.getChildren().addAll(particledisperserarray);
+        MainshipImageView.getChildren().addAll(organidetonatorarray);
 
        
        
@@ -915,8 +970,9 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         btnAtackCrew1.setOnMouseClicked(e -> {
             disableMove();
             ArrayList<Integer> attackresults;
-            this.game.atack(0);
             attackresults = this.game.atack(0);
+            if(attackresults.size()==0)
+                attackresults = this.game.atack(0);
             this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
             updateindicators();
@@ -925,8 +981,9 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         btnAtackCrew2.setOnMouseClicked(e -> {
             disableMove();
             ArrayList<Integer> attackresults;
-            this.game.atack(1);
             attackresults = this.game.atack(1);
+            if(attackresults.size()==0)
+                attackresults = this.game.atack(1);
             this.getChildren().add(Dicescreenresult(this,attackresults));
             this.updaterightbox();
             updateindicators();
@@ -1039,7 +1096,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
                 
         }
         else{
-                Label Dicevalue = new Label("Dice result: " + attackresults.get(0) );
+                Label Dicevalue = new Label("Dice result: " + attackresults.get(0) + " from " + attackresults.get(1) + " dices");
                 Dicevalue.setFont(Font.font("Death Star", FontWeight.MEDIUM, 38));
                 Dicevalue.setTextFill(Color.web("#ffffff"));
 
@@ -1050,7 +1107,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
                 if (attackresults.get(2) == 1)
                     DiceResult.setText("The Crew Member as killed the alien");
                 else if (attackresults.get(2) == 0)
-                    DiceResult.setText("The Crew Member as unable to kill the alien");
+                    DiceResult.setText("The Crew Member was unable to kill the alien");
                 else
                     DiceResult.setText("There was no alien in the selected room");
 
@@ -1399,9 +1456,17 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         playerimage.setTranslateY(animhelp.getlocationcords(oldlocal).get(1) + ycenter);
         
         ArrayList<Double> cordstart = new ArrayList<>(); // temp
-
         
         cordstart = animhelp.getcords(oldlocal,newlocal);
+        
+        double rotaionplayer = animhelp.calculatedegree(animhelp.getlocationcords(oldlocal).get(0)
+                                                        ,animhelp.getlocationcords(oldlocal).get(1)
+                                                        ,animhelp.getlocationcords(newlocal).get(0)
+                                                        ,animhelp.getlocationcords(newlocal).get(1));
+        
+
+        playerimage.setRotate((rotaionplayer * 100));
+        
         
         TranslateTransition transtion = new TranslateTransition(Duration.seconds(2),playerimage);
         
@@ -1427,7 +1492,8 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             int value = 0;
             if(crew1location == i) {value++;}
             if(crew2location == i) {value++;}
-        
+
+            
             Node nodeOut = getarrayindicators.get(i).getChildren().get(0);
             if(nodeOut instanceof HBox){
                 for(Node nodeIn:((HBox)nodeOut).getChildren()){
@@ -1471,10 +1537,49 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         for (int i = 0; i < 12; i++ ){  
             boolean returnaswer = this.game.seelockedroom(i);
             
-            if (returnaswer == true);
-                
+            if (returnaswer == true)
+                sealedroomarray.get(i).setVisible(true);
         }
         
+        // update paticle disperser
+        for (int i = 0; i < 12 ; i++){
+            particledisperserarray.get(i).setVisible(false); 
+        }
+        ArrayList<Integer> placedOrganicDetonaters = new ArrayList<>();
+        for (int i = 0; i < 12; i++ ){  
+            placedOrganicDetonaters = this.game.getPlacedParticleDisperser();
+            boolean returnaswer = false;
+            
+            for(int j = 0; j < placedOrganicDetonaters.size() ; j++){
+                if(this.game.gettrapsclone().get(placedOrganicDetonaters.get(j)).getRoomName() ==  converthelp.convertIntToRoom(i).getName())
+                    returnaswer = true;
+
+            }
+                  
+            if (returnaswer == true){
+                particledisperserarray.get(i).setVisible(true);
+            }
+        }
+        
+        // update paticle disperser
+        for (int i = 0; i < 12 ; i++){
+            organidetonatorarray.get(i).setVisible(false); 
+        }
+        ArrayList<Integer> placedparticledispencer = new ArrayList<>();
+        for (int i = 0; i < 12; i++ ){  
+            placedparticledispencer = this.game.getPlacedorganicdetonator();
+            boolean returnaswer = false;
+            
+            for(int j = 0; j < placedparticledispencer.size() ; j++){
+                if(this.game.gettrapsclone().get(placedparticledispencer.get(j)).getRoomName() ==  converthelp.convertIntToRoom(i).getName())
+                    returnaswer = true;
+
+            }
+                  
+            if (returnaswer == true){
+                organidetonatorarray.get(i).setVisible(true);
+            }
+        }
         
         
     }
