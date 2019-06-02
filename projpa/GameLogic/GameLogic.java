@@ -604,7 +604,7 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         for (int i = 0; i < this.game.getTraps().size(); i++) {
 
             if (this.game.getTraps().get(i).getName().equals("ParticleDisperser") && this.game.getTraps().get(i).getRoom() == null)
-                unplacedOrganicDetonaters.add(i);
+                unplacedOrganicDetonaters.add(this.game.getTraps().get(i).getId());
 
         }
 
