@@ -550,7 +550,7 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
     }
 
     public boolean hasOrganicDetonatorToExplode(){
-        return this.getPlacedParticleDisperser().size() > 0;
+        return this.getPlacedorganicdetonator().size() > 0;
     }
 
 	public void nextTurn() {
