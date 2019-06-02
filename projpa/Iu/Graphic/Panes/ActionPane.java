@@ -1593,13 +1593,14 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         for (int i = 0; i < 12 ; i++){
             particledisperserarray.get(i).setVisible(false); 
         }
+
         ArrayList<Integer> placedOrganicDetonaters = new ArrayList<>();
         for (int i = 0; i < 12; i++ ){  
             placedOrganicDetonaters = this.game.getPlacedParticleDisperser();
             boolean returnaswer = false;
             
             for(int j = 0; j < placedOrganicDetonaters.size() ; j++){
-                if(this.game.gettrapsclone().get(placedOrganicDetonaters.get(j)).getRoomName() ==  converthelp.convertIntToRoom(i).getName())
+                if(this.game.gettrapsclone().get(placedOrganicDetonaters.get(j)).getRoomName() ==  converthelp.convertIntToRoom(i + 1).getName())
                     returnaswer = true;
 
             }
@@ -1619,7 +1620,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             boolean returnaswer = false;
             
             for(int j = 0; j < placedparticledispencer.size() ; j++){
-                if(this.game.gettrapsclone().get(placedparticledispencer.get(j)).getRoomName() ==  converthelp.convertIntToRoom(i).getName())
+                if(this.game.gettrapsclone().get(placedparticledispencer.get(j)).getRoomName() ==  converthelp.convertIntToRoom(i + 1).getName())
                     returnaswer = true;
 
             }
