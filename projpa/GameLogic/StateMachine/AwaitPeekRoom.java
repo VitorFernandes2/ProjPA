@@ -42,8 +42,8 @@ public class AwaitPeekRoom extends StateAdapter implements Serializable{
 
             if(trap != null)
                 if (!this.game.isTrapInside(roomInterface)){
-                 
-                    trap.chooseTrapRoom(trapIndex);
+
+                    trap.chooseTrapRoom(room);
                     this.game.decrementActionPoints();
 
                 }

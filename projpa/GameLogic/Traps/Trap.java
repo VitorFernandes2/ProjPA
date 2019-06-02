@@ -98,6 +98,7 @@ public abstract class Trap implements Serializable{
 
         }
 
+        this.trapRoom = room;
         return room;
 
     }

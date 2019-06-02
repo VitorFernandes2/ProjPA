@@ -114,8 +114,9 @@ public class GameData implements Serializable{
     public boolean isTrapInside(RoomState room){
 
         for (Trap trap : this.getTraps())
-            if (trap.getRoom().getName().equals(room.getName()))
-                return true;
+            if (trap.getRoom() != null)
+                if (trap.getRoom().getName().equals(room.getName()))
+                    return true;
 
         return false;
 
