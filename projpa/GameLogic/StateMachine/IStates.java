@@ -101,6 +101,8 @@ public interface IStates {
      */
     public IStates saveGame();
 
+    
+    public IStates saveGame(String input);
     /**
      * This function creates the game
      * @param game

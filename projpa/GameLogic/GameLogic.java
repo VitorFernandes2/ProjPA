@@ -56,6 +56,37 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         return true;
 
     }
+    
+    public boolean LoadGame(String direct){
+
+        try {
+
+            FileInputStream fi = new FileInputStream(new File(direct));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+
+            // Read objects
+            GameData pr1 = (GameData) oi.readObject();
+
+            oi.close();
+
+            this.game = new GameData(pr1);
+            this.stateOfTheGame = new AwaitCrewPhaseActions(this.game);
+            firePropertyChange(null, false, true); // inform interface what state it is
+
+        } catch (IOException e) {
+
+            return false;
+
+        } catch (ClassNotFoundException ex) {
+
+            //Logger.getLogger(TextInterface.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+
+        }
+
+        return true;
+
+    }
 
     public boolean inGameOverState(){
         return stateOfTheGame instanceof GameOver;
@@ -727,6 +758,12 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
         if (inAwaitSaveGame())
             this.stateOfTheGame = this.stateOfTheGame.saveGame();
     }
+    
+    public void SaveGame(String input) {
+        if (inAwaitSaveGame())
+            this.stateOfTheGame = this.stateOfTheGame.saveGame(input);
+    }
+
 
     public ArrayList<String> getJourneyTracker(){
 

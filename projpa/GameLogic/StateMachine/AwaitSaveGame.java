@@ -47,6 +47,35 @@ public class AwaitSaveGame extends StateAdapter implements Serializable{
             return new AwaitCrewPhaseActions(this.game);
             
     }
+    
+    @Override
+    public IStates saveGame(String input) {
+
+        try {
+                
+            //test
+            FileOutputStream f = new FileOutputStream(new File(input));
+            ObjectOutputStream o = new ObjectOutputStream(f);
+            
+            // allow to see if game was already saved or not
+            wasSaved = 1;
+            
+            // Write objects to file
+            o.writeObject(this.game);
+			
+            o.close();
+                
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+                    
+        }
+            //this.game.setStateOfTheGame(new AwaitCrewPhaseActions(this.game));
+            
+            //old
+            return new AwaitCrewPhaseActions(this.game);
+            
+    }
 
     @Override
     public IStates goBack() {

@@ -22,7 +22,9 @@ import projpa.Iu.Graphic.DeathStarLabel;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.ArrayList;
+import javafx.stage.FileChooser;
 
 public class MainPane extends StackPane implements Constants, PropertyChangeListener {
 
@@ -133,10 +135,13 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
         Image loadnoimg = new Image(getClass().getResourceAsStream("..\\" + CANCEL_IMAGE));
         RedButton loadnobtn = new RedButton("No", loadnoimg, 20, 20, 120, 40);
         
+        Image loadcostimg = new Image(getClass().getResourceAsStream("..\\" + LOAD_IMAGE));
+        DefaultButton loadcostbtn = new DefaultButton("Open", loadcostimg, 20, 20, 120, 40);
+        
 
         Optionsbutns.setSpacing(20);
         Optionsbutns.setAlignment(Pos.CENTER);
-        Optionsbutns.getChildren().addAll(loadyesbtn, loadnobtn);
+        Optionsbutns.getChildren().addAll(loadyesbtn, loadnobtn,loadcostbtn);
         MainlayoutVbox.getChildren().addAll(lblScoreTitle, Optionsbutns);
         MainlayoutVbox.setAlignment(Pos.CENTER);
         MainlayoutVbox.setSpacing(20);
@@ -144,9 +149,25 @@ public class MainPane extends StackPane implements Constants, PropertyChangeList
 
         loadnobtn.setOnAction(e-> {
             myStackPane.getChildren().remove(MainlayoutVbox);
-        
+
         });
         
+        loadcostbtn.setOnAction(e-> {
+            myStackPane.getChildren().remove(MainlayoutVbox);
+            FileChooser fc = new FileChooser();
+            fc.setInitialDirectory(new File("..\\"));
+            File selectedFile = fc.showOpenDialog(null);
+            
+            if (selectedFile!= null){
+                boolean returns = this.game.LoadGame(selectedFile.getAbsolutePath()); 
+                if(returns == true)
+                    this.game.startGame();
+            }
+            else{
+                System.out.println("File isnt valid");
+            }
+        });
+
         loadyesbtn.setOnAction(e-> {
             myStackPane.getChildren().remove(MainlayoutVbox);
             this.game.LoadGame(); 

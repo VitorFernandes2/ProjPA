@@ -24,12 +24,14 @@ import projpa.Iu.Graphic.DeathStarLabel;
 import projpa.Iu.Graphic.ShipGps;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.PauseTransition;
 import javafx.scene.Node;
 
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import projpa.GameLogic.Alien;
 import projpa.GameLogic.General.General;
 
@@ -39,8 +41,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
     private BorderPane paneLayout;
     private Image imgExit;
     private Image imgNext;
+    private Image imgSavecost;
     private Image imgSave;
     private GreenButton btnSave;
+    private GreenButton btnSavecost;
     private RedButton btnExit;
     private DefaultButton btnNext;
     private HBox bottomBox;
@@ -104,8 +108,10 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         imgExit = new Image(getClass().getResourceAsStream("..\\Images\\exit.png"));
         imgNext = new Image(getClass().getResourceAsStream("..\\Images\\next.png"));
         imgSave = new Image(getClass().getResourceAsStream("..\\Images\\save.png"));
+        imgSavecost = new Image(getClass().getResourceAsStream("..\\Images\\options.png"));
         
         btnSave = new GreenButton("Save", imgSave, 20, 20, 120, 40);
+        btnSavecost = new GreenButton("", imgSavecost, 20, 20, 40, 40);
         btnExit = new RedButton("Exit", imgExit, 20, 20, 120, 40);
         btnNext = new DefaultButton("Next", imgNext, 20, 20, 120, 40);
 
@@ -152,7 +158,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
 
-        HBox rigthBottomBox = new HBox(btnSave, btnNext, btnExit);
+        HBox rigthBottomBox = new HBox(btnSave,btnSavecost, btnNext, btnExit);
         rigthBottomBox.setAlignment(Pos.CENTER_RIGHT);
         rigthBottomBox.setSpacing(10);
         bottomBox.getChildren().addAll(leftBottomBox, region,rigthBottomBox);
@@ -540,6 +546,28 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
             this.getChildren().add(popupsavegame(this));
             
         });// save
+        
+        btnSavecost.setOnAction(e -> {
+            
+            disableMove();
+            this.game.saveGame();
+            
+            FileChooser fc = new FileChooser();
+            fc.setInitialDirectory(new File("..\\"));
+            //Set extension filter
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+            fc.getExtensionFilters().add(extFilter);
+            File selectedFile = fc.showSaveDialog(null);
+            
+            if (selectedFile!= null){
+                this.game.SaveGame(selectedFile.getAbsolutePath()); 
+                this.getChildren().add(popupsavegame(this));  
+            }
+            else{
+                System.out.println("File isnt valid");
+            }
+        
+        });
         
         firstTab.setOnSelectionChanged(e -> {
             disableMove();

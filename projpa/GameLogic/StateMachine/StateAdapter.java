@@ -56,6 +56,11 @@ public class StateAdapter implements IStates,Serializable{
         
         return this;
     }
+    
+    @Override
+    public IStates saveGame(String input) {
+        return this;
+    }
 
     @Override
     public Boolean heal() {
