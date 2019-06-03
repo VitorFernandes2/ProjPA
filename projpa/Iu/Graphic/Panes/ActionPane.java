@@ -151,7 +151,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         Detonate.setOnMouseClicked(e -> {
             disableMove();
-            if (this.game.hasOrganicDetonatorToExplode())
+            if (this.game.hasParticleDispersersToPlace())
                 detonate(this);
         });
 
@@ -831,7 +831,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         VBox mainVboxRoomChoice = new VBox();
 
         ComboBox<Integer> chooseRoomMove2;
-        chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(this.game.getPlacedParticleDisperser()));
+        chooseRoomMove2 = new ComboBox<>(FXCollections.observableArrayList(this.game.getPlacedParticleDisperser2()));
 
         HBox firstLineRoomsHbox = new HBox(chooseRoomMove2);
         firstLineRoomsHbox.setSpacing(40);

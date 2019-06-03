@@ -627,7 +627,7 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
     }
     
-        public ArrayList<Integer> getPlacedorganicdetonator(){
+    public ArrayList<Integer> getPlacedorganicdetonator(){
 
         ArrayList<Integer> placedOrganicDetonaters = new ArrayList<>();
 
@@ -635,6 +635,21 @@ public class GameLogic extends PropertyChangeSupport implements Serializable{
 
             if (this.game.getTraps().get(i).getName().equals("OrganicDetonator") && this.game.getTraps().get(i).getRoom() != null)
                 placedOrganicDetonaters.add(i);
+
+        }
+
+        return placedOrganicDetonaters;
+
+    }
+
+    public ArrayList<Integer> getPlacedParticleDisperser2(){
+
+        ArrayList<Integer> placedOrganicDetonaters = new ArrayList<>();
+
+        for (int i = 0; i < this.game.getTraps().size(); i++) {
+
+            if (this.game.getTraps().get(i).getName().equals("ParticleDisperser") && this.game.getTraps().get(i).getRoom() != null)
+                placedOrganicDetonaters.add(new General().convertRoomStrinToInt(this.game.getTraps().get(i).getRoomName()));
 
         }
 
