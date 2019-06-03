@@ -74,7 +74,7 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
                     diceendstat = 1;
                     //Alien would be destroyd
                     this.game.removeAlien(game.getAlienByPosition(alienPosition));
-                    this.game.addInspirationPoints();
+                    this.game.addInspirationPoints();                 
                     this.game.addPoints();
 
                 }

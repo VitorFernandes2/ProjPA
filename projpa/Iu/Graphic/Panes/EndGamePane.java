@@ -81,13 +81,18 @@ public class EndGamePane extends StackPane implements Constants,PropertyChangeLi
         mainVboxUsernameScene.getStyleClass().add("ChooseVBox");
         
         
+        
         btnyes.setOnMouseClicked(e -> {
+            this.game.SaveScore(); // save the score
             this.game.newGame();
+            
         });
 
         btnno.setOnMouseClicked(e -> {
+            this.game.SaveScore(); // save the score
             this.game.startGame2();
             this.setVisible(false);
+            
         });
         
         paneLayoutRoomChoice.setCenter(paneLayoutendgame);

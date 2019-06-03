@@ -1644,7 +1644,7 @@ public class GameData implements Serializable{
             // se if you can enter in scoreboard
             int counter=0,pos = 0;
             for (String i : scoreloader.keySet()) {          
-                if(scoreloader.get(i) > getUser().getPoints())
+                if(scoreloader.get(i) > this.user.getPoints())
                     pos = counter; // need to add 1 to get real location
                 counter++;
             }
