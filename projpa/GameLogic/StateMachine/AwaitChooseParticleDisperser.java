@@ -17,10 +17,10 @@ public class AwaitChooseParticleDisperser extends StateAdapter implements Serial
 
         int exist=0;
         
-        for(int i=0; i <= game.getUser().getTraps().size();i++){
+        for(int i=0; i < game.getUser().getTraps().size();i++){
             
             // verifica se existe organic detontor no sitio ou não
-            if(this.game.getTrapName(i).equals("OrganicDetonator") && this.game.getTrapRoomName(i).equals(Location)) 
+            if(this.game.getTrapName(i).equals("ParticleDisperser") && this.game.getTrapRoomName(i).equals(Location))
                 exist++;
         }
 
@@ -35,7 +35,9 @@ public class AwaitChooseParticleDisperser extends StateAdapter implements Serial
         
         if(existParticleDisperser(particleDisperser)){
 
-            game.KillAllAliensIn(particleDisperser);
+            if (this.game.getAliens().size() > 0)
+                game.KillAllAliensIn(particleDisperser);
+
             this.game.removeTrap(this.game.findParticleDisperserByRoom(particleDisperser));
 
              if ( this.game.getCrewMember1RoomName().equals(particleDisperser) || 

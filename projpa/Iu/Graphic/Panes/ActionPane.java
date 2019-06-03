@@ -126,7 +126,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         DefaultButton sealRoom = new DefaultButton("Seal Room", new Image(getClass().getResourceAsStream("..\\Images\\seal.png")), 20, 20, 140, 40);
         DefaultButton ParticleDisperser = new DefaultButton("Place Particle Disperser", new Image(getClass().getResourceAsStream("..\\Images\\particle.png")), 20, 20, 260, 40);
         DefaultButton OrganicDetonator = new DefaultButton("Place Organic Detonator", new Image(getClass().getResourceAsStream("..\\Images\\seal.png")), 20, 20, 260, 40);
-        DefaultButton Detonate = new DefaultButton("Explode Organic Detonator", new Image(getClass().getResourceAsStream("..\\Images\\detonator.png")), 20, 20, 280, 40);
+        DefaultButton Detonate = new DefaultButton("Detonate Particle Disperser", new Image(getClass().getResourceAsStream("..\\Images\\detonator.png")), 20, 20, 280, 40);
 
         leftBottomBox.getChildren().addAll(sealRoom, ParticleDisperser, OrganicDetonator, Detonate);
         leftBottomBox.setSpacing(10);
@@ -151,7 +151,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
 
         Detonate.setOnMouseClicked(e -> {
             disableMove();
-            if (this.game.hasParticleDispersersToPlace())
+            if (this.game.hasParticleDisperserToExplode())
                 detonate(this);
         });
 
