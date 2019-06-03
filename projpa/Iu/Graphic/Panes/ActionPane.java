@@ -680,7 +680,7 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         mainVboxRoomChoice.getStyleClass().add("ChooseVBox");
 
         for (int i = 0; i < 12; i++) {
-            if (this.game.roomsToSeal().contains(i))
+            if (!this.game.roomsToSeal().contains(i + 1))
                 RoomsImgHbox.get(i).setVisible(false);
 
             final int j = i;
