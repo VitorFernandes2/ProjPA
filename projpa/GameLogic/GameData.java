@@ -737,7 +737,7 @@ public class GameData implements Serializable{
         
         int pos = -1; // se if there is some... if not stays -1
         
-        for (int i = 0; i <= aliens.size();i++){
+        for (int i = 0; i < aliens.size();i++){
             
             if(alienHasTheSameLocation(location, i)){
                 aliens.remove(i);
