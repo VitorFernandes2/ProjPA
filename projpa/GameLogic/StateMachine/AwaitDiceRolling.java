@@ -103,7 +103,7 @@ public class AwaitDiceRolling extends StateAdapter implements Serializable{
     @Override
     public IStates nextTurn() {
         
-        if (diceendstat == 1 || diceendstat == -1)
+        if (diceendstat == 1 || diceendstat == -1 || diceendstat == 0)
             return new AwaitCrewPhaseActions(this.game);
         if (diceendstat == -2)
             return new GameOver(this.game);

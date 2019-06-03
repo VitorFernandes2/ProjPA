@@ -1289,10 +1289,12 @@ public class ActionPane extends StackPane implements Constants, PropertyChangeLi
         btnAddOneHealth.setOnMouseClicked(e -> {
             this.game.addonehealth();
             lblIp.setText(": " + this.game.getInspirationPoints());
+            healthTracker.setText(": " + this.game.getHealthTrackerHealth());
         });
         btnAddOneHull.setOnMouseClicked(e -> {
             this.game.fixOneHull();
             lblIp.setText(": " + this.game.getInspirationPoints());
+            HullTracker.setText(": " + this.game.getHullState());
         });
         btnAddOneOrganicDetonater.setOnMouseClicked(e -> {
             this.game.buildorganicdetonator();
